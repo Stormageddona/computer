@@ -24,8 +24,7 @@
         let user = "${user}"
     </script>
     <script src="/assets/js/util.js"></script>
-    <script src="/assets/js/header.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- <script src="/assets/js/header.js"></script> -->
 
 </head>
 <header>
@@ -66,6 +65,7 @@
                     <li><a href="">견적페이지</a></li>
                     <li><a href="">커뮤니티</a></li>
                     <li><a href="">1:1질문</a></li>
+                    <li><a href="/admin/account">관리자 페이지</a></li>
                 </ul>
                 <a href="">
                     <span></span>

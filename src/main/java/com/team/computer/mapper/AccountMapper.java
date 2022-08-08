@@ -1,5 +1,7 @@
 package com.team.computer.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.team.computer.data.AccountInfoVO;
@@ -8,10 +10,7 @@ import com.team.computer.data.AccountInfoVO;
 public interface AccountMapper {
     // 로그인
     public AccountInfoVO selectAccount(String id, String pwd) ;
-
-    // 회원가입
     public void insertAccountInfo(AccountInfoVO data) ;
-
     // 회원 정보 수정
     public void updateAccountInfo(AccountInfoVO data) ;
 
