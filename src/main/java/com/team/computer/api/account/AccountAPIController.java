@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +22,8 @@ import com.team.computer.util.AESAlgorithm;
 @RequestMapping("/api/account")
 public class AccountAPIController {
     @Autowired AccountMapper a_mapper ;
+
+    // 로그인
     @GetMapping("/login")
     public Map<String,Object> getLogin(@RequestParam @Nullable String id, @RequestParam @Nullable String pwd,HttpSession session) throws Exception
     {
@@ -44,4 +48,17 @@ public class AccountAPIController {
         return map ;
     }
     
+
+        // 회원가입
+        @PutMapping("/join")
+        public Map<String,Object> putUser(@RequestBody AccountInfoVO data) throws Exception
+        {
+            Map<String,Object> map =new LinkedHashMap<String,Object>() ;
+            data.setAci_pwd(AESAlgorithm.Encrypt(data.getAci_pwd()));
+            if (data.getAci_nickname() == null) data.setAci_nickname(data.getAci_name());
+            a_mapper.insertAccountInfo(data);
+            map.put("status",true) ;
+            map.put("message","회원가입이 완료되었습니다.") ;
+            return map ;
+        }
 }

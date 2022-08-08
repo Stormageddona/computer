@@ -1,0 +1,60 @@
+.join_wrap {
+    width: 900px;
+    margin: 0 auto;
+}
+
+.join_wrap h3 {
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.join_wrap .join_box {
+    width: 100%;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+}
+
+.join_wrap .join_box tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.join_wrap .join_box tr th, .join_wrap .join_box tr td {
+    text-align-last: left;
+    padding: 20px;
+}
+
+.join_wrap .join_box tr th {
+    width: 15%;
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+}
+
+.join_wrap .join_box tr td input{
+    border: 1px solid #ddd;
+    width: 240px;
+    padding: 10px;
+}
+
+.join_wrap button {
+    width: 300px;
+    height: 50px;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    margin-top: 30px;
+    border: 2px solid #4B89DC;
+    background-color: #fff;
+    color: #4B89DC;
+    font-size: 22px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.join_wrap button:hover {
+    background-color: #4B89DC;
+    color: #fff;
+}

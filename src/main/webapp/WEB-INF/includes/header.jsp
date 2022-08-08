@@ -28,11 +28,11 @@
     <div class="header_wrap">
         <div class="header_top">
             <h1>
-                <a href=""><img src="/assets/images/images.png" alt="로고"></a>
+                <a href="/"><img src="/assets/images/images.png" alt="로고"></a>
             </h1>
             <div class="user_menu">
                 <a href="/account/login">로그인</a>
-                <a href="">회원가입</a> 
+                <a href="/account/join">회원가입</a> 
                 <p>|</p>
                 <div class="search_form">
                     <input type="text">
