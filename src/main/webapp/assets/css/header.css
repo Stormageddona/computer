@@ -1,0 +1,153 @@
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+header {
+    width: 100%;
+    vertical-align: top;
+    border-bottom: 1px solid #eee;
+    font-size: 0;
+    position: relative;
+}
+
+header .header_wrap {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+header .header_top  {
+    overflow: hidden;
+}
+
+header .header_top h1 {
+    display: inline-block;
+    width: 120px;
+    height: 80px;
+    overflow: hidden;
+}
+
+header .header_top h1 img {
+    width: 100%;
+    height: 100%;
+}
+
+header .header_top .user_menu {
+    float: right;
+    line-height: 80px;
+}
+
+header .header_top .user_menu a {
+    font-size: 14px;
+    margin-right: 10px;
+    color: #222;
+}
+
+header .header_top .user_menu a:first-child {
+    font-weight: 600;
+}
+
+header .header_top .user_menu p {
+    display: inline-block;
+    font-size: 14px;
+    margin-right: 10px;
+    color: #222;
+}
+
+header .header_top .search_form {
+    position: relative;
+    display: inline-block;
+}
+
+header .header_top .search_form input {
+    width: 250px;
+    border: none;
+    background-color: #eee;
+    height: 30px;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+header .header_top .search_form input:focus {
+    outline: none;
+    border: none;
+}
+
+header .header_top .search_form button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100%;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    /* display: none; */
+    font-size: 17px;
+    cursor: pointer;
+}
+
+header .header_bottom {
+    font-size: 0;
+}
+
+header .header_bottom nav ul {
+    list-style: none;
+}
+
+header .header_bottom nav ul li {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: 20px;
+    transition:all .3s ease;
+    /* position: relative; */
+}
+
+header .header_bottom nav ul li a {
+    display: block;
+    padding: 25px 0;
+}
+
+header .header_bottom nav ul li:hover {
+    color: red;
+}
+
+header .header_bottom nav ul li a {
+    position: relative;
+}
+
+header .header_bottom nav ul li > a::after {
+    content: '';
+    width: 0%;
+    left: 50%;
+    height: 1px;
+    display: block;
+    position: absolute;
+    margin-top: 23px;
+    border-bottom: 2px solid red;
+    transition:all .3s ease;
+}
+
+header .header_bottom nav ul li:hover > a::after {
+    content: '';
+    width: 100%;
+    left: 0px;
+    height: 1px;
+    display: block;
+    position: absolute;
+    margin-top: 23px;
+    border-bottom: 2px solid red;
+    transition:all .3s ease;
+}
+
+header .header_bottom nav ul li ol.part_add_nav {
+    position: absolute;
+    /* left: 0; */
+    /* width: 100%; */
+    border-bottom: 1px solid #eee;
+}
+
+header .header_bottom nav ol.part_add_nav li {
+    display: inline-block !important;
+    color: #000;
+}
