@@ -7,7 +7,7 @@
         select * from account_info where aci_id = #{id} and aci_pwd = #{pwd}
     </select>
 
-    <insert>
+    <insert id="insertAccountInfo">
         INSERT INTO account_info
         (aci_id, aci_pwd, aci_name, aci_nickname, aci_phone, aci_birth)
         VALUES(#{aci_id}, #{aci_pwd}, #{aci_name}, #{aci_nickname}, #{aci_phone}, #{aci_birth});

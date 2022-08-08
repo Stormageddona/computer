@@ -17,4 +17,6 @@ public class CaseInfoVO {
     private Date csi_release_dt;
     private Integer csi_use_board;
     private Date csi_reg_dt;
+
+    private String img_src;
 }
