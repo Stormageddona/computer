@@ -6,11 +6,41 @@
     <select id="selectAccount" resultType="com.team.computer.data.AccountInfoVO">
         select * from account_info where aci_id = #{id} and aci_pwd = #{pwd}
     </select>
-
-    <insert>
-        INSERT INTO account_info
-        (aci_id, aci_pwd, aci_name, aci_nickname, aci_phone, aci_birth)
-        VALUES(#{aci_id}, #{aci_pwd}, #{aci_name}, #{aci_nickname}, #{aci_phone}, #{aci_birth});
-
-    </insert>
+    <select id="selectUserList" resultType="com.team.computer.data.AccountInfoVO">
+        select
+            aci_seq, aci_id, aci_name, aci_nickname, aci_phone, aci_birth, aci_status, aci_reg_dt, aci_leave_dt, aci_grade
+        from account_info
+        <if test="search_type !=null">
+        where
+            <if test="search_type == 'id' ">aci_id</if>
+            <if test="search_type == 'name' ">aci_name</if>
+            <if test="search_type == 'nickname' ">aci_nickname</if>
+            <if test="search_type == 'phone' ">aci_phone</if>
+        like #{keyword}
+    </if>
+        order by aci_reg_dt desc
+        limit 15 offset #{offset}
+    </select>
+    <select id="selectTotalPage" resultType="java.lang.Integer">
+        select ceil(count(*)/15) from account_info
+    <if test="search_type !=null">
+    where
+        <if test="search_type == 'id' ">aci_id</if>
+        <if test="search_type == 'name' ">aci_name</if>
+        <if test="search_type == 'nickname' ">aci_nickname</if>
+        <if test="search_type == 'phone' ">aci_phone</if>
+        like #{keyword}
+    </if>
+    </select>
+    <select id="selectTotalCount" resultType="java.lang.Integer">
+        select count(*) from account_info
+    <if test="search_type !=null">
+    where
+        <if test="search_type == 'id'">aci_id</if>
+        <if test="search_type == 'name'">aci_name</if>
+        <if test="search_type == 'nickname'">aci_nickname</if>    
+        <if test="search_type == 'phone'">aci_phone</if>
+        like #{keyword}
+    </if>
+    </select>
 </mapper>
