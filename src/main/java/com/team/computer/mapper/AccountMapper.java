@@ -11,5 +11,12 @@ public interface AccountMapper {
 
     // 회원가입
     public void insertAccountInfo(AccountInfoVO data) ;
+
+    // 회원 정보 수정
+    public void updateAccountInfo(AccountInfoVO data) ;
+
+    //중복 체크
+    public Boolean isDuplicatedId(String id);
+    public Boolean isDuplicatedPhone(String phone);
     
 }

@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.structure.min.css" integrity="sha512-oM24YOsgj1yCDHwW895ZtK7zoDQgscnwkCLXcPUNsTRwoW1T1nDIuwkZq/O6oLYjpuz4DfEDr02Pguu68r4/3w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.theme.min.css" integrity="sha512-9h7XRlUeUwcHUf9bNiWSTO9ovOWFELxTlViP801e5BbwNJ5ir9ua6L20tEroWZdm+HFBAWBLx2qH4l4QHHlRyg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="/assets/js/util.js"></script>
-    <script src="/assets/js/header.js"></script>
+    <!-- <script src="/assets/js/header.js"></script> -->
 
 </head>
 <header>
@@ -33,6 +33,10 @@
             <div class="user_menu">
                 <a href="/account/login">로그인</a>
                 <a href="/account/join">회원가입</a> 
+                <c:if test="${user != null}">
+
+                    <a href="/account/modify">정보 수정</a>
+                </c:if>
                 <p>|</p>
                 <div class="search_form">
                     <input type="text">

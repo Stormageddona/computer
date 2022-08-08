@@ -22,4 +22,17 @@ $(function()
             }
         })
     })
+    $(".join_id, .join_phone, .input_phone").change(function()
+    {
+        type = $(this).attr("data-type")
+        $.ajax
+        ({
+            url:"/api/account/join?value="+$(this).val()+"&type="+type,
+            type:"get",
+            success:function(result)
+            {
+                $(".err_msg_"+type).html(result.message) ;
+            }
+        })
+    })
 })

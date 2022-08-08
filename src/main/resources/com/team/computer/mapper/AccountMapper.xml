@@ -12,4 +12,23 @@
         (aci_id, aci_pwd, aci_name, aci_nickname, aci_phone, aci_birth)
         VALUES(#{aci_id}, #{aci_pwd}, #{aci_name}, #{aci_nickname}, #{aci_phone}, #{aci_birth});
     </insert>
+
+    <update id="updateAccountInfo">
+        UPDATE account_info
+        SET 
+        <if test= "aci_pwd != null">
+        aci_pwd=#{aci_pwd},
+        </if>
+        aci_name=#{aci_name}, aci_nickname=#{aci_nickname},aci_phone = #{aci_phone}, aci_birth=#{aci_birth}
+        WHERE aci_seq=#{aci_seq};
+    </update>
+
+    <select id="isDuplicatedId" resultType="java.lang.Boolean">
+        select count(*) from account_info where aci_id = #{id}
+    </select>
+
+    <select id="isDuplicatedPhone" resultType="java.lang.Boolean">
+        select count(*) from account_info where aci_phone = #{phone}
+    </select>
+
 </mapper>

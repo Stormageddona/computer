@@ -23,7 +23,8 @@
                     아이디
                 </th>
                 <td>
-                    <input type="text" class="join_id" placeholder="아이디">
+                    <input type="text" class="join_id" data-type="id" placeholder="아이디">
+                    <b class="err_msg_id"></b>
                 </td>
             </tr>
             <tr>
@@ -45,7 +46,8 @@
             <tr>
                 <th>전화번호</th>
                 <td>
-                    <input type="text" class="join_phone">
+                    <input type="text" class="join_phone" data-type="phone">
+                    <b class="err_msg_phone"></b>
                 </td>
             </tr>
             <tr>

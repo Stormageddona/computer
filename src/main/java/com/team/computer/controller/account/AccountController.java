@@ -18,4 +18,10 @@ public class AccountController {
     {
         return "/account/join" ;
     }
+
+    @GetMapping("/modify")
+    public String getAccountModify()
+    {
+        return "/account/modify" ;
+    }
 }
