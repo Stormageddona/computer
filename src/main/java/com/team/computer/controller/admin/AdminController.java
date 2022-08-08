@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.team.computer.mapper.AccountMapper;
 
 @Controller
-@RequestMapping("/manage")
+@RequestMapping("/admin")
 public class AdminController {
     @Autowired AccountMapper account_mapper;
     @GetMapping("/user")
@@ -37,8 +37,8 @@ public class AdminController {
 
         return "/manage/user";
     }
-    @GetMapping("admin")
+    @GetMapping("/account")
     public String getAdmin() {
-        return "/manage/admin";
+        return "/admin/account";
     }
 }

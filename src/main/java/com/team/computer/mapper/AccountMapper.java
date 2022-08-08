@@ -10,7 +10,6 @@ import com.team.computer.data.AccountInfoVO;
 public interface AccountMapper {
     // 로그인
     public AccountInfoVO selectAccount(String id, String pwd) ;
-    public List<AccountInfoVO> selectUserList(String keyword, Integer offset, String search_type);
-    public Integer selectTotalPage(String keyword, String search_type);
-    public Integer selectTotalCount(String keyword, String search_type);
+    public void insertAccountInfo(AccountInfoVO data) ;
 }
+
