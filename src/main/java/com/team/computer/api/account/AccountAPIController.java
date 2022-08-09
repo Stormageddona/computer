@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -121,6 +122,61 @@ public class AccountAPIController {
             map.put("status",true) ;
             map.put("message","회원 정보 수정이 완료되었습니다.") ;
 
+            return map ;
+        }
+
+        // 아이디,비밀번호 찾기
+        @GetMapping("/find/{type}")
+        public Map<String,Object> getFindData(@PathVariable String type, @RequestParam @Nullable String id, @RequestParam @Nullable String phone,@RequestParam @Nullable String name) throws Exception
+        {
+            Map<String,Object> map =new LinkedHashMap<String,Object>() ;
+            System.out.println(id + name + phone);
+            String temp = null ;
+            if (type.equals("id")) 
+            {
+                temp = a_mapper.selectFindId(name, phone) ;
+                if (temp == null) 
+                {
+                    map.put("status",false) ;
+                    map.put("message","아이디 찾기에 실패하였습니다.") ;
+                    return map ;
+                }
+                map.put("status",true) ;
+                map.put("id",temp) ;
+            }
+            else if (type.equals("pwd")) 
+            {
+                temp = a_mapper.selectFindPwd(id, name, phone) ;
+                System.out.println(temp);
+                if (temp == null) 
+                {
+                    map.put("status",false) ;
+                    map.put("message","비밀번호 찾기에 실패하였습니다.") ;
+                    return map ;
+                }
+                map.put("status",true) ;
+                map.put("seq",AESAlgorithm.Encrypt(temp)) ;
+            }
+    
+
+            return map ;
+
+        }
+
+        //비밀번호 재설정
+        @PatchMapping("/pwd/{seq}")
+        public Map<String,Object> updateUserPwd(@PathVariable String seq,@RequestParam String pwd) throws Exception
+        {
+            Map<String,Object> map =new LinkedHashMap<String,Object>() ;
+            seq = seq.replaceAll(" ", "+");
+            System.out.println(seq);
+            String tempseq = seq ;
+            seq = AESAlgorithm.Decrypt(tempseq);
+            // pwd = AESAlgorithm.Encrypt(pwd) ;
+            // Integer tempseq = Integer.parseInt(seq) ;
+            // a_mapper.updateAccountInfoPwd(tempseq, pwd) ;
+            map.put("status", true) ;
+            map.put("message", "비밀번호 변경이 완료되었습니다.") ;
             return map ;
         }
 }

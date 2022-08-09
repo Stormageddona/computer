@@ -14,6 +14,9 @@
             <input type="password" placeholder="비밀번호" class="pwd_input">
             <button class="login">로그인</button>
             <button class="join">회원가입</button>
+            <div class="temp"style="font-size: 14px;">
+                <a href="/account/find/id">아이디</a><span>·</span><a href="/account/find/pwd">비밀번호</a>찾기
+            </div>
             
         </div>
     </div>

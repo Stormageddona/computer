@@ -18,4 +18,9 @@ public interface AccountMapper {
     public Boolean isDuplicatedId(String id);
     public Boolean isDuplicatedPhone(String phone);
     
+
+    //아이디, 비밀번호 찾기 
+    public String selectFindId(String name, String phone) ;
+    public String selectFindPwd(String id,String name, String phone) ;
+    public void updateAccountInfoPwd(Integer seq, String pwd) ;
 }
