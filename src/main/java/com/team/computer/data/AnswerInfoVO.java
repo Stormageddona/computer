@@ -15,4 +15,6 @@ public class AnswerInfoVO {
     private Date asi_reg_dt;
     private Date asi_mod_dt;
     private Date asi_del_dt;
+
+    private String img_src;
 }

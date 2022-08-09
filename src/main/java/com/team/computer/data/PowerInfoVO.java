@@ -16,4 +16,6 @@ public class PowerInfoVO {
     private Date poi_reg_dt;
     private Integer poi_reted_power;
     private Integer poi_size;
+
+    private String img_src;
 }

@@ -17,4 +17,6 @@ public class CoolerInfoVO {
     private Integer coi_type;
     private Integer coi_size;
     private Integer coi_noize;
+
+    private String img_src;
 }

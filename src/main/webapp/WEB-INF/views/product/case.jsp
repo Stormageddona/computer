@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/assets/css/product.css">
-    <script src="/assets/js/product/product.js"></script>
 </head>
 <body>
     <section class="product_section">
         <div class="product_section_wrap">
     
-            <aside>
+            <%@include file="/WEB-INF/includes/product_aside.jsp"%>
+            <!-- <aside>
                 <div class="product_category">
                     <div class="product_name_box">
                         <h3>카테고리</h3>
@@ -27,16 +27,21 @@
                         </ul>
                     </div>
                 </div>
-            </aside>
+            </aside> -->
     
             <div class="product_area">
-    
-                <h3>카테고리명</h3>
+
+                <%@include file="/WEB-INF/includes/product_markup.jsp"%>
+                <!-- <h3>카테고리명</h3>
                 <div class="product_area_wrap">
                 <div class="product_menu">
                     <button class="price_desc on">높은가격순</button><span>|</span>
                     <button class="price_asc">낮은가격순</button>
                 </div>
+                    <form action="/book/book" id="search_form">
+                        <input type="text" id="keyword">
+                        <button type="submit">검색</button>
+                    </form>
                 <div class="product_box">
     
                     <div class="product_box_content">
@@ -71,7 +76,7 @@
                     </div>
     
                 </div>
-            </div>
+            </div> -->
             </div>
 
             <div class="page_area">

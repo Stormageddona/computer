@@ -19,4 +19,6 @@ public class SsdInfoVO {
     private Integer sdi_read_speed;
     private Integer sdi_write_speed;
     private Date sdi_reg_dt;
+
+    private String img_src;
 }

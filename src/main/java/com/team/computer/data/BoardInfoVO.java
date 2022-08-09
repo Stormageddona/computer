@@ -15,4 +15,6 @@ public class BoardInfoVO {
     private Date bdi_reg_dt;
     private Date bdi_mod_dt;
     private Date bdi_del_dt;
+
+    private String img_src;
 }

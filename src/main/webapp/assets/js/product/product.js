@@ -1,142 +1,109 @@
 $("document").ready(function(){
-    selectCaseList();
+    let query = window.location.search;
+    let param = new URLSearchParams(query);
+    let page = param.get('page');
+    let keyword = param.get('keyword');
+    let pageURL = location.href;
+    let pageURLSplit = pageURL.split("/");
+    console.log(pageURLSplit);
+    let realURL = "/";
+    for(let i=3; i<pageURLSplit.length; i++) {
+        realURL += pageURLSplit[i]
+        if(i != pageURLSplit.length-1) realURL += "/";
+    }
+    realURL = realURL.split("?")[0];
+    if(realURL == '/product/case') {
+        $(".product_area h3").html("케이스");
+        $("#search_form").attr("action", "/product/case");
+        if(keyword != null){
+            selectCaseList(keyword, page);
+        }else {
+            selectCaseList();
+            $("#search_form").on("submit", function(e){
+                e.preventDefault(); 
+                selectCaseList ($("#keyword").val(), 1);
+            });
+        }
+    }
+    if(realURL == '/product/cooler') {
+        $(".product_area h3").html("쿨러");
+        $("#search_form").attr("action", "/product/cooler");
+        if(keyword != null){
+            selectcoolerList(keyword, page);
+        }else {
+            selectcoolerList();
+            $("#search_form").on("submit", function(e){
+                e.preventDefault(); 
+                selectcoolerList ($("#keyword").val(), 1);
+            });
+        }
+    }
+    if(realURL == '/product/cpu') {
+        $(".product_area h3").html("CPU");
+        $("#search_form").attr("action", "/product/cpu");
+        if(keyword != null){
+            selectcpuList(keyword, page);
+        }else {
+            selectcpuList();
+            $("#search_form").on("submit", function(e){
+                e.preventDefault(); 
+                selectcpuList ($("#keyword").val(), 1);
+            });
+        }
+    }
+    if(realURL == '/product/gpu') {
+        $(".product_area h3").html("그래픽카드");
+        $("#search_form").attr("action", "/product/gpu");
+        if(keyword != null){
+            selectgpuList(keyword, page);
+        }else {
+            selectgpuList();
+            $("#search_form").on("submit", function(e){
+                e.preventDefault(); 
+                selectgpuList ($("#keyword").val(), 1);
+            });
+        }
+    }
+    if(realURL == '/product/hdd') {
+        $(".product_area h3").html("HDD");
+        $("#search_form").attr("action", "/product/hdd");
+        if(keyword != null){
+            selecthddList(keyword, page);
+        }else {
+            selecthddList();
+            $("#search_form").on("submit", function(e){
+                e.preventDefault(); 
+                selecthddList ($("#keyword").val(), 1);
+            });
+        }
+    }
+    if(realURL == '/product/mainboard') {
+        $(".product_area h3").html("메인보드");
+        $("#search_form").attr("action", "/product/mainboard");
+        if(keyword != null){
+            selectmainboardList(keyword, page);
+        }else {
+            selectmainboardList();
+            $("#search_form").on("submit", function(e){
+                e.preventDefault(); 
+                selectmainboardList ($("#keyword").val(), 1);
+            });
+        }
+    }
+    if(realURL == '/product/memory') {
+        $(".product_area h3").html("메모리 카드");
+        $("#search_form").attr("action", "/product/memory");
+        if(keyword != null){
+            selectmemoryList(keyword, page);
+        }else {
+            selectmemoryList();
+            $("#search_form").on("submit", function(e){
+                e.preventDefault(); 
+                selectmemoryList ($("#keyword").val(), 1);
+            });
+        }
+    }
+
 })
 
-function selectCaseList(keyword) {
-    if(keyword == null || keyword == undefined) keyword = "";
-    $.ajax({
-        url:"/api/product/case?keyword="+keyword,
-        type:"get",
-        success:function(r) {
-            console.log(r.caseListAsc);
-            $(".product_box").html("");
-            for(let i=0; i < r.caseListDesc.length; i++) {
-                let won = r.caseListDesc[i].csi_price.toLocaleString();
-                let tag =
-                '<div class="product_box_content">'+
-                
-                        '<div class="product_img_box">'+
-                            '<img src="'+r.caseListDesc[i].img_src+'" alt="">'+
-                        '</div>'+
-
-                        '<div class="product_text_box">'+
-                            '<div class="product_tittle_box">'+
-                                '<p>'+r.caseListDesc[i].csi_name+'('+r.caseListDesc[i].csi_model_name+')</p>'+
-                            '</div>'+
-                            '<div class="product_summary_box">'+
-                                '<p> 저장소켓 갯수 : '+r.caseListDesc[i].csi_save_socket_num+' / 케이스 크기 : '+r.caseListDesc[i].csi_size+' / 사용가능 보드'+r.caseListDesc[i].csi_use_board+'</p>'+
-                            '</div>'+
-                        '</div>'+
-
-                        '<div class="product_add_box">'+
-                            '<div class="product_price">'+
-                                '<p>10점(10건)</p>'+
-
-                            '</div>'+
-                            '<div class="product_score">'+
-                                '<p>'+won+' 원</p>'+
-
-                            '</div>'+
-                            '<div class="product_btn_box">'+
-                                '<button>자세히보기</button>'+
-                                '<button>리뷰작성</button>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'
-
-                    $(".product_box").append(tag);
-            }
-
-            $(".price_desc").click(function(){
-                $(".product_box").html("");
-                $(".product_menu button").removeClass("on");
-                $(this).addClass("on");
-                for(let i=0; i < r.caseListDesc.length; i++) {
-                    let won = r.caseListDesc[i].csi_price.toLocaleString();
-                    let tag =
-                    '<div class="product_box_content">'+
-                    
-                            '<div class="product_img_box">'+
-                                '<img src="'+r.caseListDesc[i].img_src+'" alt="">'+
-                            '</div>'+
-    
-                            '<div class="product_text_box">'+
-                                '<div class="product_tittle_box">'+
-                                    '<p>'+r.caseListDesc[i].csi_name+'('+r.caseListDesc[i].csi_model_name+')</p>'+
-                                '</div>'+
-                                '<div class="product_summary_box">'+
-                                    '<p> 저장소켓 갯수 : '+r.caseListDesc[i].csi_save_socket_num+' / 케이스 크기 : '+r.caseListDesc[i].csi_size+' / 사용가능 보드'+r.caseListDesc[i].csi_use_board+'</p>'+
-                                '</div>'+
-                            '</div>'+
-    
-                            '<div class="product_add_box">'+
-                                '<div class="product_price">'+
-                                    '<p>10점(10건)</p>'+
-    
-                                '</div>'+
-                                '<div class="product_score">'+
-                                    '<p>'+won+' 원</p>'+
-    
-                                '</div>'+
-                                '<div class="product_btn_box">'+
-                                    '<button>자세히보기</button>'+
-                                    '<button>리뷰작성</button>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>'
-    
-                        $(".product_box").append(tag);
-                }
-            })
-
-            $(".price_asc").click(function(){
-                $(".product_box").html("");
-                $(".product_menu button").removeClass("on");
-                $(this).addClass("on");
-                for(let i=0; i<r.caseListAsc.length; i++) {
-                    let won = r.caseListAsc[i].csi_price.toLocaleString();
-                    let tag =
-                    '<div class="product_box_content">'+
-
-                        '<div class="product_img_box">'+
-                            '<img src="'+r.caseListAsc[i].img_src+'" alt="">'+
-                        '</div>'+
-
-                        '<div class="product_text_box">'+
-                            '<div class="product_tittle_box">'+
-                                '<p>'+r.caseListAsc[i].csi_name+'('+r.caseListAsc[i].csi_model_name+')</p>'+
-                            '</div>'+
-                            '<div class="product_summary_box">'+
-                                '<p> 저장소켓 갯수 : '+r.caseListAsc[i].csi_save_socket_num+' / 케이스 크기 : '+r.caseListAsc[i].csi_size+' / 사용가능 보드'+r.caseListAsc[i].csi_use_board+'</p>'+
-                            '</div>'+
-                        '</div>'+
-
-                        '<div class="product_add_box">'+
-                            '<div class="product_price">'+
-                                '<p>10점(10건)</p>'+
-
-                            '</div>'+
-                            '<div class="product_score">'+
-                                '<p>'+won+' 원</p>'+
-
-                            '</div>'+
-                            '<div class="product_btn_box">'+
-                                '<button>자세히보기</button>'+
-                                '<button>리뷰작성</button>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'
-
-                    $(".product_box").append(tag);
-                }
-            })
-
-            for(let i=0; i > r.caseListCnt.length; i++ ) {
-                let tag = 
-                '<a href="#" onclick="return false;">'+(i+1)+'</a>';
-                $(".page_area").append(tag);
-            }
-
-        }
-    })
-}
+let pageControll = null ;

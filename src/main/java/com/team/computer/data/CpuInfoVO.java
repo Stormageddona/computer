@@ -19,4 +19,6 @@ public class CpuInfoVO {
     private Integer cpi_clock;
     private Integer cpi_cache;
     private Integer cpi_graphic;
+
+    private String img_src;
 }
