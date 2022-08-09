@@ -6,10 +6,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team.computer.data.AccountInfoVO;
 import com.team.computer.mapper.AccountMapper;
 import com.team.computer.mapper.AdminMapper;
 
@@ -34,6 +37,17 @@ public class AdminAPIController {
 
         map.put("list", admin_mapper.selectUserList(keyword, offset, search_type, grade));
         map.put("pageCount", admin_mapper.selectTotalPage(keyword,search_type,grade));
+        return map;
+    }
+    
+    @PatchMapping("/account")
+    public Map<String,Object> PatchAccountInfo(
+        @RequestBody AccountInfoVO data
+    ){
+        Map<String,Object> map = new LinkedHashMap<String,Object>();
+        admin_mapper.updateAccountInfo(data);
+        map.put("status", true);
+        map.put("message", "회원정보 수정이 완료되었습니다.");
         return map;
     }
 }

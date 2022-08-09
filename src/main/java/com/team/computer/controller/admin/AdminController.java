@@ -15,7 +15,7 @@ import com.team.computer.mapper.AccountMapper;
 @RequestMapping("/admin")
 public class AdminController {
     @Autowired AccountMapper account_mapper;
-    @GetMapping("/user")
+    @GetMapping("/account")
     public String getManageUser(Model model, 
         @RequestParam @Nullable Integer page,
         @RequestParam @Nullable String keyword,
@@ -35,10 +35,10 @@ public class AdminController {
         // model.addAttribute("totalPage",account_mapper.selectTotalPage(keyword, search_type));
         // model.addAttribute("totalCount",account_mapper.selectTotalCount(keyword, search_type));
 
-        return "/manage/user";
-    }
-    @GetMapping("/account")
-    public String getAdmin() {
         return "/admin/account";
+    }
+    @GetMapping("/adminList")
+    public String getAdmin() {
+        return "/admin/adminList";
     }
 }

@@ -5,6 +5,7 @@ $(function()
         type:"get",
         success:function(result){
             console.log(result)
+            $(".user_list").html("")
             for(let i=0; i<result.list.length; i++){
                 let tag= 
                     '<tr>' +
@@ -14,11 +15,8 @@ $(function()
                         '<td>' + result.list[i].aci_nickname + '</td>' +
                         '<td>' + result.list[i].aci_birth + '</td>' +
                     '</tr>';
+                $(".user_list").append(tag)
             }
-            // $(".temp").html("")
-            // $(".temp").append(result.list[i].aci_id)
-            // $(".temp").append(result.list[i].aci_name)
-            // $(".temp").append(result.list[i].aci_phone)
         }
     })
 })
