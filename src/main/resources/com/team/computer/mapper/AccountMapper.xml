@@ -31,4 +31,16 @@
         select count(*) from account_info where aci_phone = #{phone}
     </select>
 
+    <select id="selectFindId" resultType="java.lang.String">
+        select aci_id from account_info where aci_name = #{name} and aci_phone = #{phone}
+    </select>
+
+    <select id="selectFindPwd" resultType="java.lang.String">
+        select aci_seq from account_info where aci_name = #{name} and aci_phone = #{phone} and aci_id = #{id}
+    </select>
+
+    <update id="updateAccountInfoPwd">
+        update account_info set aci_pwd = #{pwd} where aci_seq = #{seq}
+    </update>
+
 </mapper>
