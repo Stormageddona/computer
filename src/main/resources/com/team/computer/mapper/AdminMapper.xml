@@ -40,4 +40,9 @@
         like #{keyword}
     </if>
     </select>
+    <update id="updateAccountInfo">
+        UPDATE account_info
+        SET aci_name=#{aci_name}, aci_nickname=#{aci_nickname}, aci_phone=#{aci_phone}, aci_birth=#{aci_birth}, aci_grade=#{aci_grade}
+        WHERE aci_seq=#{aci_seq}
+    </update>
 </mapper>

@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/includes/header.jsp"%>
+<%@include file="/WEB-INF/includes/admin_aside.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +8,20 @@
 </head>
 <body>
     <main>
-        <div class="temp"></div>
+        <table>
+            <thead>
+                <tr>
+                    <td>번호</td>
+                    <td>이름</td>
+                    <td>전화번호</td>
+                    <td>닉네임</td>
+                    <td>생년월일</td>
+                </tr>
+            </thead>
+            <tbody class="user_list">
+                
+            </tbody>
+        </table>
     </main>
 </body>
 </html>

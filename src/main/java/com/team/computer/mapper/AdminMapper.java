@@ -11,5 +11,6 @@ public interface AdminMapper {
     public List<AccountInfoVO> selectUserList(String keyword, Integer offset, String search_type, Integer grade);
     public Integer selectTotalPage(String keyword, String search_type, Integer grade);
     public Integer selectTotalCount(String keyword, String search_type);
+    public void updateAccountInfo(AccountInfoVO data);
 }
 
