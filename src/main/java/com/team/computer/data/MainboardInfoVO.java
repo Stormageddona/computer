@@ -22,4 +22,6 @@ public class MainboardInfoVO {
     private String mii_sata_version;
     private Integer mii_sata_num;
     private Date mii_reg_dt;
+
+    private String img_src;
 }

@@ -15,4 +15,6 @@ public class QuestionInfoVO {
     private Date qsi_reg_dt;
     private Date qsi_mod_dt;
     private Date qsi_del_dt;
+
+    private String img_src;
 }

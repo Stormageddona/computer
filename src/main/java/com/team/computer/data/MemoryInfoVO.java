@@ -17,4 +17,6 @@ public class MemoryInfoVO {
     private Integer mmi_volume;
     private Integer mmi_clock;
     private Date mmi_type;
+
+    private String img_src;
 }

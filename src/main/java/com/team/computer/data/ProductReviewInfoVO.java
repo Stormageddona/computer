@@ -16,4 +16,6 @@ public class ProductReviewInfoVO {
     private Date pri_mod_dt;
     private Date pri_del_dt;
     private Integer pri_rating;
+
+    private String img_src;
 }

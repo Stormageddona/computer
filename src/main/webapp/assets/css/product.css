@@ -169,3 +169,7 @@
     background-color: transparent;
     cursor: pointer;
 }
+
+.page_area a {
+    font-size: 10px;
+}

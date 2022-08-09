@@ -23,4 +23,6 @@ public class GpuInfoVO {
     private Integer gpi_hdmi_num;
     private Integer gpi_length;
     private Integer gpi_power_use;
+
+    private String img_src;
 }

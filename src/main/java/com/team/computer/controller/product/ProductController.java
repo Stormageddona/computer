@@ -9,9 +9,51 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/product")
 public class ProductController {
     
-    @GetMapping("/product")
-    public String getProduct(){
+    @GetMapping("/case")
+    public String getProductCase(){
 
-        return "/product/product";
+        return "/product/case";
+    }
+
+    @GetMapping("/cooler")
+    public String getProductColler(){
+
+        return "/product/cooler";
+    }
+
+    @GetMapping("/cpu")
+    public String getProductCpu(){
+
+        return "/product/cpu";
+    }
+
+    @GetMapping("/gpu")
+    public String getProductGpu(){
+
+        return "/product/gpu";
+    }
+
+    @GetMapping("/hdd")
+    public String getProductHdd(){
+
+        return "/product/hdd";
+    }
+
+    @GetMapping("/mainboard")
+    public String getProductMainboard(){
+
+        return "/product/mainboard";
+    }
+
+    @GetMapping("/memory")
+    public String getProductMemory(){
+
+        return "/product/memory";
+    }
+
+    @GetMapping("/power")
+    public String getProductPower(){
+
+        return "/product/power";
     }
 }

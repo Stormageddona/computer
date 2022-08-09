@@ -17,4 +17,6 @@ public class HddInfoVO {
     private Integer hdi_volume;
     private Integer hdi_read_speed;
     private Integer hdi_write_speed;
+
+    private String img_src;
 }
