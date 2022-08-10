@@ -27,69 +27,147 @@
         limit 10 offset #{offset}
     </select>
 
-    <select id="selectCoolerListDesc" resultType="com.team.computer.data.CoolerInfoVO">
+    <select id="selectCoolerList" resultType="com.team.computer.data.CoolerInfoVO">
         select a.*, b.img_src
-        FROM cooler_info as a
-        left outer join image_info as b
+        FROM cooler_info a
+        left outer join image_info b
         on a.coi_img_seq = b.img_seq
-        where a.coi_name like '%${keyword}'
-        order by a.coi_price desc
+        where a.coi_name like '%${keyword}%'
+        order by a.coi_price
+        <if test="desc == true">
+            desc
+        </if>
         limit 10 offset #{offset} 
-    </select>
-    <select id="selectCoolerListAsc" resultType="com.team.computer.data.CoolerInfoVO">
-        select a.*, b.img_src
-        FROM cooler_info as a
-        left outer join image_info as b
-        on a.coi_img_seq = b.img_seq
-        where a.coi_name like '%${keyword}'
-        order by a.coi_price asc
-        limit 10 offset #{offset}
     </select>
     <select id="selectCoolerListCnt" resultType="java.lang.Integer">
         select ceil(count(*)/10) from cooler_info
+        where coi_name like '%${keyword}%'
+        limit 10 offset #{offset} 
     </select>
 
-    <select id="selectCpuListDesc" resultType="com.team.computer.data.CpuInfoVO">
-    select a.*, b.img_src
-    FROM Cpu_info as a
-    left outer join image_info as b
-    on a.cpi_img_seq = b.img_seq
-    where a.cpi_name like '%${keyword}'
-    order by a.cpi_price desc
-    limit 10 offset #{offset} 
-    </select>
-    <select id="selectCpuListAsc" resultType="com.team.computer.data.CpuInfoVO">
-    select a.*, b.img_src
-    FROM Cpu_info as a
-    left outer join image_info as b
-    on a.cpi_img_seq = b.img_seq
-    where a.cpi_name like '%${keyword}'
-    order by a.cpi_price asc
-    limit 10 offset #{offset}
+    <select id="selectCpuList" resultType="com.team.computer.data.CpuInfoVO">
+        select a.*, b.img_src
+        FROM Cpu_info a
+        left outer join image_info b
+        on a.cpi_img_seq = b.img_seq
+        where a.cpi_name like '%${keyword}%'
+        order by a.cpi_price
+        <if test="desc == true">
+            desc
+        </if>
+        limit 10 offset #{offset} 
     </select>
     <select id="selectCpuListCnt" resultType="java.lang.Integer">
-    select ceil(count(*)/10) from Cpu_info
+        select ceil(count(*)/10) from Cpu_info
+        where cpi_name like '%${keyword}%'
+        limit 10 offset #{offset} 
     </select>
 
-    <select id="selectGpuListDesc" resultType="com.team.computer.data.GpuInfoVO">
-    select a.*, b.img_src
-    FROM Gpu_info as a
-    left outer join image_info as b
-    on a.gpi_img_seq = b.img_seq
-    where a.gpi_name like '%${keyword}'
-    order by a.gpi_price desc
-    limit 10 offset #{offset} 
-    </select>
-    <select id="selectGpuListAsc" resultType="com.team.computer.data.GpuInfoVO">
-    select a.*, b.img_src
-    FROM Gpu_info as a
-    left outer join image_info as b
-    on a.gpi_img_seq = b.img_seq
-    where a.gpi_name like '%${keyword}'
-    order by a.gpi_price asc
-    limit 10 offset #{offset}
+    <select id="selectGpuList" resultType="com.team.computer.data.GpuInfoVO">
+        select a.*, b.img_src
+        FROM Gpu_info as a
+        left outer join image_info as b
+        on a.gpi_img_seq = b.img_seq
+        where a.gpi_name like '%${keyword}%'
+        order by a.gpi_price
+        <if test="desc == true">
+            desc
+        </if>
+        limit 10 offset #{offset} 
     </select>
     <select id="selectGpuListCnt" resultType="java.lang.Integer">
-    select ceil(count(*)/10) from Gpu_info
+        select ceil(count(*)/10) from Gpu_info
+        where gpi_name like '%${keyword}%'
+        limit 10 offset #{offset}
+    </select>
+
+    <select id="selectHddList" resultType="com.team.computer.data.HddInfoVO">
+        select a.*, b.img_src
+        FROM hdd_info as a
+        left outer join image_info as b
+        on a.hdi_img_seq = b.img_seq
+        where a.hdi_name like '%${keyword}%'
+        order by a.hdi_price
+        <if test="desc == true">
+            desc
+        </if>
+        limit 10 offset #{offset} 
+    </select>
+    <select id="selectHddListCnt" resultType="java.lang.Integer">
+        select ceil(count(*)/10) from hdd_info
+        where hdi_name like '%${keyword}%'
+        limit 10 offset #{offset}
+    </select>
+
+    <select id="selectMainboardList" resultType="com.team.computer.data.MainboardInfoVO">
+        select a.*, b.img_src
+        FROM mainboard_info as a
+        left outer join image_info as b
+        on a.mii_img_seq = b.img_seq
+        where a.mii_name like '%${keyword}%'
+        order by a.mii_price
+        <if test="desc == true">
+            desc
+        </if>
+        limit 10 offset #{offset} 
+    </select>
+    <select id="selectMainboardListCnt" resultType="java.lang.Integer">
+        select ceil(count(*)/10) from mainboard_info
+        where mii_name like '%${keyword}%'
+        limit 10 offset #{offset}
+    </select>
+
+    <select id="selectMemoryList" resultType="com.team.computer.data.MemoryInfoVO">
+        select a.*, b.img_src
+        FROM memory_info a
+        left outer join image_info b
+        on a.mmi_img_seq = b.img_seq
+        where a.mmi_name like '%${keyword}%'
+        order by a.mmi_price
+        <if test="desc == true">
+            desc
+        </if>
+        limit 10 offset #{offset} 
+    </select>
+    <select id="selectMemoryListCnt" resultType="java.lang.Integer">
+        select ceil(count(*)/10) from memory_info
+        where mmi_name like '%${keyword}%'
+        limit 10 offset #{offset}
+    </select>
+
+    <select id="selectPowerList" resultType="com.team.computer.data.PowerInfoVO">
+        select a.*, b.img_src
+        FROM power_info a
+        left outer join image_info b
+        on a.poi_img_seq = b.img_seq
+        where a.poi_name like '%${keyword}%'
+        order by a.poi_price
+        <if test="desc == true">
+            desc
+        </if>
+        limit 10 offset #{offset} 
+    </select>
+    <select id="selectPowerListCnt" resultType="java.lang.Integer">
+        select ceil(count(*)/10) from power_info
+        where poi_name like '%${keyword}%'
+        limit 10 offset #{offset}
+    </select>
+
+    <select id="selectSsdList" resultType="com.team.computer.data.SsdInfoVO">
+        select a.*, b.img_src
+        FROM ssd_info a
+        left outer join image_info b
+        on a.sdi_img_seq = b.img_seq
+        where a.sdi_name like '%${keyword}%'
+        order by a.sdi_price
+        <if test="desc == true">
+            desc
+        </if>
+        limit 10 offset #{offset} 
+    </select>
+    <select id="selectSsdListCnt" resultType="java.lang.Integer">
+        select ceil(count(*)/10) from ssd_info
+        where sdi_name like '%${keyword}%'
+        limit 10 offset #{offset}
     </select>
 </mapper>

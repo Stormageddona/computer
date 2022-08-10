@@ -9,6 +9,8 @@
 <script src="/assets/js/product/mainboard.js"></script>
 <script src="/assets/js/product/memory.js"></script>
 
+<script src="/assets/js/product/pager.js"></script>
+
 <h3>카테고리명</h3>
 <div class="product_area_wrap">
 <div class="product_menu">

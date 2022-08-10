@@ -45,42 +45,65 @@ public class ProductAPIController {
 
     @GetMapping("/case")
     @Transactional
-    public Map<String, Object> getProductCaseList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page) {
+    public Map<String, Object> getProductCaseList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page,@RequestParam Boolean desc) {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
         if(page == null) page=1;
-        m.put("caseListDesc", prod_mapper.selectCaseList((page-1)*10, keyword, true));
-        m.put("caseListAsc", prod_mapper.selectCaseList((page-1)*10, keyword, false));
+        m.put("caseList", prod_mapper.selectCaseList((page-1)*10, keyword, desc));
         m.put("caseListCnt", prod_mapper.selectCaseListCnt((page-1)*10, keyword));
         return m;
     }
 
     @GetMapping("/cooler")
-    public Map<String, Object> getProductCoolerList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page) {
+    public Map<String, Object> getProductCoolerList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page,@RequestParam Boolean desc) {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
         if(page == null) page=1;
-        m.put("coolerListDesc", prod_mapper.selectCoolerListDesc((page-1)*10, keyword));
-        m.put("coolerListAsc", prod_mapper.selectCoolerListAsc((page-1)*10, keyword));
-        m.put("coolerListCnt", prod_mapper.selectCoolerListCnt(keyword));
+        m.put("coolerList", prod_mapper.selectCoolerList((page-1)*10, keyword, desc));
+        m.put("coolerListCnt", prod_mapper.selectCoolerListCnt((page-1)*10, keyword));
         return m;
     }
 
     @GetMapping("/cpu")
-    public Map<String, Object> getProductCpuList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page) {
+    public Map<String, Object> getProductCpuList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page,@RequestParam Boolean desc) {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
         if(page == null) page=1;
-        m.put("cpuListDesc", prod_mapper.selectCpuListDesc((page-1)*10, keyword));
-        m.put("cpuListAsc", prod_mapper.selectCpuListAsc((page-1)*10, keyword));
-        m.put("cpuListCnt", prod_mapper.selectCpuListCnt(keyword));
+        m.put("cpuList", prod_mapper.selectCpuList((page-1)*10, keyword, desc));
+        m.put("cpuListCnt", prod_mapper.selectCpuListCnt((page-1)*10, keyword));
         return m;
     }
 
     @GetMapping("/gpu")
-    public Map<String, Object> getProductGpuList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page) {
+    public Map<String, Object> getProductGpuList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page,@RequestParam Boolean desc) {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
         if(page == null) page=1;
-        m.put("gpuListDesc", prod_mapper.selectGpuListDesc((page-1)*10, keyword));
-        m.put("gpuListAsc", prod_mapper.selectGpuListAsc((page-1)*10, keyword));
-        m.put("gpuListCnt", prod_mapper.selectGpuListCnt(keyword));
+        m.put("gpuList", prod_mapper.selectGpuList((page-1)*10, keyword, desc));
+        m.put("gpuListCnt", prod_mapper.selectGpuListCnt((page-1)*10, keyword));
+        return m;
+    }
+
+    @GetMapping("/hdd")
+    public Map<String, Object> getProductHddList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page,@RequestParam Boolean desc) {
+        Map<String, Object> m = new LinkedHashMap<String, Object>();
+        if(page == null) page=1;
+        m.put("hddList", prod_mapper.selectHddList((page-1)*10, keyword, desc));
+        m.put("hddListCnt", prod_mapper.selectHddListCnt((page-1)*10, keyword));
+        return m;
+    }
+
+    @GetMapping("/mainboard")
+    public Map<String, Object> getProductMainboardList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page,@RequestParam Boolean desc) {
+        Map<String, Object> m = new LinkedHashMap<String, Object>();
+        if(page == null) page=1;
+        m.put("mainboardList", prod_mapper.selectMainboardList((page-1)*10, keyword, desc));
+        m.put("mainboardListCnt", prod_mapper.selectMainboardListCnt((page-1)*10, keyword));
+        return m;
+    }
+
+    @GetMapping("/memory")
+    public Map<String, Object> getProductMemoryList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page,@RequestParam Boolean desc) {
+        Map<String, Object> m = new LinkedHashMap<String, Object>();
+        if(page == null) page=1;
+        m.put("mainboardList", prod_mapper.selectMemoryList((page-1)*10, keyword, desc));
+        m.put("mainboardListCnt", prod_mapper.selectMemoryListCnt((page-1)*10, keyword));
         return m;
     }
 }

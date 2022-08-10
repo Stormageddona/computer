@@ -9,6 +9,11 @@ import com.team.computer.data.CaseInfoVO;
 import com.team.computer.data.CoolerInfoVO;
 import com.team.computer.data.CpuInfoVO;
 import com.team.computer.data.GpuInfoVO;
+import com.team.computer.data.HddInfoVO;
+import com.team.computer.data.MainboardInfoVO;
+import com.team.computer.data.MemoryInfoVO;
+import com.team.computer.data.PowerInfoVO;
+import com.team.computer.data.SsdInfoVO;
 import com.team.computer.data.request.ProductRequest;
 
 @Mapper
@@ -16,17 +21,29 @@ public interface ProductMapper {
     public List<CaseInfoVO> selectCaseList(Integer offset, String keyword, Boolean desc);
     public Integer selectCaseListCnt(Integer offset, String keyword);
 
-    public List<CoolerInfoVO> selectCoolerListDesc(Integer offset, String keyword);
-    public List<CoolerInfoVO> selectCoolerListAsc(Integer offset, String keyword);
-    public Integer selectCoolerListCnt(String keyword);
+    public List<CoolerInfoVO> selectCoolerList(Integer offset, String keyword, Boolean desc);
+    public Integer selectCoolerListCnt(Integer offset, String keyword);
 
-    public List<CpuInfoVO> selectCpuListDesc(Integer offset, String keyword);
-    public List<CpuInfoVO> selectCpuListAsc(Integer offset, String keyword);
-    public Integer selectCpuListCnt(String keyword);
+    public List<CpuInfoVO> selectCpuList(Integer offset, String keyword, Boolean desc);
+    public Integer selectCpuListCnt(Integer offset, String keyword);
 
-    public List<GpuInfoVO> selectGpuListDesc(Integer offset, String keyword);
-    public List<GpuInfoVO> selectGpuListAsc(Integer offset, String keyword);
-    public Integer selectGpuListCnt(String keyword);
+    public List<GpuInfoVO> selectGpuList(Integer offset, String keyword, Boolean desc);
+    public Integer selectGpuListCnt(Integer offset, String keyword);
+
+    public List<HddInfoVO> selectHddList(Integer offset, String keyword, Boolean desc);
+    public Integer selectHddListCnt(Integer offset, String keyword);
+    
+    public List<MainboardInfoVO> selectMainboardList(Integer offset, String keyword, Boolean desc);
+    public Integer selectMainboardListCnt(Integer offset, String keyword);
+
+    public List<MemoryInfoVO> selectMemoryList(Integer offset, String keyword, Boolean desc);
+    public Integer selectMemoryListCnt(Integer offset, String keyword);
+
+    public List<PowerInfoVO> selectPowerList(Integer offset, String keyword, Boolean desc);
+    public Integer selectPowerListCnt(Integer offset, String keyword);
+
+    public List<SsdInfoVO> selectSsdList(Integer offset, String keyword, Boolean desc);
+    public Integer selectSsdListCnt(Integer offset, String keyword);
 
     // //테스트
     public void intsertTestCase(CaseInfoVO data) ;
