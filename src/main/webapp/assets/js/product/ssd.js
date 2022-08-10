@@ -1,27 +1,27 @@
-function selectmainboardList(keyword, page, Order, temp = null, ListCnt) {
+function selectssdList(keyword, page, Order, temp = null, ListCnt) {
     if(page == null || page == undefined) page = 1;
     if(keyword == null || keyword == undefined) keyword = "";
     $.ajax({
-        url:"/api/product/mainboard?keyword="+keyword+'&page='+page+'&desc='+Order,
+        url:"/api/product/ssd?keyword="+keyword+'&page='+page+'&desc='+Order,
         type:"get",
         success:function(r) {
-            console.log(r.mainboardListAsc);
+            console.log(r.ssdListAsc);
             $(".product_box").html("");
-            for(let i=0; i < r.mainboardList.length; i++) {
-                let won = r.mainboardList[i].mii_price.toLocaleString();
+            for(let i=0; i < r.ssdList.length; i++) {
+                let won = r.ssdList[i].sdi_price.toLocaleString();
                 let tag =
                 '<div class="product_box_content">'+
                 
-                        '<div class="product_img_box" data-seq="'+r.mainboardList[i].mii_seq+'">'+
-                            '<img src="'+r.mainboardList[i].img_src+'" alt="">'+
+                        '<div class="product_img_box" data-seq="'+r.ssdList[i].sdi_seq+'">'+
+                            '<img src="'+r.ssdList[i].img_src+'" alt="">'+
                         '</div>'+
 
                         '<div class="product_text_box">'+
                             '<div class="product_tittle_box">'+
-                                '<p>'+r.mainboardList[i].mii_name+'('+r.mainboardList[i].mii_model_name+')</p>'+
+                                '<p>'+r.ssdList[i].sdi_name+'('+r.ssdList[i].sdi_model_name+')</p>'+
                             '</div>'+
                             '<div class="product_summary_box">'+
-                                '<p> 저장소켓 갯수 : '+r.mainboardList[i].mii_save_socket_num+' / 케이스 크기 : '+r.mainboardList[i].mii_size+' / 사용가능 보드'+r.mainboardList[i].mii_use_board+'</p>'+
+                                '<p> 저장소켓 갯수 : '+r.ssdList[i].sdi_save_socket_num+' / 케이스 크기 : '+r.ssdList[i].sdi_size+' / 사용가능 보드'+r.ssdList[i].sdi_use_board+'</p>'+
                             '</div>'+
                         '</div>'+
 
@@ -54,9 +54,9 @@ function selectmainboardList(keyword, page, Order, temp = null, ListCnt) {
                 //     $(".page_area").append(tag);
                 // }
                 
-                console.log("페이지 A : "+r.mainboardListCnt);
+                console.log("페이지 A : "+r.ssdListCnt);
                 console.log("페이지 B : "+ListCnt);
-                let pagecount = r.mainboardListCnt==null?ListCnt:r.mainboardListCnt
+                let pagecount = r.ssdListCnt==null?ListCnt:r.ssdListCnt
                 console.log("페이지갯수 : "+pagecount);
                 $(".page_area").html("");
                 for(let i=0; i < pagecount; i++) {
@@ -67,7 +67,7 @@ function selectmainboardList(keyword, page, Order, temp = null, ListCnt) {
                 }
                 $(".page_area a").click(function(){
                     let page = $(this).html();
-                    selectmainboardList(keyword, page,Order, pageControll,pagecount );
+                    selectssdList(keyword, page,Order, pageControll,pagecount );
                 })
                 console.log(temp)
                 if (temp != null) $(temp).trigger("click")

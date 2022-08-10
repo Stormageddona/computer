@@ -1,28 +1,27 @@
-function selectmemoryList(keyword, page, temp = null) {
+function selectmemoryList(keyword, page, Order, temp = null, ListCnt) {
     if(page == null || page == undefined) page = 1;
     if(keyword == null || keyword == undefined) keyword = "";
     $.ajax({
-        url:"/api/product/memory?keyword="+keyword+'&page='+page,
+        url:"/api/product/memory?keyword="+keyword+'&page='+page+'&desc='+Order,
         type:"get",
         success:function(r) {
-            // console.log(r);
-            // console.log(r.memoryListAsc);
+            console.log(r.memoryListAsc);
             $(".product_box").html("");
-            for(let i=0; i < r.memoryListDesc.length; i++) {
-                let won = r.memoryListDesc[i].mmi_price.toLocaleString();
+            for(let i=0; i < r.memoryList.length; i++) {
+                let won = r.memoryList[i].mmi_price.toLocaleString();
                 let tag =
                 '<div class="product_box_content">'+
                 
-                        '<div class="product_img_box">'+
-                            '<img src="'+r.memoryListDesc[i].img_src+'" alt="">'+
+                        '<div class="product_img_box" data-seq="'+r.memoryList[i].mmi_seq+'">'+
+                            '<img src="'+r.memoryList[i].img_src+'" alt="">'+
                         '</div>'+
 
                         '<div class="product_text_box">'+
                             '<div class="product_tittle_box">'+
-                                '<p>'+r.memoryListDesc[i].mmi_name+'('+r.memoryListDesc[i].mmi_model_name+')</p>'+
+                                '<p>'+r.memoryList[i].mmi_name+'('+r.memoryList[i].mmi_model_name+')</p>'+
                             '</div>'+
                             '<div class="product_summary_box">'+
-                                '<p> 저장소켓 갯수 : '+r.memoryListDesc[i].mmi_save_socket_num+' / 케이스 크기 : '+r.memoryListDesc[i].mmi_size+' / 사용가능 보드'+r.memoryListDesc[i].mmi_use_board+'</p>'+
+                                '<p> 저장소켓 갯수 : '+r.memoryList[i].mmi_save_socket_num+' / 케이스 크기 : '+r.memoryList[i].mmi_size+' / 사용가능 보드'+r.memoryList[i].mmi_use_board+'</p>'+
                             '</div>'+
                         '</div>'+
 
@@ -45,110 +44,35 @@ function selectmemoryList(keyword, page, temp = null) {
                     $(".product_box").append(tag);
             }
 
-            $(".price_desc").click(function(){
-                pageControll = $(this)
-                $(".product_box").html("");
-                $(".product_menu button").removeClass("on");
-                $(this).addClass("on");
-                for(let i=0; i < r.memoryListDesc.length; i++) {
-                    let won = r.memoryListDesc[i].mmi_price.toLocaleString();
-                    let tag =
-                    '<div class="product_box_content">'+
-                    
-                            '<div class="product_img_box">'+
-                                '<img src="'+r.memoryListDesc[i].img_src+'" alt="">'+
-                            '</div>'+
-    
-                            '<div class="product_text_box">'+
-                                '<div class="product_tittle_box">'+
-                                    '<p>'+r.memoryListDesc[i].mmi_name+'('+r.memoryListDesc[i].mmi_model_name+')</p>'+
-                                '</div>'+
-                                '<div class="product_summary_box">'+
-                                    '<p> 저장소켓 갯수 : '+r.memoryListDesc[i].mmi_save_socket_num+' / 케이스 크기 : '+r.memoryListDesc[i].mmi_size+' / 사용가능 보드'+r.memoryListDesc[i].mmi_use_board+'</p>'+
-                                '</div>'+
-                            '</div>'+
-    
-                            '<div class="product_add_box">'+
-                                '<div class="product_price">'+
-                                    '<p>10점(10건)</p>'+
-    
-                                '</div>'+
-                                '<div class="product_score">'+
-                                    '<p>'+won+' 원</p>'+
-    
-                                '</div>'+
-                                '<div class="product_btn_box">'+
-                                    '<button>자세히보기</button>'+
-                                    '<button>리뷰작성</button>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>'
-    
-                        $(".product_box").append(tag);
-                }
-            })
 
-            $(".price_asc").click(function(){
-                pageControll = $(this)
-                pagenum = 1
-                $(".product_box").html("");
-                $(".product_menu button").removeClass("on");
-                $(this).addClass("on");
-                for(let i=0; i<r.memoryListAsc.length; i++) {
-                    let won = r.memoryListAsc[i].mmi_price.toLocaleString();
-                    let tag =
-                    '<div class="product_box_content">'+
 
-                        '<div class="product_img_box">'+
-                            '<img src="'+r.memoryListAsc[i].img_src+'" alt="">'+
-                        '</div>'+
-
-                        '<div class="product_text_box">'+
-                            '<div class="product_tittle_box">'+
-                                '<p>'+r.memoryListAsc[i].mmi_name+'('+r.memoryListAsc[i].mmi_model_name+')</p>'+
-                            '</div>'+
-                            '<div class="product_summary_box">'+
-                                '<p> 저장소켓 갯수 : '+r.memoryListAsc[i].mmi_save_socket_num+' / 케이스 크기 : '+r.memoryListAsc[i].mmi_size+' / 사용가능 보드'+r.memoryListAsc[i].mmi_use_board+'</p>'+
-                            '</div>'+
-                        '</div>'+
-
-                        '<div class="product_add_box">'+
-                            '<div class="product_price">'+
-                                '<p>10점(10건)</p>'+
-
-                            '</div>'+
-                            '<div class="product_score">'+
-                                '<p>'+won+' 원</p>'+
-
-                            '</div>'+
-                            '<div class="product_btn_box">'+
-                                '<button>자세히보기</button>'+
-                                '<button>리뷰작성</button>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'
-
-                    $(".product_box").append(tag);
-                }
-
-            })
+            // $(".page_area").html("");
+            // for(let idx=0; idx < r.pageCnt; idx++){
+                //     console.log(idx);
+                //     let tag = 
+                //     '<a href="#" onclick="return false;">'+(idx+1)+'</a>';
+                //     $(".page_area").append(tag);
+                // }
                 
-                // console.log("페이지갯수 : "+r.memoryListCnt);
+                console.log("페이지 A : "+r.memoryListCnt);
+                console.log("페이지 B : "+ListCnt);
+                let pagecount = r.memoryListCnt==null?ListCnt:r.memoryListCnt
+                console.log("페이지갯수 : "+pagecount);
                 $(".page_area").html("");
-                for(let i=0; i < r.memoryListCnt; i++) {
-                    // console.log(i);
+                for(let i=0; i < pagecount; i++) {
+                    console.log(i);
                     let tag = 
                     '<a href="#" onclick="return false;">'+(i+1)+'</a>';
                     $(".page_area").append(tag);
                 }
                 $(".page_area a").click(function(){
                     let page = $(this).html();
-                    selectmemoryList(keyword, page, pageControll);
+                    selectmemoryList(keyword, page,Order, pageControll,pagecount );
                 })
-                // console.log(temp)
+                console.log(temp)
                 if (temp != null) $(temp).trigger("click")
 
-                // console.log(page)
+                console.log("콘솔로그페이지"+page)
         }
 
     })

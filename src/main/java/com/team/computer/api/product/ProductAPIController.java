@@ -106,4 +106,22 @@ public class ProductAPIController {
         m.put("mainboardListCnt", prod_mapper.selectMemoryListCnt((page-1)*10, keyword));
         return m;
     }
+
+    @GetMapping("/power")
+    public Map<String, Object> getProductPowerList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page,@RequestParam Boolean desc) {
+        Map<String, Object> m = new LinkedHashMap<String, Object>();
+        if(page == null) page=1;
+        m.put("powerList", prod_mapper.selectPowerList((page-1)*10, keyword, desc));
+        m.put("powerListCnt", prod_mapper.selectPowerListCnt((page-1)*10, keyword));
+        return m;
+    }
+
+    @GetMapping("/ssd")
+    public Map<String, Object> getProductSsdList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page,@RequestParam Boolean desc) {
+        Map<String, Object> m = new LinkedHashMap<String, Object>();
+        if(page == null) page=1;
+        m.put("ssdList", prod_mapper.selectSsdList((page-1)*10, keyword, desc));
+        m.put("ssdListCnt", prod_mapper.selectSsdListCnt((page-1)*10, keyword));
+        return m;
+    }
 }

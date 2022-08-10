@@ -32,14 +32,14 @@ $("document").ready(function(){
             $(".product_box").html("");
             $(".product_menu button").removeClass("on");
             $(this).addClass("on");
-            pagecaseArea($("#keyword").val(), page,true)
+            pageArea($("#keyword").val(), page,true, selectCaseList)
         })
 
         $(".price_asc").click(function(){
             $(".product_box").html("");
             $(".product_menu button").removeClass("on");
             $(this).addClass("on");
-            pagecaseArea($("#keyword").val(), page,false)
+            pageArea($("#keyword").val(), page,false,selectCaseList)
         })
 
     }
@@ -61,14 +61,14 @@ $("document").ready(function(){
             $(".product_box").html("");
             $(".product_menu button").removeClass("on");
             $(this).addClass("on");
-            pagecoolerArea($("#keyword").val(), page,true)
+            pageArea($("#keyword").val(), page, true, selectcoolerList)
         })
 
         $(".price_asc").click(function(){
             $(".product_box").html("");
             $(".product_menu button").removeClass("on");
             $(this).addClass("on");
-            pagecoolerArea($("#keyword").val(), page,false)
+            pageArea($("#keyword").val(), page, false, selectcoolerList)
         })
     }
     if(realURL == '/product/cpu') {
@@ -89,14 +89,14 @@ $("document").ready(function(){
             $(".product_box").html("");
             $(".product_menu button").removeClass("on");
             $(this).addClass("on");
-            pageArea($("#keyword").val(), page,true)
+            pageArea($("#keyword").val(), page,true,selectcpuList)
         })
 
         $(".price_asc").click(function(){
             $(".product_box").html("");
             $(".product_menu button").removeClass("on");
             $(this).addClass("on");
-            pageArea($("#keyword").val(), page,false)
+            pageArea($("#keyword").val(), page,false,selectcpuList)
         })
     }
     if(realURL == '/product/gpu') {
@@ -117,54 +117,155 @@ $("document").ready(function(){
             $(".product_box").html("");
             $(".product_menu button").removeClass("on");
             $(this).addClass("on");
-            pageArea($("#keyword").val(), page,true)
+            pageArea($("#keyword").val(), page,true,selectgpuList)
         })
 
         $(".price_asc").click(function(){
             $(".product_box").html("");
             $(".product_menu button").removeClass("on");
             $(this).addClass("on");
-            pageArea($("#keyword").val(), page,false)
+            pageArea($("#keyword").val(), page,false,selectgpuList)
         })
     }
     if(realURL == '/product/hdd') {
         $(".product_area h3").html("HDD");
         $("#search_form").attr("action", "/product/hdd");
+
         if(keyword != null){
-            selecthddList(keyword, page);
+            selecthddList(keyword, page, true);
         }else {
-            selecthddList();
+            selecthddList(keyword, page, true);
             $("#search_form").on("submit", function(e){
                 e.preventDefault(); 
-                selecthddList ($("#keyword").val(), 1);
+                selecthddList ($("#keyword").val(), page, true);
             });
         }
+
+        $(".price_desc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pageArea($("#keyword").val(), page,true,selecthddList)
+        })
+
+        $(".price_asc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pageArea($("#keyword").val(), page,false,selecthddList)
+        })
     }
     if(realURL == '/product/mainboard') {
         $(".product_area h3").html("메인보드");
         $("#search_form").attr("action", "/product/mainboard");
+
         if(keyword != null){
-            selectmainboardList(keyword, page);
+            selectmainboardList(keyword, page, true);
         }else {
-            selectmainboardList();
+            selectmainboardList(keyword, page, true);
             $("#search_form").on("submit", function(e){
                 e.preventDefault(); 
-                selectmainboardList ($("#keyword").val(), 1);
+                selectmainboardList ($("#keyword").val(), page, true);
             });
         }
+
+        $(".price_desc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pageArea($("#keyword").val(), page,true,selectmainboardList)
+        })
+
+        $(".price_asc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pageArea($("#keyword").val(), page,false,selectmainboardList)
+        })
     }
     if(realURL == '/product/memory') {
         $(".product_area h3").html("메모리 카드");
         $("#search_form").attr("action", "/product/memory");
+
         if(keyword != null){
-            selectmemoryList(keyword, page);
+            selectmemoryList(keyword, page, true);
         }else {
-            selectmemoryList();
+            selectmemoryList(keyword, page, true);
             $("#search_form").on("submit", function(e){
                 e.preventDefault(); 
-                selectmemoryList ($("#keyword").val(), 1);
+                selectmemoryList ($("#keyword").val(), page, true);
             });
         }
+
+        $(".price_desc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pageArea($("#keyword").val(), page,true,selectmemoryList)
+        })
+
+        $(".price_asc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pageArea($("#keyword").val(), page,false,selectmemoryList)
+        })
+    }
+    if(realURL == '/product/power') {
+        $(".product_area h3").html("파워");
+        $("#search_form").attr("action", "/product/power");
+
+        if(keyword != null){
+            selectpowerList(keyword, page, true);
+        }else {
+            selectpowerList(keyword, page, true);
+            $("#search_form").on("submit", function(e){
+                e.preventDefault(); 
+                selectpowerList ($("#keyword").val(), page, true);
+            });
+        }
+
+        $(".price_desc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pageArea($("#keyword").val(), page,true,selectpowerList)
+        })
+
+        $(".price_asc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pageArea($("#keyword").val(), page,false,selectpowerList)
+        })
+    }
+    if(realURL == '/product/ssd') {
+        $(".product_area h3").html("SSD");
+        $("#search_form").attr("action", "/product/ssd");
+
+        if(keyword != null){
+            selectssdList(keyword, page, true);
+        }else {
+            selectssdList(keyword, page, true);
+            $("#search_form").on("submit", function(e){
+                e.preventDefault(); 
+                selectssdList ($("#keyword").val(), page, true);
+            });
+        }
+
+        $(".price_desc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pageArea($("#keyword").val(), page,true,selectssdList)
+        })
+
+        $(".price_asc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pageArea($("#keyword").val(), page,false,selectssdList)
+        })
     }
 
 })

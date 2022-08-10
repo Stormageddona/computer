@@ -1,27 +1,27 @@
-function selectmainboardList(keyword, page, Order, temp = null, ListCnt) {
+function selectpowerList(keyword, page, Order, temp = null, ListCnt) {
     if(page == null || page == undefined) page = 1;
     if(keyword == null || keyword == undefined) keyword = "";
     $.ajax({
-        url:"/api/product/mainboard?keyword="+keyword+'&page='+page+'&desc='+Order,
+        url:"/api/product/power?keyword="+keyword+'&page='+page+'&desc='+Order,
         type:"get",
         success:function(r) {
-            console.log(r.mainboardListAsc);
+            console.log(r.powerListAsc);
             $(".product_box").html("");
-            for(let i=0; i < r.mainboardList.length; i++) {
-                let won = r.mainboardList[i].mii_price.toLocaleString();
+            for(let i=0; i < r.powerList.length; i++) {
+                let won = r.powerList[i].poi_price.toLocaleString();
                 let tag =
                 '<div class="product_box_content">'+
                 
-                        '<div class="product_img_box" data-seq="'+r.mainboardList[i].mii_seq+'">'+
-                            '<img src="'+r.mainboardList[i].img_src+'" alt="">'+
+                        '<div class="product_img_box" data-seq="'+r.powerList[i].poi_seq+'">'+
+                            '<img src="'+r.powerList[i].img_src+'" alt="">'+
                         '</div>'+
 
                         '<div class="product_text_box">'+
                             '<div class="product_tittle_box">'+
-                                '<p>'+r.mainboardList[i].mii_name+'('+r.mainboardList[i].mii_model_name+')</p>'+
+                                '<p>'+r.powerList[i].poi_name+'('+r.powerList[i].poi_model_name+')</p>'+
                             '</div>'+
                             '<div class="product_summary_box">'+
-                                '<p> 저장소켓 갯수 : '+r.mainboardList[i].mii_save_socket_num+' / 케이스 크기 : '+r.mainboardList[i].mii_size+' / 사용가능 보드'+r.mainboardList[i].mii_use_board+'</p>'+
+                                '<p> 저장소켓 갯수 : '+r.powerList[i].poi_save_socket_num+' / 케이스 크기 : '+r.powerList[i].poi_size+' / 사용가능 보드'+r.powerList[i].poi_use_board+'</p>'+
                             '</div>'+
                         '</div>'+
 
@@ -54,9 +54,9 @@ function selectmainboardList(keyword, page, Order, temp = null, ListCnt) {
                 //     $(".page_area").append(tag);
                 // }
                 
-                console.log("페이지 A : "+r.mainboardListCnt);
+                console.log("페이지 A : "+r.powerListCnt);
                 console.log("페이지 B : "+ListCnt);
-                let pagecount = r.mainboardListCnt==null?ListCnt:r.mainboardListCnt
+                let pagecount = r.powerListCnt==null?ListCnt:r.powerListCnt
                 console.log("페이지갯수 : "+pagecount);
                 $(".page_area").html("");
                 for(let i=0; i < pagecount; i++) {
@@ -67,7 +67,7 @@ function selectmainboardList(keyword, page, Order, temp = null, ListCnt) {
                 }
                 $(".page_area a").click(function(){
                     let page = $(this).html();
-                    selectmainboardList(keyword, page,Order, pageControll,pagecount );
+                    selectpowerList(keyword, page,Order, pageControll,pagecount );
                 })
                 console.log(temp)
                 if (temp != null) $(temp).trigger("click")

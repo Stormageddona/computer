@@ -8,6 +8,8 @@
 <script src="/assets/js/product/hdd.js"></script>
 <script src="/assets/js/product/mainboard.js"></script>
 <script src="/assets/js/product/memory.js"></script>
+<script src="/assets/js/product/power.js"></script>
+<script src="/assets/js/product/ssd.js"></script>
 
 <script src="/assets/js/product/pager.js"></script>
 
