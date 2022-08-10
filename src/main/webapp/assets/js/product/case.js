@@ -54,7 +54,7 @@ function selectCaseList(keyword, page, temp = null, ListCnt) {
                 for(let i=0; i < r.caseListDesc.length; i++) {
                     let won = r.caseListDesc[i].csi_price.toLocaleString();
                     let tag =
-                    '<div class="product_box_content">'+
+                    '<div class="product_box_content" data-seq="'+r.caseListDesc[i].csi_seq+'">'+
                     
                             '<div class="product_img_box">'+
                                 '<img src="'+r.caseListDesc[i].img_src+'" alt="">'+
@@ -98,7 +98,7 @@ function selectCaseList(keyword, page, temp = null, ListCnt) {
                 for(let i=0; i<r.caseListAsc.length; i++) {
                     let won = r.caseListAsc[i].csi_price.toLocaleString();
                     let tag =
-                    '<div class="product_box_content">'+
+                    '<div class="product_box_content" data-seq="'+r.caseListDesc[i].csi_seq+'">'+
 
                         '<div class="product_img_box">'+
                             '<img src="'+r.caseListAsc[i].img_src+'" alt="">'+
@@ -142,6 +142,8 @@ function selectCaseList(keyword, page, temp = null, ListCnt) {
                 //     $(".page_area").append(tag);
                 // }
                 
+                console.log("페이지 A : "+r.caseListCnt);
+                console.log("페이지 B : "+ListCnt);
                 let pagecount = r.caseListCnt==null?ListCnt:r.caseListCnt
                 console.log("페이지갯수 : "+pagecount);
                 $(".page_area").html("");
