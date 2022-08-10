@@ -18,7 +18,7 @@ function selectCaseList(keyword, page, temp = null, col) {
 
                         '<div class="product_text_box">'+
                             '<div class="product_tittle_box">'+
-                                '<p>'+r.caseListDesc[i].type+_name+'('+r.caseListDesc[i].csi_model_name+')</p>'+
+                                '<p>'+r.caseListDesc[i].csi_name+'('+r.caseListDesc[i].csi_model_name+')</p>'+
                             '</div>'+
                             '<div class="product_summary_box">'+
                                 '<p> 저장소켓 갯수 : '+r.caseListDesc[i].csi_save_socket_num+' / 케이스 크기 : '+r.caseListDesc[i].csi_size+' / 사용가능 보드'+r.caseListDesc[i].csi_use_board+'</p>'+

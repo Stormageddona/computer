@@ -8,12 +8,13 @@ import com.team.computer.data.CaseInfoVO;
 import com.team.computer.data.CoolerInfoVO;
 import com.team.computer.data.CpuInfoVO;
 import com.team.computer.data.GpuInfoVO;
+import com.team.computer.data.request.ProductRequest;
 
 @Mapper
 public interface ProductMapper {
     public List<CaseInfoVO> selectCaseListDesc(Integer offset, String keyword);
     public List<CaseInfoVO> selectCaseListAsc(Integer offset, String keyword);
-    public Integer selectCaseListCnt(String keyword);
+    public Integer selectCaseListCnt(Integer offset, String keyword);
 
     public List<CoolerInfoVO> selectCoolerListDesc(Integer offset, String keyword);
     public List<CoolerInfoVO> selectCoolerListAsc(Integer offset, String keyword);

@@ -1,15 +1,20 @@
 package com.team.computer.api.product;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team.computer.data.CaseInfoVO;
+import com.team.computer.data.request.ProductRequest;
 import com.team.computer.mapper.ProductMapper;
 
 @RestController
@@ -17,12 +22,14 @@ import com.team.computer.mapper.ProductMapper;
 public class ProductAPIController {
     @Autowired ProductMapper prod_mapper;
     @GetMapping("/case")
+    @Transactional
     public Map<String, Object> getProductCaseList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page) {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
         if(page == null) page=1;
         m.put("caseListDesc", prod_mapper.selectCaseListDesc((page-1)*10, keyword));
         m.put("caseListAsc", prod_mapper.selectCaseListAsc((page-1)*10, keyword));
-        m.put("caseListCnt", prod_mapper.selectCaseListCnt(keyword));
+        m.put("caseListCnt", prod_mapper.selectCaseListCnt((page-1)*10, keyword));
+
         return m;
     }
 

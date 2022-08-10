@@ -3,8 +3,11 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.computer.mapper.ProductMapper">
     <select id="selectCaseListDesc" resultType="com.team.computer.data.CaseInfoVO">
-        select a.*, 
-        where a.csi_name like '%${keyword}'
+        select a.*, b.img_src
+        FROM case_info as a
+        left outer join image_info as b
+        on a.csi_img_seq = b.img_seq
+        where a.csi_name like '%${keyword}%'
         order by a.csi_price desc
         limit 10 offset #{offset} 
     </select>
@@ -13,12 +16,14 @@
         FROM case_info as a
         left outer join image_info as b
         on a.csi_img_seq = b.img_seq
-        where a.csi_name like '%${keyword}'
+        where a.csi_name like '%${keyword}%'
         order by a.csi_price asc
         limit 10 offset #{offset}
     </select>
     <select id="selectCaseListCnt" resultType="java.lang.Integer">
         select ceil(count(*)/10) from case_info
+        where csi_name like '%${keyword}%'
+        limit 10 offset #{offset}
     </select>
 
     <select id="selectCoolerListDesc" resultType="com.team.computer.data.CoolerInfoVO">
