@@ -1,29 +1,30 @@
 
 
+
 function selectCaseList(keyword, page, Order, temp = null, ListCnt) {
     if(page == null || page == undefined) page = 1;
     if(keyword == null || keyword == undefined) keyword = "";
     $.ajax({
-        url:"/api/product/case?keyword="+keyword+'&page='+page+'&desc='+Order,
+        url:"/api/product/case?keyword="+keyword+'&page='+page+'&desc='+Order+'&ordertype=price',
         type:"get",
         success:function(r) {
-            console.log(r.caseListAsc);
+            console.log(r.ListAsc);
             $(".product_box").html("");
-            for(let i=0; i < r.caseList.length; i++) {
-                let won = r.caseList[i].csi_price.toLocaleString();
+            for(let i=0; i < r.List.length; i++) {
+                let won = r.List[i].price.toLocaleString();
                 let tag =
                 '<div class="product_box_content">'+
                 
-                        '<div class="product_img_box" data-seq="'+r.caseList[i].csi_seq+'">'+
-                            '<img src="'+r.caseList[i].img_src+'" alt="">'+
+                        '<div class="product_img_box" data-seq="'+r.List[i].seq+'">'+
+                            '<img src="'+r.List[i].img_src+'" alt="">'+
                         '</div>'+
 
                         '<div class="product_text_box">'+
                             '<div class="product_tittle_box">'+
-                                '<p>'+r.caseList[i].csi_name+'('+r.caseList[i].csi_model_name+')</p>'+
+                                '<p>'+r.List[i].name+'('+r.List[i].model_name+')</p>'+
                             '</div>'+
                             '<div class="product_summary_box">'+
-                                '<p> 저장소켓 갯수 : '+r.caseList[i].csi_save_socket_num+' / 케이스 크기 : '+r.caseList[i].csi_size+' / 사용가능 보드'+r.caseList[i].csi_use_board+'</p>'+
+                                '<p> 저장소켓 갯수 : '+r.List[i].save_socket_num+' / 케이스 크기 : '+r.List[i].size+' / 사용가능 보드'+r.List[i].use_board+'</p>'+
                             '</div>'+
                         '</div>'+
 
@@ -56,9 +57,9 @@ function selectCaseList(keyword, page, Order, temp = null, ListCnt) {
                 //     $(".page_area").append(tag);
                 // }
                 
-                console.log("페이지 A : "+r.caseListCnt);
+                console.log("페이지 A : "+r.ListCnt);
                 console.log("페이지 B : "+ListCnt);
-                let pagecount = r.caseListCnt==null?ListCnt:r.caseListCnt
+                let pagecount = r.ListCnt==null?ListCnt:r.ListCnt
                 console.log("페이지갯수 : "+pagecount);
                 $(".page_area").html("");
                 for(let i=0; i < pagecount; i++) {
@@ -69,7 +70,7 @@ function selectCaseList(keyword, page, Order, temp = null, ListCnt) {
                 }
                 $(".page_area a").click(function(){
                     let page = $(this).html();
-                    selectCaseList(keyword, page,Order, pageControll,pagecount );
+                    selectList(keyword, page,Order, pageControll,pagecount );
                 })
                 console.log(temp)
                 if (temp != null) $(temp).trigger("click")

@@ -17,11 +17,11 @@ import com.team.computer.util.utils;
 public class ManageAPIController {
     @Autowired ProductMapper prod_mapper;
     @GetMapping("/list")
-    public Map<String,Object> getProductList(@RequestParam Integer type)
+    public Map<String,Object> getProductList(@RequestParam Integer type, @RequestParam Integer offset, @RequestParam Integer keyword)
     {
         Map<String,Object> map = new LinkedHashMap<String,Object>();
         
-        if () prod_mapper.selectCpuList()) ;
+        // if () prod_mapper.selectCpuList()) ;
         
         return map;
     }
