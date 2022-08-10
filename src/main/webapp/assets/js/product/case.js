@@ -1,4 +1,6 @@
-function selectCaseList(keyword, page, temp = null, col) {
+
+
+function selectCaseList(keyword, page, temp = null, ListCnt) {
     if(page == null || page == undefined) page = 1;
     if(keyword == null || keyword == undefined) keyword = "";
     $.ajax({
@@ -12,13 +14,13 @@ function selectCaseList(keyword, page, temp = null, col) {
                 let tag =
                 '<div class="product_box_content">'+
                 
-                        '<div class="product_img_box">'+
+                        '<div class="product_img_box" data-seq="'+r.caseListDesc[i].csi_seq+'">'+
                             '<img src="'+r.caseListDesc[i].img_src+'" alt="">'+
                         '</div>'+
 
                         '<div class="product_text_box">'+
                             '<div class="product_tittle_box">'+
-                                '<p>'+r.caseListDesc[i].type+_name+'('+r.caseListDesc[i].csi_model_name+')</p>'+
+                                '<p>'+r.caseListDesc[i].csi_name+'('+r.caseListDesc[i].csi_model_name+')</p>'+
                             '</div>'+
                             '<div class="product_summary_box">'+
                                 '<p> 저장소켓 갯수 : '+r.caseListDesc[i].csi_save_socket_num+' / 케이스 크기 : '+r.caseListDesc[i].csi_size+' / 사용가능 보드'+r.caseListDesc[i].csi_use_board+'</p>'+
@@ -140,9 +142,10 @@ function selectCaseList(keyword, page, temp = null, col) {
                 //     $(".page_area").append(tag);
                 // }
                 
-                console.log("페이지갯수 : "+r.caseListCnt);
+                let pagecount = r.caseListCnt==null?ListCnt:r.caseListCnt
+                console.log("페이지갯수 : "+pagecount);
                 $(".page_area").html("");
-                for(let i=0; i < r.caseListCnt; i++) {
+                for(let i=0; i < pagecount; i++) {
                     console.log(i);
                     let tag = 
                     '<a href="#" onclick="return false;">'+(i+1)+'</a>';
@@ -150,12 +153,12 @@ function selectCaseList(keyword, page, temp = null, col) {
                 }
                 $(".page_area a").click(function(){
                     let page = $(this).html();
-                    selectCaseList(keyword, page, pageControll);
+                    selectCaseList(keyword, page, pageControll,pagecount );
                 })
                 console.log(temp)
                 if (temp != null) $(temp).trigger("click")
 
-                console.log(page)
+                console.log("콘솔로그페이지"+page)
         }
 
     })

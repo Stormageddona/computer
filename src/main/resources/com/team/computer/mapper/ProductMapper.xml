@@ -2,23 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.computer.mapper.ProductMapper">
-    <select id="selectCaseListDesc" resultType="com.team.computer.data.CaseInfoVO">
-        select a.*, 
-        where a.csi_name like '%${keyword}'
-        order by a.csi_price desc
-        limit 10 offset #{offset} 
-    </select>
-    <select id="selectCaseListAsc" resultType="com.team.computer.data.CaseInfoVO">
+    <!-- 테스트  -->
+    <insert id="intsertTestCase">
+        INSERT INTO case_info
+            ( csi_name, csi_model_name, csi_company, csi_price, csi_size, csi_save_socket_num, csi_release_dt, csi_use_board)
+            VALUES (#{csi_name}, #{csi_model_name}, #{csi_company}, #{csi_price}, #{csi_size}, #{csi_save_socket_num}, #{csi_release_dt}, #{csi_use_board});
+
+
+    </insert>
+
+    <select id="selectCaseList" resultType="com.team.computer.data.CaseInfoVO">
         select a.*, b.img_src
-        FROM case_info as a
-        left outer join image_info as b
+        FROM case_info a
+        left outer join image_info b
         on a.csi_img_seq = b.img_seq
         where a.csi_name like '%${keyword}'
-        order by a.csi_price asc
+        <if test="desc == true">
+            order by a.csi_price desc
+        </if>
         limit 10 offset #{offset}
     </select>
     <select id="selectCaseListCnt" resultType="java.lang.Integer">
-        select ceil(count(*)/10) from case_info
+        select ceil(count(*)/10) from case_info 
+        where csi_name like '%${keyword}' 
+        limit 10 offset #{offset}
     </select>
 
     <select id="selectCoolerListDesc" resultType="com.team.computer.data.CoolerInfoVO">

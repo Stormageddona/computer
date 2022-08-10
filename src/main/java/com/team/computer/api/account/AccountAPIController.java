@@ -155,7 +155,7 @@ public class AccountAPIController {
                     return map ;
                 }
                 map.put("status",true) ;
-                map.put("seq",AESAlgorithm.Encrypt(temp)) ;
+                map.put("seq",AESAlgorithm.Encrypt(temp)) ; 
             }
     
 
@@ -169,12 +169,10 @@ public class AccountAPIController {
         {
             Map<String,Object> map =new LinkedHashMap<String,Object>() ;
             seq = seq.replaceAll(" ", "+");
-            System.out.println(seq);
-            String tempseq = seq ;
-            seq = AESAlgorithm.Decrypt(tempseq);
-            // pwd = AESAlgorithm.Encrypt(pwd) ;
-            // Integer tempseq = Integer.parseInt(seq) ;
-            // a_mapper.updateAccountInfoPwd(tempseq, pwd) ;
+            seq = AESAlgorithm.Decrypt(seq);
+            pwd = AESAlgorithm.Encrypt(pwd) ;
+            Integer tempseq = Integer.parseInt(seq) ;
+            a_mapper.updateAccountInfoPwd(tempseq, pwd) ;
             map.put("status", true) ;
             map.put("message", "비밀번호 변경이 완료되었습니다.") ;
             return map ;
