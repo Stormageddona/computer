@@ -20,7 +20,17 @@
                 </li>
                 <li>
                     <i class="fas fa-user"></i>
-                    <a href="/admin/manage_product">제품 관리</a>
+                    <span>제품 관리</span>
+                    <li><a href="/admin/product?type=1">CPU</a></li>
+                    <li><a href="/admin/product?type=2">메인보드</a></li>
+                    <li><a href="/admin/product?type=3">쿨러</a></li>
+                    <li><a href="/admin/product?type=4">그래픽카드</a></li>
+                    <li><a href="/admin/product?type=5">메모리</a></li>
+                    <li><a href="/admin/product?type=6">파워</a></li>
+                    <li><a href="/admin/product?type=7">케이스</a></li>
+                    <li><a href="/admin/product?type=8">하드디스크</a></li>
+                    <li><a href="/admin/product?type=9">SSD</a></li>
+                    
                 </li>
             </ul>
         </nav>

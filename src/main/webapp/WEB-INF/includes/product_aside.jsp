@@ -1,4 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+   
+            
 <aside>
     <div class="product_category">
         <div class="product_name_box">
