@@ -12,5 +12,6 @@ public interface AdminMapper {
     public Integer selectTotalPage(String keyword, String search_type, Integer grade);
     public Integer selectTotalCount(String keyword, String search_type);
     public void updateAccountInfo(AccountInfoVO data);
+    public void deleteAccountInfo(Integer seq);
 }
 

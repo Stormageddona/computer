@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,6 +49,14 @@ public class AdminAPIController {
         admin_mapper.updateAccountInfo(data);
         map.put("status", true);
         map.put("message", "회원정보 수정이 완료되었습니다.");
+        return map;
+    }
+    @DeleteMapping("/accountdelete")
+    public Map<String,Object> deleteAccountInfo(@RequestParam @Nullable Integer seq) {
+        Map<String,Object> map = new LinkedHashMap<String,Object>();
+        admin_mapper.deleteAccountInfo(seq);
+        map.put("status", true);
+        map.put("message", "회원정보 삭제가 완료되었습니다.");
         return map;
     }
 }

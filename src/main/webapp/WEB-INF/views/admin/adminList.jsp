@@ -8,9 +8,11 @@
 </head>
 <body>
     <main>
-        <div>
-            <input type="text" name="keyword" placeholder="아이디 검색" value="${keyword}">
-            <button type="submit">검색</button>
+        <div class="search_box">
+            <form action="/admin/adminList" method="get">
+                <input type="text" name="keyword" placeholder="아이디 검색" value="${keyword}">
+                <button type="submit">검색</button>
+            </form>
         </div>
         <table>
             <thead>
@@ -23,20 +25,23 @@
                 </tr>
             </thead>
             <tbody class="admin_list">
-                <tr>
-                    <td></td>
-                </tr>
+
             </tbody>
         </table>
         <div class="mod_box">
             <p>이름</p>
-            <input type="text" class="mod_name">
+                <input type="text" class="mod_name">
             <p>전화번호</p>
-            <input type="number" class="mod_phone">
+                <input type="number" class="mod_phone">
             <p>닉네임</p>
-            <input type="text" class="mod_nickname">
+                <input type="text" class="mod_nickname">
             <p>생년월일</p>
-            <input type="text" class="mod_birth">
+                <input type="text" class="mod_birth">
+            <p>회원등급</p>
+            <select class="mod_grade">
+                <option value="1">일반 회원</option>
+                <option value="2">관리자</option>
+            </select>
             <button class="mod_submit">확인</button>
             <button class="mod_cancel">취소</button>
         </div>

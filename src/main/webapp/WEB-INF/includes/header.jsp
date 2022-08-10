@@ -54,7 +54,7 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="">컴퓨터 파츠</a>
+                        <a href="/admin/manage_product">컴퓨터 파츠</a>
                         <!-- <ol class="part_add_nav">
                                 <li><a href="">파츠1</a></li>
                                 <li><a href="">파츠1</a></li>
