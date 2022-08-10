@@ -5,6 +5,7 @@ $("document").ready(function(){
     let keyword = param.get('keyword');
     let pageURL = location.href;
     let pageURLSplit = pageURL.split("/");
+    // let pageControll = null ;
     console.log(pageURLSplit);
     let realURL = "/";
     for(let i=3; i<pageURLSplit.length; i++) {
@@ -15,54 +16,116 @@ $("document").ready(function(){
     if(realURL == '/product/case') {
         $(".product_area h3").html("케이스");
         $("#search_form").attr("action", "/product/case");
+        
+        
         if(keyword != null){
-            selectCaseList(keyword, page);
+            selectCaseList(keyword, page, true);
         }else {
-            selectCaseList();
+            selectCaseList(keyword, page, true);
             $("#search_form").on("submit", function(e){
                 e.preventDefault(); 
-                selectCaseList ($("#keyword").val(), 1);
+                selectCaseList ($("#keyword").val(), page, true);
             });
         }
+
+        $(".price_desc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pagecaseArea($("#keyword").val(), page,true)
+        })
+
+        $(".price_asc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pagecaseArea($("#keyword").val(), page,false)
+        })
+
     }
     if(realURL == '/product/cooler') {
         $(".product_area h3").html("쿨러");
         $("#search_form").attr("action", "/product/cooler");
+
         if(keyword != null){
-            selectcoolerList(keyword, page);
+            selectcoolerList(keyword, page, true);
         }else {
-            selectcoolerList();
+            selectcoolerList(keyword, page, true);
             $("#search_form").on("submit", function(e){
                 e.preventDefault(); 
-                selectcoolerList ($("#keyword").val(), 1);
+                selectcoolerList ($("#keyword").val(), page, true);
             });
         }
+
+        $(".price_desc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pagecoolerArea($("#keyword").val(), page,true)
+        })
+
+        $(".price_asc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pagecoolerArea($("#keyword").val(), page,false)
+        })
     }
     if(realURL == '/product/cpu') {
         $(".product_area h3").html("CPU");
         $("#search_form").attr("action", "/product/cpu");
+
         if(keyword != null){
-            selectcpuList(keyword, page);
+            selectcpuList(keyword, page, true);
         }else {
-            selectcpuList();
+            selectcpuList(keyword, page, true);
             $("#search_form").on("submit", function(e){
                 e.preventDefault(); 
-                selectcpuList ($("#keyword").val(), 1);
+                selectcpuList ($("#keyword").val(), page, true);
             });
         }
+
+        $(".price_desc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pageArea($("#keyword").val(), page,true)
+        })
+
+        $(".price_asc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pageArea($("#keyword").val(), page,false)
+        })
     }
     if(realURL == '/product/gpu') {
         $(".product_area h3").html("그래픽카드");
         $("#search_form").attr("action", "/product/gpu");
+
         if(keyword != null){
-            selectgpuList(keyword, page);
+            selectgpuList(keyword, page, true);
         }else {
-            selectgpuList();
+            selectgpuList(keyword, page, true);
             $("#search_form").on("submit", function(e){
                 e.preventDefault(); 
-                selectgpuList ($("#keyword").val(), 1);
+                selectgpuList ($("#keyword").val(), page, true);
             });
         }
+
+        $(".price_desc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pageArea($("#keyword").val(), page,true)
+        })
+
+        $(".price_asc").click(function(){
+            $(".product_box").html("");
+            $(".product_menu button").removeClass("on");
+            $(this).addClass("on");
+            pageArea($("#keyword").val(), page,false)
+        })
     }
     if(realURL == '/product/hdd') {
         $(".product_area h3").html("HDD");
