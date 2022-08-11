@@ -4,11 +4,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team.computer.mapper.AdminMapper;
 import com.team.computer.mapper.ProductMapper;
 import com.team.computer.util.utils;
 
@@ -16,12 +18,17 @@ import com.team.computer.util.utils;
 @RequestMapping("/api/admin/product")
 public class ManageAPIController {
     @Autowired ProductMapper prod_mapper;
-    @GetMapping("/list")
-    public Map<String,Object> getProductList(@RequestParam Integer type, @RequestParam Integer offset, @RequestParam Integer keyword)
+    @Autowired AdminMapper admin_mapper;
+    @DeleteMapping("")
+    public Map<String,Object> getProductList(@RequestParam String type,@RequestParam Integer seq)
     {
         Map<String,Object> map = new LinkedHashMap<String,Object>();
-        
-        // if () prod_mapper.selectCpuList()) ;
+        // System.out.println(type+"_info" + "  " + utils.getTableNameBySeqType(type)+"seq" + "  " +  seq);
+
+        admin_mapper.deleteProductBySeq(type+"_info",utils.getTableNameBySeqType(type)+"seq", seq) ;
+        map.put("status",true) ;
+        map.put("message","삭제되었습니다.") ;
+
         
         return map;
     }

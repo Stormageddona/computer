@@ -48,4 +48,9 @@
     <delete id="deleteAccountInfo">
         delete from account_info where aci_seq=#{seq}
     </delete>
+
+    <!-- 제품 삭제 -->
+    <delete id="deleteProductBySeq">
+        delete from ${type} where ${typeseq} = #{seq}
+    </delete>
 </mapper>

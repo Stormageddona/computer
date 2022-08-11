@@ -48,12 +48,11 @@ public class ProductAPIController {
 
     @GetMapping("/{type}")
     @Transactional
-    public Map<String, Object> getProductCaseList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page,@RequestParam Boolean desc,@PathVariable @Nullable String type,@RequestParam @Nullable String search,@RequestParam @Nullable String ordertype) {
+    public Map<String, Object> getProductCaseList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page,@RequestParam @Nullable Boolean desc,@PathVariable @Nullable String type,@RequestParam @Nullable String search,@RequestParam @Nullable String ordertype) {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
         if(search == null) search = "total" ;
-        if (ordertype == null) ordertype = "relese_dt" ;
+        if (ordertype == null) ordertype = "release_dt" ;
         if(page == null) page=1;
-
         List<Map<String, Object>> temp = prod_mapper.selectList((page-1)*10, keyword, desc,type,search,ordertype) ;
         List<Map<String, Object>> list = new LinkedList<Map<String,Object>>() ;
         String seq_type = null;
@@ -70,7 +69,6 @@ public class ProductAPIController {
         {
             String table = (String)i.get("tbl_name")+"_info" ;
             Integer seq = (Integer)i.get("seq") ;
-            System.out.println(table +seq_type +seq);
             Map<String,Object> data = new LinkedHashMap<String,Object>() ;
             for (Entry<String, Object> entrySet : prod_mapper.selectProductDetailBySeq(table,seq_type, seq).entrySet())
             {
@@ -80,8 +78,6 @@ public class ProductAPIController {
         }
         m.put("List", list);
         m.put("ListCnt", prod_mapper.selectListCnt((page-1)*10, keyword,type,search,ordertype));
-        // m.put("Detail", prod_mapper.selectProductDetailBySeq(type + "_info", ))
-        // System.out.println(prod_mapper.selectList((page-1)*10, keyword, desc,"case","total", "price"));
         return m;
     }
 
