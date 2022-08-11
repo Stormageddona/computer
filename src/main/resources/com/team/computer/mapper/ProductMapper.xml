@@ -10,12 +10,10 @@
     </insert>
 
     <select id="selectList" resultType="java.util.Map">
-        select *
+        select tbl_name, seq
         FROM product_summary
         where 
-        <if test="type != null">tbl_name = '${type}'
-        and
-        </if> 
+        <if test="type != null">tbl_name = #{type} and </if> 
         <if test="search == 'total'">(name like '%${keyword}%' or model_name like '%${keyword}%' or company like '%${keyword}%') </if> 
         <if test="search == 'name'">(name like '%${keyword}%')</if> 
         <if test="search == 'model_name'">(model_name like '%${keyword}%')</if> 
@@ -37,6 +35,12 @@
         <if test="search == 'company'">(company like '%${keyword}%') </if> 
         limit 10 offset #{offset}
     </select>
+
+    <select id="selectProductDetailBySeq" resultType="java.util.Map">
+        select * from ${table} where ${type}seq = ${seq}
+    </select>
+
+
 </mapper>
     <!-- <select id="selectCaseList" resultType="com.team.computer.data.CaseInfoVO">
         select a.*, b.img_src
