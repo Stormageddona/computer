@@ -1,5 +1,8 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<script>
+    let type = "${type}"
+</script>
 <script src="/assets/js/product/product.js"></script>
 <script src="/assets/js/product/list_form.js"></script>
 

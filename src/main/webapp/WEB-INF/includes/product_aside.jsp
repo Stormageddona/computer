@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
    
             
-<aside>
+<aside class="product_aside">
     <div class="product_category">
         <div class="product_name_box">
             <h3>카테고리</h3>
