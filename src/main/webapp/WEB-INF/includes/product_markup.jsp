@@ -1,15 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <script src="/assets/js/product/product.js"></script>
-<script src="/assets/js/product/case.js"></script>
-<script src="/assets/js/product/cooler.js"></script>
-<script src="/assets/js/product/cpu.js"></script>
-<script src="/assets/js/product/gpu.js"></script>
-<script src="/assets/js/product/hdd.js"></script>
-<script src="/assets/js/product/mainboard.js"></script>
-<script src="/assets/js/product/memory.js"></script>
-<script src="/assets/js/product/power.js"></script>
-<script src="/assets/js/product/ssd.js"></script>
+<script src="/assets/js/product/list_form.js"></script>
 
 <script src="/assets/js/product/pager.js"></script>
 
