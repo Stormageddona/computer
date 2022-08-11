@@ -12,7 +12,8 @@ import com.team.computer.data.CaseInfoVO;
 public interface ProductMapper {
 
     
-    public List<Map<String,Object>> selectList(Integer offset, String keyword, Boolean desc,String type, String search,String ordertype) ;
+    public List<Map<String,Object>> selectList(
+        Integer offset, String keyword, Boolean desc,String type, String search,String ordertype) ;
     public Integer selectListCnt(Integer offset, String keyword,String type, String search,String ordertype);
 
     // public List<Map<String,Object>> selectCaseList(Integer offset, String keyword, Boolean desc);
