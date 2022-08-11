@@ -8,6 +8,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,6 +58,15 @@ public class AdminAPIController {
         admin_mapper.deleteAccountInfo(seq);
         map.put("status", true);
         map.put("message", "회원정보 삭제가 완료되었습니다.");
+        return map;
+    }
+    @PutMapping("/add_account")
+    public Map<String,Object> putAddAccount(@RequestBody AccountInfoVO data) {
+        Map<String,Object> map = new LinkedHashMap<String,Object>();
+        System.out.println(data);
+        account_mapper.insertAccountInfo(data);
+        map.put("status", true);
+        map.put("message", "회원정보가 추가되었습니다.");
         return map;
     }
 }

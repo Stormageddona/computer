@@ -42,10 +42,15 @@
     </select>
     <update id="updateAccountInfo">
         UPDATE account_info
-        SET aci_name=#{aci_name}, aci_nickname=#{aci_nickname}, aci_phone=#{aci_phone}, aci_birth=#{aci_birth}, aci_grade=#{aci_grade}
+        SET aci_name=#{aci_name}, aci_nickname=#{aci_nickname}, aci_phone=#{aci_phone}, aci_birth=#{aci_birth}, aci_status=#{aci_status}
         WHERE aci_seq=#{aci_seq}
     </update>
     <delete id="deleteAccountInfo">
         delete from account_info where aci_seq=#{seq}
+    </delete>
+
+    <!-- 제품 삭제 -->
+    <delete id="deleteProductBySeq">
+        delete from ${type} where ${typeseq} = #{seq}
     </delete>
 </mapper>
