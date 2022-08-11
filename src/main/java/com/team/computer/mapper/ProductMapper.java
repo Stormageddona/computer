@@ -15,7 +15,7 @@ public interface ProductMapper {
     public List<Map<String,Object>> selectList(
         Integer offset, String keyword, Boolean desc,String type, String search,String ordertype) ;
     public Integer selectListCnt(Integer offset, String keyword,String type, String search,String ordertype);
-
+    public Map<String,Object> selectProductDetailBySeq(String table, String type, Integer seq) ;
     // public List<Map<String,Object>> selectCaseList(Integer offset, String keyword, Boolean desc);
 
     // public List<CoolerInfoVO> selectCoolerList(Integer offset, String keyword, Boolean desc);
