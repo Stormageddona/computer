@@ -1,15 +1,22 @@
 
-
-
-function selectCaseList(keyword, page, Order, temp = null, ListCnt) {
+function selectList(keyword, page, Order, url, temp = null, ListCnt) {
+    let pageControll = null ;
     if(page == null || page == undefined) page = 1;
     if(keyword == null || keyword == undefined) keyword = "";
     $.ajax({
-        url:"/api/product/case?keyword="+keyword+'&page='+page+'&desc='+Order+'&ordertype=price',
+        url:"/api/product/"+url+"?keyword="+keyword+'&page='+page+'&desc='+Order+'&ordertype=price',
         type:"get",
         success:function(r) {
-            console.log(r.ListAsc);
+            console.log(r.List.length);
+            console.log(r.ListCnt);
             $(".product_box").html("");
+            if(r.List.length == 0) {
+                let tag =
+                '<div class="product_box_content">'+
+                    '<p>상품이 없습니다</p>'+
+                '</div>'
+                $(".product_box").append(tag);
+            } else{
             for(let i=0; i < r.List.length; i++) {
                 let won = r.List[i].price.toLocaleString();
                 let tag =
@@ -46,16 +53,8 @@ function selectCaseList(keyword, page, Order, temp = null, ListCnt) {
 
                     $(".product_box").append(tag);
             }
+        }
 
-
-
-            // $(".page_area").html("");
-            // for(let idx=0; idx < r.pageCnt; idx++){
-                //     console.log(idx);
-                //     let tag = 
-                //     '<a href="#" onclick="return false;">'+(idx+1)+'</a>';
-                //     $(".page_area").append(tag);
-                // }
                 
                 console.log("페이지 A : "+r.ListCnt);
                 console.log("페이지 B : "+ListCnt);
@@ -70,7 +69,7 @@ function selectCaseList(keyword, page, Order, temp = null, ListCnt) {
                 }
                 $(".page_area a").click(function(){
                     let page = $(this).html();
-                    selectList(keyword, page,Order, pageControll,pagecount );
+                    selectList(keyword, page,Order,url, pageControll,pagecount );
                 })
                 console.log(temp)
                 if (temp != null) $(temp).trigger("click")
@@ -78,5 +77,34 @@ function selectCaseList(keyword, page, Order, temp = null, ListCnt) {
                 console.log("콘솔로그페이지"+page)
         }
 
+    })
+}
+
+function productList(keyword, keyword2, page, desc, desc_no, url, prod_name) {
+    $(".product_area h3").html(prod_name);
+    $("#search_form").attr("action", "/product/"+url);
+
+    if(keyword != null){
+        selectList(keyword2, page, desc, url);
+    }else {
+        selectList(keyword2, page, desc, url);
+        $("#search_form").on("submit", function(e){
+            e.preventDefault(); 
+            selectList (keyword, page, desc, url);
+        });
+    }
+
+    $(".price_desc").click(function(){
+        $(".product_box").html("");
+        $(".product_menu button").removeClass("on");
+        $(this).addClass("on");
+        pageArea(keyword, page, desc, url)
+    })
+
+    $(".price_asc").click(function(){
+        $(".product_box").html("");
+        $(".product_menu button").removeClass("on");
+        $(this).addClass("on");
+        pageArea(keyword, page, desc_no, url)
     })
 }

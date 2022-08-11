@@ -3,8 +3,10 @@ package com.team.computer.api.product;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
@@ -51,10 +53,34 @@ public class ProductAPIController {
         if(search == null) search = "total" ;
         if (ordertype == null) ordertype = "relese_dt" ;
         if(page == null) page=1;
-        System.out.println(ordertype);
-        m.put("List", prod_mapper.selectList((page-1)*10, keyword, desc,type,search,ordertype));
+
+        List<Map<String, Object>> temp = prod_mapper.selectList((page-1)*10, keyword, desc,type,search,ordertype) ;
+        List<Map<String, Object>> list = new LinkedList<Map<String,Object>>() ;
+        String seq_type = null;
+        if (type.equals("case")) seq_type = "csi_" ;
+        else if (type.equals("cpu")) seq_type = "cpi_" ;
+        else if (type.equals("mainboard")) seq_type = "mbi_" ;
+        else if (type.equals("gpu")) seq_type = "gpi_" ;
+        else if (type.equals("cooler")) seq_type = "coi_" ;
+        else if (type.equals("power")) seq_type = "poi_" ;
+        else if (type.equals("hdd")) seq_type = "hdi_" ;
+        else if (type.equals("ssd")) seq_type = "sdi_" ;
+        else if (type.equals("memory")) seq_type = "mmi_" ;
+        for (Map<String, Object> i : temp)
+        {
+            String table = (String)i.get("tbl_name")+"_info" ;
+            Integer seq = (Integer)i.get("seq") ;
+            System.out.println(table +seq_type +seq);
+            Map<String,Object> data = new LinkedHashMap<String,Object>() ;
+            for (Entry<String, Object> entrySet : prod_mapper.selectProductDetailBySeq(table,seq_type, seq).entrySet())
+            {
+                data.put(entrySet.getKey().replace(seq_type, ""),entrySet.getValue() ) ;
+            }
+            list.add(data) ;
+        }
+        m.put("List", list);
         m.put("ListCnt", prod_mapper.selectListCnt((page-1)*10, keyword,type,search,ordertype));
-        System.out.println(m);
+        // m.put("Detail", prod_mapper.selectProductDetailBySeq(type + "_info", ))
         // System.out.println(prod_mapper.selectList((page-1)*10, keyword, desc,"case","total", "price"));
         return m;
     }
