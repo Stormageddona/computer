@@ -16,6 +16,8 @@
                     <td>전화번호</td>
                     <td>닉네임</td>
                     <td>생년월일</td>
+                    <td>가입일</td>
+                    <td>회원상태</td>
                 </tr>
             </thead>
             <tbody class="user_list">
@@ -31,10 +33,12 @@
                 <input type="text" class="mod_nickname">
             <p>생년월일</p>
                 <input type="text" class="mod_birth">
-            <p>회원등급</p>
-            <select class="mod_grade">
-                <option value="1">일반 회원</option>
-                <option value="2">관리자</option>
+            <p>회원상태</p>
+            <select class="mod_status">
+                <option value="1">정상</option>
+                <option value="2">정지</option>
+                <option value="3">탈퇴예정</option>
+                <option value="4">탈퇴</option>
             </select>
             <button class="mod_submit">확인</button>
             <button class="mod_cancel">취소</button>

@@ -8,14 +8,28 @@ $(function()
             console.log(result)
             $(".user_list").html("")
             for(let i=0; i<result.list.length; i++){
+                let str = null ;
+                if(result.list[i].aci_status == 1) {
+                    str = "정상"
+                }
+                else if (result.list[i].aci_status == 2) {
+                    str = "정지"
+                }
+                else if (result.list[i].aci_status == 3) {
+                    str = "탈퇴예정"
+                }
+                else if (result.list[i].aci_status == 4) {
+                    str = "탈퇴"
+                }
                 let tag= 
                     '<tr>' +
                         '<td>' + result.list[i].aci_seq + '</td>' +
                         '<td>' + result.list[i].aci_name + '</td>' +
                         '<td>' + result.list[i].aci_phone + '</td>' +
                         '<td>' + result.list[i].aci_nickname + '</td>' +
-                        '<td>' + result.list[i].aci_birth + '</td>' +
-                        '<td>' + result.list[i].aci_grade + '</td>' +
+                        '<td>' + makeDateString(new Date(result.list[i].aci_birth)) + '</td>' +
+                        '<td>' + makeDateString(new Date(result.list[i].aci_reg_dt)) + '</td>' +
+                        '<td>' + str + '</td>' +
                         '<td><button class="modify_btn" data-seq='+i+'>수정</button></td>' +
                         '<td><button class="delete_btn" data-seq='+ result.list[i].aci_seq +'>삭제</button></td>' +
                     '</tr>';
@@ -27,8 +41,8 @@ $(function()
                 $(".mod_name").val(result.list[e].aci_name)
                 $(".mod_phone").val(result.list[e].aci_phone)
                 $(".mod_nickname").val(result.list[e].aci_nickname)
-                $(".mod_birth").val(result.list[e].aci_birth)
-                $(".mod_grade").val(result.list[e].aci_grade)
+                $(".mod_birth").val(makeDateString(new Date(result.list[e].aci_birth)))
+                $(".mod_status").val(result.list[e].aci_status)
                 $(".mod_submit").attr("data-seq",result.list[e].aci_seq)
         })
         $(".delete_btn").click(function(){
@@ -52,7 +66,7 @@ $(function()
         $(".mod_phone").val("")
         $(".mod_nickname").val("")
         $(".mod_birth").val("")
-        $(".mod_grade").val("")
+        $(".mod_status").val("")
     })
     $(".mod_submit").click(function(){
         if(!confirm("수정하시겠습니까?/n ※ㅋ")) return;
@@ -63,7 +77,7 @@ $(function()
             aci_phone : $(".mod_phone").val(),
             aci_nickname : $(".mod_nickname").val(),
             aci_birth : $(".mod_birth").val(),
-            aci_grade : $(".mod_grade").val()
+            aci_status : $(".mod_status").val()
         }
         $.ajax({
             url:"/api/admin/account",
