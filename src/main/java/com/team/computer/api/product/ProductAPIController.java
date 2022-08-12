@@ -55,6 +55,7 @@ public class ProductAPIController {
         if(page == null) page=1;
         List<Map<String, Object>> temp = prod_mapper.selectList((page-1)*10, keyword, desc,type,search,ordertype) ;
         List<Map<String, Object>> list = new LinkedList<Map<String,Object>>() ;
+        System.out.println(temp);
         String seq_type = null;
         if (type.equals("case")) seq_type = "csi_" ;
         else if (type.equals("cpu")) seq_type = "cpi_" ;
@@ -70,12 +71,15 @@ public class ProductAPIController {
             String table = (String)i.get("tbl_name")+"_info" ;
             Integer seq = (Integer)i.get("seq") ;
             Map<String,Object> data = new LinkedHashMap<String,Object>() ;
+            Map<String,Object> aa = prod_mapper.selectProductDetailBySeq(table,seq_type, seq) ;
+            System.out.println(aa);
             for (Entry<String, Object> entrySet : prod_mapper.selectProductDetailBySeq(table,seq_type, seq).entrySet())
             {
                 data.put(entrySet.getKey().replace(seq_type, ""),entrySet.getValue() ) ;
             }
             list.add(data) ;
         }
+        System.out.println(list);
         m.put("List", list);
         m.put("ListCnt", prod_mapper.selectListCnt((page-1)*10, keyword,type,search,ordertype));
         return m;
