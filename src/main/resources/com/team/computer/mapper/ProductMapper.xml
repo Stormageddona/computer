@@ -37,7 +37,11 @@
     </select>
 
     <select id="selectProductDetailBySeq" resultType="java.util.Map">
-        select * from ${table} where ${type}seq = ${seq}
+        select a.*, b.img_src
+        from ${table} a
+        left outer join image_info b
+        on a.${type}seq = b.img_seq
+        where a.${type}seq = ${seq}
     </select>
 
     <select id="selectProductColumn" resultType="java.lang.String">

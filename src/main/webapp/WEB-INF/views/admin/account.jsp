@@ -8,10 +8,16 @@
 </head>
 <body>
     <main>
+        <button class="add_account">사용자추가</button>
+        <div class="search_box">
+            <input type="text" name="keyword" placeholder="아이디 검색" value="${keyword}">
+            <button type="submit">검색</button>
+        </div>
         <table>
             <thead>
                 <tr>
                     <td>번호</td>
+                    <td>아이디</td>
                     <td>이름</td>
                     <td>전화번호</td>
                     <td>닉네임</td>
@@ -42,6 +48,28 @@
             </select>
             <button class="mod_submit">확인</button>
             <button class="mod_cancel">취소</button>
+        </div>
+        <div class="add_box">
+            <p>아이디</p>
+                <input type="text" class="add_id">
+            <p>비밀번호</p>
+                <input type="password" class="add_pwd">
+            <p>이름</p>
+                <input type="text" class="add_name">
+            <p>전화번호</p>
+                <input type="number" class="add_phone">
+            <p>닉네임</p>
+                <input type="text" class="add_nickname">
+            <p>생년월일</p>
+                <input type="text" class="add_birth">
+            <p>회원등급</p>
+                <select class="add_grade">
+                    <option value="1">일반회원</option>
+                    <option value="2">관리자</option>
+                </select>
+            <br>
+            <button class="add_submit">확인</button>
+            <button class="add_cancel">취소</button>
         </div>
     </main>
 </body>

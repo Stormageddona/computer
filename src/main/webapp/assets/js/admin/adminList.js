@@ -26,6 +26,7 @@ $(function()
                 let tag= 
                     '<tr>' +
                         '<td>' + result.list[i].aci_seq + '</td>' +
+                        '<td>' + result.list[i].aci_id + '</td>' +
                         '<td>' + result.list[i].aci_name + '</td>' +
                         '<td>' + result.list[i].aci_phone + '</td>' +
                         '<td>' + result.list[i].aci_nickname + '</td>' +
@@ -89,16 +90,38 @@ $(function()
             data:JSON.stringify(data),
             success:function(result){
                 // console.log(result)
-                alert(result.message)
-                location.reload()
-                $(".mod_box").hide()
+                if (result.message != null)
+                {
+                    alert(result.message)
+                }
+                if (result.mod_name_msg != null) {
+                    alert(result.mod_name_msg)
+                }
+                if (result.status){
+                    location.reload() 
+                    $(".mod_box").hide()
+                }
             }
         })
     });
     $(".add_account").click(function(){
         $(".add_box").show()
     });
+
+    $(".add_cancel").click(function(){
+        if(!confirm("취소하시겠습니까?/n ※ㅋ")) return;
+        $(".add_box").hide()
+        $(".add_id").val("")
+        $(".add_pwd").val("")
+        $(".add_name").val("")
+        $(".add_phone").val("")
+        $(".add_nickname").val("")
+        $(".add_birth").val("")
+        $(".add_grade").val("")
+    });
+    
     $(".add_submit").click(function(){
+        if(!confirm ("등록하시겠습니까?")) return;
         let data = {
             aci_id : $(".add_id").val(),
             aci_pwd : $(".add_pwd").val(),
@@ -106,6 +129,7 @@ $(function()
             aci_phone : $(".add_phone").val(),
             aci_nickname : $(".add_nickname").val(),
             aci_birth : $(".add_birth").val(),
+            aci_grade : $(".add_grade option:selected").val(),
         }        
         $.ajax({
             url:"/api/admin/add_account",
@@ -113,10 +137,19 @@ $(function()
             contentType:"application/json",
             data:JSON.stringify(data),
             success:function(result) {
-                alert(result.message)
-                // location.reload();
-                // $(".add_box").hide();
-                console.log(result.data);
+                if(result.message != null){
+                    alert(result.message)
+                }
+                if(result.id_message != null){
+                    alert(result.id_message)
+                }
+                if(result.phone_message != null) {
+                    alert(result.phone_message)
+                }
+                if(result.status){
+                    location.reload();
+                    $(".add_box").hide();
+                }
             }
         })
     })
