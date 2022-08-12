@@ -40,6 +40,22 @@
         select * from ${table} where ${type}seq = ${seq}
     </select>
 
+    <select id="selectProductColumn" resultType="java.lang.String">
+        SELECT
+            column_name
+        FROM
+            information_schema.columns
+        WHERE
+        table_schema = 'computer_db' AND table_name = #{table}
+    </select>
+    <select id="selectProductColumnComment" resultType="java.lang.String">
+        SELECT
+            column_comment
+        FROM
+            information_schema.columns
+        WHERE
+        table_schema = 'computer_db' AND table_name = #{table}
+    </select>
 
 </mapper>
     <!-- <select id="selectCaseList" resultType="com.team.computer.data.CaseInfoVO">

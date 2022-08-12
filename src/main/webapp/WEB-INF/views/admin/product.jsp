@@ -10,11 +10,24 @@
     <script src="/assets/js/admin/product.js"></script>
 </head>
 <body>
+    <button class="add_btn" data-type="${type}">제품 추가</button>
+    <div class="serach_box">
+        <input type="text" class="search_input" placeholder="제품명, 모델명, 회사">
+    </div>
     <table class="product_table">
         <thead>
         </thead>
         <tbody>
         </tbody>
     </table>
+    <div class="pager_box">
+        
+    </div>
+
+    <div class="add_area">
+        <div class="add_box">
+            
+        </div>
+    </div>
 </body>
 </html>

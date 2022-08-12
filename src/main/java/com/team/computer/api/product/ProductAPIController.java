@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team.computer.data.CaseInfoVO;
 import com.team.computer.mapper.ProductMapper;
+import com.team.computer.util.utils;
 
 @RestController
 @RequestMapping("/api/product")
@@ -48,55 +49,43 @@ public class ProductAPIController {
 
     @GetMapping("/{type}")
     @Transactional
-    public Map<String, Object> getProductCaseList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page,@RequestParam @Nullable Boolean desc,@PathVariable @Nullable String type,@RequestParam @Nullable String search,@RequestParam @Nullable String ordertype) {
+    public Map<String, Object> getProductCaseList(@RequestParam @Nullable String keyword, @RequestParam @Nullable String page,@RequestParam @Nullable Boolean desc,@PathVariable @Nullable String type,@RequestParam @Nullable String search,@RequestParam @Nullable String ordertype) {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
-        if(search == null) search = "total" ;
-        if (ordertype == null) ordertype = "release_dt" ;
-        if(page == null) page=1;
-        List<Map<String, Object>> temp = prod_mapper.selectList((page-1)*10, keyword, desc,type,search,ordertype) ;
+        if(search == null || search.equals("null")) search = "total" ;
+        if (ordertype == null || ordertype.equals("null")) ordertype = "release_dt" ;
+        Integer num = 1 ;
+        System.out.println(page);
+        if(page != null && !page.equals("null")) num = Integer.parseInt(page);
+        if (keyword.equals("null")) keyword = null ;
+        System.out.println("시작" + (num-1)*10 + " , 키워드 : " + keyword + " ,정렬 : " + desc + "  " + type + "  " + search + "  " + ordertype);
+        List<Map<String, Object>> temp = prod_mapper.selectList((num-1)*10, keyword, desc,type,search,ordertype) ;
         List<Map<String, Object>> list = new LinkedList<Map<String,Object>>() ;
         System.out.println(temp);
-        String seq_type = null;
-        if (type.equals("case")) seq_type = "csi_" ;
-        else if (type.equals("cpu")) seq_type = "cpi_" ;
-        else if (type.equals("mainboard")) seq_type = "mbi_" ;
-        else if (type.equals("gpu")) seq_type = "gpi_" ;
-        else if (type.equals("cooler")) seq_type = "coi_" ;
-        else if (type.equals("power")) seq_type = "poi_" ;
-        else if (type.equals("hdd")) seq_type = "hdi_" ;
-        else if (type.equals("ssd")) seq_type = "sdi_" ;
-        else if (type.equals("memory")) seq_type = "mmi_" ;
+        String seq_type = utils.getTableNameBySeqType(type);
         for (Map<String, Object> i : temp)
         {
             String table = (String)i.get("tbl_name")+"_info" ;
             Integer seq = (Integer)i.get("seq") ;
             Map<String,Object> data = new LinkedHashMap<String,Object>() ;
-            Map<String,Object> aa = prod_mapper.selectProductDetailBySeq(table,seq_type, seq) ;
-            System.out.println(aa);
             for (Entry<String, Object> entrySet : prod_mapper.selectProductDetailBySeq(table,seq_type, seq).entrySet())
             {
-                data.put(entrySet.getKey().replace(seq_type, ""),entrySet.getValue() ) ;
+                String str = entrySet.getKey().replace(seq_type, "") ;
+                data.put(str,entrySet.getValue() ) ;
             }
+
             list.add(data) ;
+            System.out.println(data);
         }
-        System.out.println(list);
+        
+
         m.put("List", list);
-        m.put("ListCnt", prod_mapper.selectListCnt((page-1)*10, keyword,type,search,ordertype));
+        m.put("ListCnt", prod_mapper.selectListCnt((num-1)*10, keyword,type,search,ordertype));
         return m;
     }
 
     @GetMapping("/detail")
     public Map<String, Object> getDetailProduct(@RequestParam String type, @RequestParam Integer seq) {
-        String seq_type = null ;
-        if (type.equals("case")) seq_type = "csi_" ;
-        else if (type.equals("cpu")) seq_type = "cpi_" ;
-        else if (type.equals("mainboard")) seq_type = "mbi_" ;
-        else if (type.equals("gpu")) seq_type = "gpi_" ;
-        else if (type.equals("cooler")) seq_type = "coi_" ;
-        else if (type.equals("power")) seq_type = "poi_" ;
-        else if (type.equals("hdd")) seq_type = "hdi_" ;
-        else if (type.equals("ssd")) seq_type = "sdi_" ;
-        else if (type.equals("memory")) seq_type = "mmi_" ;
+        String seq_type = utils.getTableNameBySeqType(type) ;
         Map<String, Object> temp = prod_mapper.selectProductDetailBySeq(type+"_info", seq_type, seq);
         Map<String, Object> data = new LinkedHashMap<String,Object>() ;
         for (Entry<String, Object> entrySet : temp.entrySet())
@@ -105,6 +94,17 @@ public class ProductAPIController {
         
         }
         return data;
+    }
+
+    @GetMapping("/add/{type}")
+    public Map<String, Object> getProductAddData(@PathVariable String type)
+    {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        // String str = utils.getTableNameBySeqType(type) ;
+        map.put("column",prod_mapper.selectProductColumn(type+"_info")) ;
+        map.put("column_kr",prod_mapper.selectProductColumnComment(type+"_info")) ;
+        // System.out.println(stype);
+        return map;
     }
     // @GetMapping("/cooler")
     // public Map<String, Object> getProductCoolerList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page,@RequestParam Boolean desc) {
