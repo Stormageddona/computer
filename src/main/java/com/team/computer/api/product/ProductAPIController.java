@@ -85,6 +85,27 @@ public class ProductAPIController {
         return m;
     }
 
+    @GetMapping("/detail")
+    public Map<String, Object> getDetailProduct(@RequestParam String type, @RequestParam Integer seq) {
+        String seq_type = null ;
+        if (type.equals("case")) seq_type = "csi_" ;
+        else if (type.equals("cpu")) seq_type = "cpi_" ;
+        else if (type.equals("mainboard")) seq_type = "mbi_" ;
+        else if (type.equals("gpu")) seq_type = "gpi_" ;
+        else if (type.equals("cooler")) seq_type = "coi_" ;
+        else if (type.equals("power")) seq_type = "poi_" ;
+        else if (type.equals("hdd")) seq_type = "hdi_" ;
+        else if (type.equals("ssd")) seq_type = "sdi_" ;
+        else if (type.equals("memory")) seq_type = "mmi_" ;
+        Map<String, Object> temp = prod_mapper.selectProductDetailBySeq(type+"_info", seq_type, seq);
+        Map<String, Object> data = new LinkedHashMap<String,Object>() ;
+        for (Entry<String, Object> entrySet : temp.entrySet())
+        {
+            data.put(entrySet.getKey().replace(seq_type, ""),entrySet.getValue() ) ;
+        
+        }
+        return data;
+    }
     // @GetMapping("/cooler")
     // public Map<String, Object> getProductCoolerList(@RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page,@RequestParam Boolean desc) {
     //     Map<String, Object> m = new LinkedHashMap<String, Object>();

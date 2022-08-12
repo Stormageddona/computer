@@ -18,6 +18,7 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                 $(".product_box").append(tag);
             } else{
             for(let i=0; i < r.List.length; i++) {
+                let prod_type = "'/product/detail?seq="+r.List[i].seq+"&type="+type+"'"
                 let won = r.List[i].price.toLocaleString();
                 let tag =
                 '<div class="product_box_content">'+
@@ -45,7 +46,7 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
 
                             '</div>'+
                             '<div class="product_btn_box">'+
-                                '<button>자세히보기</button>'+
+                                '<button onclick="location.href='+prod_type+'">자세히보기</button>'+
                                 '<button>리뷰작성</button>'+
                             '</div>'+
                         '</div>'+
@@ -80,17 +81,17 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
     })
 }
 
-function productList(keyword, keyword2, page, desc, desc_no, url, prod_name) {
+function productList(keyword, page, url, prod_name) {
     $(".product_area h3").html(prod_name);
-    $("#search_form").attr("action", "/product/"+url);
+    $("#search_form").attr('action', '/product/'+url);
 
     if(keyword != null){
-        selectList(keyword2, page, desc, url);
+        selectList(keyword, page, true, url);
     }else {
-        selectList(keyword2, page, desc, url);
+        selectList(keyword, page, true, url);
         $("#search_form").on("submit", function(e){
             e.preventDefault(); 
-            selectList (keyword, page, desc, url);
+            selectList ($("#keyword").val(), page, true, url);
         });
     }
 
@@ -98,13 +99,15 @@ function productList(keyword, keyword2, page, desc, desc_no, url, prod_name) {
         $(".product_box").html("");
         $(".product_menu button").removeClass("on");
         $(this).addClass("on");
-        pageArea(keyword, page, desc, url)
+        pageArea($("#keyword").val(), page, true, url)
     })
 
     $(".price_asc").click(function(){
         $(".product_box").html("");
         $(".product_menu button").removeClass("on");
         $(this).addClass("on");
-        pageArea(keyword, page, desc_no, url)
+        pageArea($("#keyword").val(), page, false, url)
     })
 }
+
+let pageControll = null ;
