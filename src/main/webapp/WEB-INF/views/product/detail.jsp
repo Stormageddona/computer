@@ -15,6 +15,20 @@
     <section class="detail">
         <div class="detail_wrap">
             <%@include file="/WEB-INF/includes/product_aside.jsp"%>
+            <div class="info_view">
+
+            </div>
+            <div class="detail_info">
+                <div class="detail_img_area">
+
+                </div>
+                <div class="detail_product_info">
+                    <h3>상품명 (모델명)</h3>
+                    <p class="product_info">
+
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 </body>
