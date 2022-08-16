@@ -10,9 +10,10 @@
     <main>
         <button class="add_account">사용자추가</button>
         <div class="search_box">
-            <input type="text" name="keyword" placeholder="아이디 검색" value="${keyword}">
-            <button type="submit">검색</button>
-        </div>
+                <input type="text" class="keyword" placeholder="검색어 입력" value="${keyword}">
+                <button type="submit" class="submit_account">검색</button>
+                <button type="button" class="input_reset">초기화</button>
+            </div>
         <table>
             <thead>
                 <tr>
