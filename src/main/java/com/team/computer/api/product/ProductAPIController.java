@@ -54,13 +54,10 @@ public class ProductAPIController {
         if(search == null || search.equals("null")) search = "total" ;
         if (ordertype == null || ordertype.equals("null")) ordertype = "release_dt" ;
         Integer num = 1 ;
-        System.out.println(page);
         if(page != null && !page.equals("null")) num = Integer.parseInt(page);
         if (keyword.equals("null")) keyword = null ;
-        System.out.println("시작" + (num-1)*10 + " , 키워드 : " + keyword + " ,정렬 : " + desc + "  " + type + "  " + search + "  " + ordertype);
         List<Map<String, Object>> temp = prod_mapper.selectList((num-1)*10, keyword, desc,type,search,ordertype) ;
         List<Map<String, Object>> list = new LinkedList<Map<String,Object>>() ;
-        System.out.println(temp);
         String seq_type = utils.getTableNameBySeqType(type);
         for (Map<String, Object> i : temp)
         {
@@ -74,12 +71,21 @@ public class ProductAPIController {
             }
 
             list.add(data) ;
-            System.out.println(data);
         }
         
 
         m.put("List", list);
         m.put("ListCnt", prod_mapper.selectListCnt((num-1)*10, keyword,type,search,ordertype));
+        List<String> codiStr = new LinkedList<String>() ;
+        for (String tempStr : prod_mapper.selectProductColumn(type+"_info"))
+        {
+             codiStr.add(tempStr.replace(seq_type, "")) ;
+             
+            
+        }
+        
+        m.put("column",codiStr) ;
+        m.put("column_kr",prod_mapper.selectProductColumnComment(type+"_info")) ;
         return m;
     }
 
