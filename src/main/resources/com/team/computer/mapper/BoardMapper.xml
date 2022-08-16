@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.computer.mapper.BoardMapper">
+    <select id="selectBoardList" resultType="com.team.computer.data.BoardInfoVO">
+        SELECT a.*, b.aci_id, b.aci_name, count(c.bcmi_bdi_seq) as comment_cnt
+        FROM board_info a
+        left outer join account_info b
+        on a.bdi_aci_seq = b.aci_seq
+        left outer join board_comment_info c
+        on a.bdi_seq = c.bcmi_bdi_seq 
+        where bdi_status = 1 and
+        bdi_title like '%${keyword}%' or bdi_comment like '%${keyword}%'
+        limit 10 offset #{offset}
+    </select>
+    <select id="selectBoardListCnt" resultType="java.lang.Integer">
+        SELECT ceil(count(*)/10) from board_info
+        where bdi_status = 1 and
+        bdi_title like '%${keyword}%' or bdi_comment like '%${keyword}%'
+        limit 10 offset #{offset}
+    </select>
+</mapper>

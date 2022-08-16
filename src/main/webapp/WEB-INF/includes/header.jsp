@@ -63,7 +63,7 @@
                         </ol> -->
                     </li>
                     <li><a href="">견적페이지</a></li>
-                    <li><a href="">커뮤니티</a></li>
+                    <li><a href="/board/list">커뮤니티</a></li>
                     <li><a href="">1:1질문</a></li>
                     <li><a href="/admin/account">관리자 페이지</a></li>
                 </ul>
