@@ -9,16 +9,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.team.computer.mapper.AccountMapper;
+import com.team.computer.mapper.AdminMapper;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    @Autowired AccountMapper account_mapper;
+    @Autowired AdminMapper admin_mapper;
     @GetMapping("/account")
     public String getManageUser(Model model, 
         @RequestParam @Nullable Integer page,
+        // @RequestParam @Nullable Integer offset,
         @RequestParam @Nullable String keyword,
+        // @RequestParam Integer grade,
         @RequestParam @Nullable String search_type
     ) {
         model.addAttribute("keyword", keyword);
@@ -31,9 +33,9 @@ public class AdminController {
         model.addAttribute("page",page);
         page=(page-1)*15;
 
-        // model.addAttribute("list", account_mapper.selectUserList(page, keyword, search_type));
-        // model.addAttribute("totalPage",account_mapper.selectTotalPage(keyword, search_type));
-        // model.addAttribute("totalCount",account_mapper.selectTotalCount(keyword, search_type));
+        // model.addAttribute("list", admin_mapper.selectUserList(keyword, offset, search_type, grade));
+        // model.addAttribute("totalPage",admin_mapper.selectTotalPage(keyword, search_type, grade));
+        // model.addAttribute("totalCount",admin_mapper.selectTotalCount(keyword, search_type));
 
         return "/admin/account";
     }

@@ -20,6 +20,8 @@ import com.team.computer.mapper.AccountMapper;
 import com.team.computer.mapper.AdminMapper;
 import com.team.computer.util.AESAlgorithm;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 @RestController
 @RequestMapping("/api/admin")
 public class AdminAPIController {
@@ -27,18 +29,20 @@ public class AdminAPIController {
     @Autowired AdminMapper admin_mapper;
     @GetMapping("/account")
     public Map<String,Object> getUserList(
-        @RequestParam @Nullable Integer page,
+        // @RequestParam @Nullable Integer page,
         @RequestParam @Nullable Integer offset,
         @RequestParam @Nullable String keyword,
         @RequestParam @Nullable String search_type,
         @RequestParam Integer grade
         ) {
+            System.out.println( offset + keyword + search_type);
         Map<String,Object> map = new LinkedHashMap<String,Object>();
-        if(page == null) page =1;
-        map.put("page", page);
-        page = (page-1)*15;
+        // if(page == null) page =1;
+        // map.put("page", page);
+        // page = (page-1)*15;
+        if (keyword.equals("undefined")) keyword = "";
         if (offset == null) offset = 0 ;
-
+        System.out.println(admin_mapper.selectUserList(keyword, offset, search_type, grade));
         map.put("list", admin_mapper.selectUserList(keyword, offset, search_type, grade));
         map.put("pageCount", admin_mapper.selectTotalPage(keyword,search_type,grade));
         return map;
@@ -75,6 +79,7 @@ public class AdminAPIController {
         data.setAci_pwd(pwd);
 
         boolean isDuplicated = false;
+        
         if(account_mapper.isDuplicatedId(data.getAci_id()) == true) {
             isDuplicated = true;
             map.put("status", false);
@@ -87,8 +92,9 @@ public class AdminAPIController {
         }
         
         if (isDuplicated) return map ;
+        
         try{
-            account_mapper.insertAccountInfo(data);
+            admin_mapper.insertAdminAccountInfo(data);
         }
         catch(DuplicateKeyException e) {
             map.put("status", false);
@@ -97,6 +103,7 @@ public class AdminAPIController {
         }
         map.put("status", true);
         map.put("message", "회원정보가 추가되었습니다.");
+        System.out.println(data);
         return map;
     }
 }
