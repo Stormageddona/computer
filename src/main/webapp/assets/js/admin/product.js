@@ -7,6 +7,8 @@ let keyword = null ;
 let desc = false ;
 let search = null ;
 let ordertype = null ;
+let column_kr = new Array();
+let column = new Array();
 $(function()
 {
     if(type == 1) prod = "cpu" ;
@@ -39,11 +41,165 @@ $(function()
             {
                 $(".add_area").show()
                 $(".add_box").html("")
-                for (let i = 0 ;i < result.column_kr.length;i++)
+                // console.log(result.column)
+                // console.log(result.column_kr)
+                let tempArr_kr = new Array();
+                let tempArr = new Array();
+                let temp = new Array();
+                let commonColumns = ["이미지", "이름", "모델명", "가격", "제조사", "출시일"];
+                
+                for(let i=0; i<result.column_kr.length; i++) {
+                    tempArr_kr.push(result.column_kr[i]);
+                }
+                console.log(tempArr_kr)
+                for (let i=0; i<tempArr_kr.length; i++)
                 {
-                    let tag = '<span>' + result.column_kr[i] + '</span><input type="text" class="'+ result.column[i] +'"><br>'
+                    for (let e=0; e<tempArr_kr.length; e++)
+                    {
+                        if (tempArr_kr[e] == "이미지") 
+                        {
+                            temp.push(e)
+                            console.log(tempArr_kr.splice(e,1))
+                            break;
+                        }
+                        if (tempArr_kr[e] == "이름") 
+                        {
+                            temp.push(e)
+                            console.log(tempArr_kr.splice(e,1))
+                            break;
+
+                        }
+                        if (tempArr_kr[e] == "모델명") 
+                        {
+                            temp.push(e)
+                            console.log(tempArr_kr.splice(e,1))
+                            break;
+
+                        }
+                        if (tempArr_kr[e] == "가격") 
+                        {
+                            temp.push(e)
+                            console.log(tempArr_kr.splice(e,1))
+                            break;
+
+                        }
+                        if (tempArr_kr[e] == "제조사") 
+                        {
+                            temp.push(e)
+                            console.log(tempArr_kr.splice(e,1))
+                            break;
+
+                        }
+                        if (tempArr_kr[e] == "출시일") 
+                        {
+                            temp.push(e)
+                            console.log(tempArr_kr.splice(e,1))
+                            break;
+
+                        }
+
+                    }
+                }
+
+                console.log(temp)
+                
+
+                // // commonColumns 컬럼 모두 걸러내기
+                // for(let i=0; i<commonColumns.length; i++) {
+                //     if (tempArr_kr.filter((data) => data != commonColumns[i]))
+                //     {
+                //         console.log(tempArr_kr.splice(i,1))
+                //         tempArr_kr.splice(i,1)
+                //         tempArr.splice(i,1)
+                //         temp.push(i)
+                //     }
+                // }
+                // console.log(tempArr_kr)
+                // // 공통컬럼을 먼저 추가하고
+                // for(let i=0; i<commonColumns.length; i++) {
+                //     column_kr.push(commonColumns[i]);
+                //     column.push(result.column[temp[i]]);
+                // }
+                // // 나머지컬럼을 추가
+                // for(let i=0; i<tempArr.length; i++) {
+                //     column_kr.push(tempArr_kr[i]);
+                //     column.push(tempArr[i]);
+                // }
+                // // console.log(column_kr.length)
+                // // console.log(column_kr)
+                // // console.log(column)
+                for (let i=0; i < column_kr.length ; i++)
+                {
+                    if (column_kr[i] == "번호" || column_kr[i] == "등록일") continue ;
+                    if (column_kr[i] == "이미지") 
+                    {
+                        let tag = 
+                        column_kr[i] + 
+                        '<form class="img_form" hidden>'+
+                            '<input type="file" id="input_image" name="file" accept="image/gif,image/jpeg,image/png">'+
+                        '</form>'+
+                        '<button class="add_image" onclick="document.getElementById(\'input_image\').click()"><i class="fas fa-image"></i></button><br>';
+                        $(".add_box").append(tag)
+                        continue ;
+                    }
+                    let tag = '<span>' + column_kr[i] + '</span><input type="text" class="'+ result.column[i] +'"><br>'
                     $(".add_box").append(tag)
                 }
+
+                // let a = 0 ;
+                // for (let e = 0 ; e < result.column_kr.length ; e++)
+                // {
+                //     for (let i = 0 ; i < result.column_kr.length ; i++)
+                //     {
+                //         a++
+                //         console.log(a)
+                //         console.log(e, result.column_kr.length, i, result.column_kr.length)
+                //         // if (true)
+                //         // {
+                //             // result.column_kr[i] = null && result.column_kr[i] == "이미지"
+                //             // orderProductAdd(result.column_kr[i]) ;
+                //         // }
+                //         // if (e = 1 && result.column[i] == "name")
+                //         // {
+                //         //     result.column_kr[i] = null
+
+                //         //     orderProductAdd(result.column_kr[i]) ;
+                //         //     break ;
+                //         // }
+                //         // if (e = 2 && result.column[i] == "model_name")
+                //         // {
+                //         //     result.column_kr[i] = null
+
+                //         //     orderProductAdd(result.column_kr[i]) ;
+                //         //     break ;
+                //         // }
+                //         // if (e = 3 && result.column_kr[i] == "가격")
+                //         // {
+                //         //     result.column_kr[i] = null
+
+                //         //     orderProductAdd(result.column_kr[i]) ;
+                //         //     break ;
+                //         // }
+                //         // if (e = 4 && result.column_kr[i] == "제조사")
+                //         // {
+                //         //     result.column_kr[i] = null
+
+                //         //     orderProductAdd(result.column_kr[i]) ;
+                //         //     break ;
+                //         // }
+                //         // if (e = 5 && result.column_kr[i] == "출시일")
+                //         // {
+                //         //     result.column_kr[i] = null
+
+                //         //     orderProductAdd(result.column_kr[i]) ;
+                //         //     break ;
+                //         // }
+                //         // if (e > 5 && result.column_kr[i] != null){
+                //         //     orderProductAdd(result.column_kr[i]) ;
+                //         //     break;
+                //         // }
+                //     }
+                // }
             })
         }
     })
@@ -126,6 +282,26 @@ function getData(prod,page,keyword,desc,search,ordertype)
             // }
         }
     })
+
+
+}
+
+function orderProductAdd(result)
+{
+
+    if (result == "번호" || result == "등록일") return ;
+    if (result == "이미지") 
+    {
+        let tag = 
+        result + 
+        '<form class="img_form" hidden>'+
+            '<input type="file" id="input_image" name="file" accept="image/gif,image/jpeg,image/png">'+
+        '</form>'+
+        '<button class="add_image" onclick="document.getElementById(\'input_image\').click()"><i class="fas fa-image"></i></button><br>';
+        $(".add_box").append(tag)
+    }
+    let tag = '<span>' + result + '</span><input type="text" class="'+ result +'"><br>'
+    $(".add_box").append(tag)
 
 
 }
