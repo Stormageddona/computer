@@ -91,7 +91,6 @@ public class ProductAPIController {
         String seq_type = utils.getTableNameBySeqType(type) ;
         Map<String, Object> temp = prod_mapper.selectProductDetailBySeq(type+"_info", seq_type, seq);
         Map<String, Object> data = new LinkedHashMap<String,Object>() ;
-        List<Map<String, Object>> List = new LinkedList<Map<String, Object>>() ;
         Map<String, Object> pdata = new LinkedHashMap<String, Object>() ;
         for (Entry<String, Object> entrySet : temp.entrySet())
         {
