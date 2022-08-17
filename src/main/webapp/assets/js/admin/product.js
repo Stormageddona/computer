@@ -44,12 +44,11 @@ $(function()
             {
                 $(".add_area").show()
                 $(".add_box").html("")
+                
                 // console.log(result.column)
                 // console.log(result.column_kr)
                 let tempArr_kr = new Array();
-                let tempArr = new Array();
                 let temp = new Array();
-                let commonColumns = ["이미지", "이름", "모델명", "가격", "제조사", "출시일"];
                 
                 for(let i=0; i<result.column_kr.length; i++) {
                     tempArr_kr.push(result.column_kr[i]);
@@ -99,9 +98,10 @@ $(function()
                     if (Listcolumn_kr[i] == "이미지") 
                     {
                         let tag = 
+                        '<div class="img_area"></div>' +
                         Listcolumn_kr[i] + 
                         '<form class="img_form" hidden>'+
-                            '<input type="file" id="input_image" name="file" accept="image/gif,image/jpeg,image/png">'+
+                            '<input type="file" id="input_image" name="file" accept="image/gif,image/jpeg,image/png" onchange="imgupload($(this))">'+
                         '</form>'+
                         '<button class="add_image" onclick="document.getElementById(\'input_image\').click()"><i class="fas fa-image"></i></button><br>';
                         $(".add_box").append(tag)
@@ -119,12 +119,19 @@ $(function()
                 let data = {} ;   
                 for (let i = 0 ; i < Listcolumn.length ; i++)
                 {
-                    // data = data + {[]:}
                     data[Listcolumn[i]] = $("."+[Listcolumn[i]]).val()
                 }
 
                 console.log(data)
-                
+                $.ajax
+                ({
+                    url:"/api/admin/product/"+prod , contentType:"application/json", 
+                    data:JSON.stringify(data), type:"put",
+                    success:function(result)
+                    {
+                        
+                    }
+                })
         
             })
         }
@@ -153,6 +160,36 @@ $(function()
 
 
 })
+
+let img_files = new Array() ;
+function imgupload(data, type)
+{
+    let form = $(".img_form");
+    let formData = new FormData(form[0]) ;
+    if (data.val() == '' || data.val() == null) return;
+    data.val("") ;
+    $.ajax
+    ({
+        url:"/image/upload/"+type+"?temp=true",
+        type:"put",
+        data:formData,
+        contentType:false,
+        processData:false,
+        success:function(result) 
+        {
+            if(!result.status)
+            {
+                alert(result.message);
+                return;
+            }
+            let tag = '<div class="board_img" filename="' + result.file + '" style="background-image:url(/images/product/'+result.file+'?temp=true)">'+
+            '<button onClick=deleteImg("'+result.file+'")>&times;</button>'+
+            '</div>';
+            img_files.push(result.file) ;
+            $(".img_area").append(tag) ;
+        }
+    })
+}
 
 function pagerClick(num)
 {
