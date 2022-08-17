@@ -28,21 +28,15 @@ public class AdminAPIController {
     @Autowired AdminMapper admin_mapper;
     @GetMapping("/account")
     public Map<String,Object> getUserList(
-        // @RequestParam @Nullable Integer page,
         @RequestParam @Nullable Integer offset,
         @RequestParam @Nullable String keyword,
         @RequestParam @Nullable String search_type,
         @RequestParam Integer grade
         ) {
-            System.out.println( offset + keyword + search_type);
         Map<String,Object> map = new LinkedHashMap<String,Object>();
-        // if(page == null) page =1;
-        // map.put("page", page);
-        // page = (page-1)*15;
         if (keyword.equals("undefined")) keyword = "";
-        if (offset == null) offset = 0 ;
-        System.out.println(admin_mapper.selectUserList(keyword, offset, search_type, grade));
-        map.put("list", admin_mapper.selectUserList(keyword, offset, search_type, grade));
+        if (offset == null) offset = 1 ;
+        map.put("list", admin_mapper.selectUserList(keyword, (offset-1)*15, search_type, grade));
         map.put("pageCount", admin_mapper.selectTotalPage(keyword,search_type,grade));
         return map;
     }

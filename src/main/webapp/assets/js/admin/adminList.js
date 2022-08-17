@@ -1,88 +1,10 @@
+let startPage=0;
 $(function()
 {
     $(".mod_box").hide()
     $(".add_box").hide()
-    let query = window.location.search;
-    let param = new URLSearchParams(query);
-    let page = param.get('page');
-    let keyword = param.get('keyword');
-    // let search_type = param.get('search_type');
-    if(page == null || page == undefined) page = 1;
-    // if(keyword == null || keyword == undefined) keyword = "";
-    // selectAccountList(keyword, page)
-
-    if(keyword != null){
-        selectAccountList(keyword, page);
-    }else {
-        selectAccountList(keyword, page);
-        $("#search_form").on("submit", function(e){
-            e.preventDefault(); 
-            selectAccountList ($("#keyword").val(), page);
-        });
-    }
-
-    // $.ajax({
-    //     url:"/api/admin/account?grade=2&keyword="+keyword+"&page="+page,
-    //     type:"get",
-    //     success:function(result){
-    //         console.log(result)
-    //         $(".admin_list").html("")
-        
-    //         for(let i=0; i<result.list.length; i++){
-    //             let str = null ;
-    //             if(result.list[i].aci_status == 1) {
-    //                 str = "정상"
-    //             }
-    //             else if (result.list[i].aci_status == 2) {
-    //                 str = "정지"
-    //             }
-    //             else if (result.list[i].aci_status == 3) {
-    //                 str = "탈퇴예정"
-    //             }
-    //             else if (result.list[i].aci_status == 4) {
-    //                 str = "탈퇴"
-    //             }
-    //             let tag= 
-    //                 '<tr>' +
-    //                     '<td>' + result.list[i].aci_seq + '</td>' +
-    //                     '<td>' + result.list[i].aci_id + '</td>' +
-    //                     '<td>' + result.list[i].aci_name + '</td>' +
-    //                     '<td>' + result.list[i].aci_phone + '</td>' +
-    //                     '<td>' + result.list[i].aci_nickname + '</td>' +
-    //                     '<td>' + makeDateString(new Date(result.list[i].aci_birth)) + '</td>' +
-    //                     '<td>' + makeDateString(new Date(result.list[i].aci_reg_dt)) + '</td>' +
-    //                     // '<td>' + makeDateString(new Date(result.list[i].aci_leave_dt)) + '</td>' +
-    //                     '<td>' + str + '</td>' +
-    //                     '<td><button class="modify_btn" data-seq='+i+'>수정</button></td>' +
-    //                     '<td><button class="delete_btn" data-seq='+ result.list[i].aci_seq +'>삭제</button></td>' +
-    //                 '</tr>';
-    //             $(".admin_list").append(tag)
-    //         }
-    //             $(".modify_btn").click(function(){
-    //                 $(".mod_box").show()
-    //                 let e = $(this).attr("data-seq")
-    //                 $(".mod_name").val(result.list[e].aci_name)
-    //                 $(".mod_phone").val(result.list[e].aci_phone)
-    //                 $(".mod_nickname").val(result.list[e].aci_nickname)
-    //                 $(".mod_birth").val(makeDateString(new Date(result.list[e].aci_birth)))
-    //                 $(".mod_status").val(result.list[e].aci_status)
-    //                 $(".mod_submit").attr("data-seq",result.list[e].aci_seq)
-    //         })
-    //             $(".delete_btn").click(function(){
-    //                 if(!confirm("삭제하시겠습니까?/n ※ㅋ")) return;
-    //                 let del = $(this).attr("data-seq")
-    //                 $.ajax({
-    //                     url:"/api/admin/accountdelete?seq="+del,
-    //                     type:"delete",
-    //                     success:function(result){
-    //                         alert(result.message)
-    //                         location.reload()
-    //                 }
-    //             })
-    //         })
-    //     }
-    // })
-
+    
+    getList()
     $(".mod_cancel").click(function(){
         if(!confirm("취소하시겠습니까?/n ※ㅋ")) return;
         $(".mod_box").hide()
@@ -110,20 +32,12 @@ $(function()
             data:JSON.stringify(data),
             success:function(result){
                 // console.log(result)
-                if (result.message != null)
-                {
-                    alert(result.message)
-                }
-                if (result.mod_name_msg != null) {
-                    alert(result.mod_name_msg)
-                }
-                if (result.status){
-                    location.reload() 
-                    $(".mod_box").hide()
-                }
+                alert(result.message)
+                location.reload()
+                $(".mod_box").hide()
             }
         })
-    });
+    })
     $(".add_account").click(function(){
         $(".add_box").show()
     });
@@ -150,8 +64,7 @@ $(function()
             aci_nickname : $(".add_nickname").val(),
             aci_birth : $(".add_birth").val(),
             aci_grade : $(".add_grade option:selected").val(),
-        }
-        // console.log(data)
+        }        
         $.ajax({
             url:"/api/admin/add_account",
             type:"put",
@@ -174,21 +87,28 @@ $(function()
             }
         })
     })
+    $(".input_reset").click(function(){
+        $(".search_box input").val("");
+        location.reload();
+    })
+
+    $(".submit_account").click(function()
+    {
+        getList($(".keyword").val())
+        console.log($(".keyword").val())
+        
+    })
+    
 })
 
-function selectAccountList(page, keyword) {
-    // if(page == null || page == undefined) page = 1;
-    if(keyword == null || keyword == undefined) keyword = "";
-    // if(search_type == null || search_type == undefined) search_type = "";
-    console.log(keyword)
+function getList(keyword)
+{
     $.ajax({
         url:"/api/admin/account?grade=2&keyword="+keyword+"&search_type=id",
-        // url:"/api/admin/account?grade=2&keyword="+keyword+"&page="+page,
         type:"get",
         success:function(result){
             console.log(result)
             $(".admin_list").html("")
-        
             for(let i=0; i<result.list.length; i++){
                 let str = null ;
                 if(result.list[i].aci_status == 1) {
@@ -212,35 +132,52 @@ function selectAccountList(page, keyword) {
                         '<td>' + result.list[i].aci_nickname + '</td>' +
                         '<td>' + makeDateString(new Date(result.list[i].aci_birth)) + '</td>' +
                         '<td>' + makeDateString(new Date(result.list[i].aci_reg_dt)) + '</td>' +
-                        // '<td>' + makeDateString(new Date(result.list[i].aci_leave_dt)) + '</td>' +
                         '<td>' + str + '</td>' +
                         '<td><button class="modify_btn" data-seq='+i+'>수정</button></td>' +
                         '<td><button class="delete_btn" data-seq='+ result.list[i].aci_seq +'>삭제</button></td>' +
                     '</tr>';
                 $(".admin_list").append(tag)
             }
-                $(".modify_btn").click(function(){
-                    $(".mod_box").show()
-                    let e = $(this).attr("data-seq")
-                    $(".mod_name").val(result.list[e].aci_name)
-                    $(".mod_phone").val(result.list[e].aci_phone)
-                    $(".mod_nickname").val(result.list[e].aci_nickname)
-                    $(".mod_birth").val(makeDateString(new Date(result.list[e].aci_birth)))
-                    $(".mod_status").val(result.list[e].aci_status)
-                    $(".mod_submit").attr("data-seq",result.list[e].aci_seq)
+            $(".page_area").html("");
+            for(let i=startPage; i<(result.pageCount>(startPage+10)?(startPage+10):result.pageCount); i++) {
+                
+
+                if(startPage > 10) {
+                    $(".page_area").append("<button class='prev_page'>이전페이지</button>")
+                }
+                $(".page_area").append("<button>"+(i+1)+"</button>")
+                if(result.pageCount==(startPage+10)){
+                    $(".page_area").append("<button class='next_page'>다음페이지</button>")
+                }
+            }
+            $(".prev_page").click(function(){
+                startPage = startPage-10
             })
-                $(".delete_btn").click(function(){
-                    if(!confirm("삭제하시겠습니까?/n ※ㅋ")) return;
-                    let del = $(this).attr("data-seq")
-                    $.ajax({
-                        url:"/api/admin/accountdelete?seq="+del,
-                        type:"delete",
-                        success:function(result){
-                            alert(result.message)
-                            location.reload()
-                    }
-                })
+            $(".next_page").click(function(){
+                startPage = startPage+10
             })
+            $(".modify_btn").click(function(){
+                $(".mod_box").show()
+                let e = $(this).attr("data-seq")
+                $(".mod_name").val(result.list[e].aci_name)
+                $(".mod_phone").val(result.list[e].aci_phone)
+                $(".mod_nickname").val(result.list[e].aci_nickname)
+                $(".mod_birth").val(makeDateString(new Date(result.list[e].aci_birth)))
+                $(".mod_status").val(result.list[e].aci_status)
+                $(".mod_submit").attr("data-seq",result.list[e].aci_seq)
+        })
+        $(".delete_btn").click(function(){
+            if(!confirm("삭제하시겠습니까?/n ※ㅋ")) return;
+            let del = $(this).attr("data-seq")
+            $.ajax({
+                url:"/api/admin/accountdelete?seq="+del,
+                type:"delete",
+                success:function(result){
+                    alert(result.message)
+                    location.reload()
+                }
+            })
+        })
         }
     })
 }
