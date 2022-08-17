@@ -3,12 +3,25 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
     let pageControll = null ;
     if(page == null || page == undefined) page = 1;
     if(keyword == null || keyword == undefined) keyword = "";
+
     $.ajax({
         url:"/api/product/"+url+"?keyword="+keyword+'&page='+page+'&desc='+Order+'&ordertype=price',
         type:"get",
         success:function(r) {
-            console.log(r.List.length);
-            console.log(r.ListCnt);
+            let List = new Array() ;
+            for (let e = 0 ; e < r.List.length ; e++)
+            {
+                let tempcolumn = new Array() ;
+                for (let i = 0 ; i < r.column.length ; i++)
+                {
+                    tempcolumn.push(r.column_kr[i] + " : " + eval("r.List["+e+"]."+r.column[i]) )
+                }
+                List.push(tempcolumn)
+            }
+            console.log(List)
+            
+
+
             $(".product_box").html("");
             if(r.List.length == 0) {
                 let tag =
@@ -121,8 +134,8 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
         }
 
                 
-                console.log("페이지 A : "+r.ListCnt);
-                console.log("페이지 B : "+ListCnt);
+                // console.log("페이지 A : "+r.ListCnt);
+                // console.log("페이지 B : "+ListCnt);
                 let pagecount = r.ListCnt==null?ListCnt:r.ListCnt
                 // let countpage = 10
                 // let startpage = ((ListCnt - 1) / countpage) * countpage + 1;
@@ -130,11 +143,11 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                 // if (endpage > pagecount) {
                 //     page = totalpage;
                 // }
-                console.log("페이지갯수 : "+pagecount);
+                // console.log("페이지갯수 : "+pagecount);
                 $(".page_area").html("");
 
                 for(let i=0; i < pagecount; i++) {
-                    console.log(i);
+                    // console.log(i);
                     let tag = 
                     '<a href="#" onclick="return false;">'+(i+1)+'</a>';
                     $(".page_area").append(tag);
@@ -143,10 +156,10 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                     let page = $(this).html();
                     selectList(keyword, page,Order,url, pageControll,pagecount );
                 })
-                console.log(temp)
+                // console.log(temp)
                 if (temp != null) $(temp).trigger("click")
 
-                console.log("콘솔로그페이지"+page)
+                // console.log("콘솔로그페이지"+page)
         }
 
     })
@@ -183,3 +196,4 @@ function productList(keyword, page, url, prod_name) {
 }
 
 let pageControll = null ;
+
