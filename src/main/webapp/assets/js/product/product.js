@@ -13,6 +13,9 @@ $("document").ready(function(){
         if(i != pageURLSplit.length-1) realURL += "/";
     }
     realURL = realURL.split("?")[0];
+    if(realURL == '/product/all') {
+        productList(keyword,  page, 'all', "전체 제품")
+    }
     if(realURL == '/product/case') {
         productList(keyword,  page, 'case', "케이스")
     }

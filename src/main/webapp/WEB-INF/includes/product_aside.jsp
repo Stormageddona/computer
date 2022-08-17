@@ -6,6 +6,7 @@
         <div class="product_name_box">
             <h3>카테고리</h3>
             <ul>
+                <li><a href="/product/all">전체</a><button><i class="fa-solid fa-caret-down"></i></button></li>
                 <li><a href="/product/case">케이스</a><button><i class="fa-solid fa-caret-down"></i></button></li>
                 <li><a href="/product/mainboard">메인보드</a><button><i class="fa-solid fa-caret-down"></i></button></li>
                 <li><a href="/product/memory">메모리</a><button><i class="fa-solid fa-caret-down"></i></button></li>

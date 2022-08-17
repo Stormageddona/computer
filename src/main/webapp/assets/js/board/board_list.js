@@ -4,23 +4,21 @@ $("document").ready(function(){
     let page = param.get('page');
     let keyword = param.get('keyword');
 
-    if(page == null || page == undefined) page = 1;
-    if(keyword == null || keyword == undefined) keyword = "";
-
-    selectBoardList(keyword, page);
-    // if(keyword != null){
-    //     selectBoardList(keyword, page);
-    // }else {
-    //     selectBoardList(keyword, page);
-    //     $("#search_form").on("submit", function(e){
-    //         e.preventDefault(); 
-    //         selectBoardList($("#keyword").val(), page);
-    //     });
-    // }
+    if(keyword != null){
+        selectBoardList(keyword, page);
+    }else {
+        selectBoardList(keyword, page);
+        $("#search_form").on("submit", function(e){
+            e.preventDefault(); 
+            selectBoardList($("#keyword").val(), page);
+        });
+    }
 
 })
 
 function selectBoardList(keyword, page) {
+    if(page == null || page == undefined) page = 1;
+    if(keyword == null || keyword == undefined) keyword = "";
     $.ajax({
         url:"/api/board/list?page="+page+"&keyword="+keyword,
         type:"get",
@@ -36,7 +34,7 @@ function selectBoardList(keyword, page) {
                 let tag =
                     '<tr>'+
                         '<td>'+r.boardList[i].bdi_seq+'</td>'+
-                        '<td><a href="#">'+r.boardList[i].bdi_title+'('+r.boardList[i].comment_cnt+')</a></td>'+
+                        '<td><a href="/board/detail?seq='+r.boardList[i].bdi_seq+'">'+r.boardList[i].bdi_title+'('+r.boardList[i].comment_cnt+')</a></td>'+
                         '<td class="board_writer">'+r.boardList[i].aci_nickname+'</td>'+
                         // '<td>'+r.boardList[i].+'조회수</td>'+
                         '<td>조회수(추가예정)</td>'+
@@ -47,6 +45,13 @@ function selectBoardList(keyword, page) {
                     if(r.boardList[i].aci_nickname == null) {
                         $(".board_writer").html(r.boardList[i].aci_id)
                     }
+            }
+
+            for(let i=0; i < r.boardCnt; i++) {
+                let tag =
+                '<a href="#" onclick="return false;">'+(i+1)+'</a>';
+                $(".pager_area").html("");
+                $(".pager_area").append(tag);
             }
         }
     })
