@@ -47,13 +47,13 @@ public class ProductAPIController {
 
     @GetMapping("/{type}")
     @Transactional
-    public Map<String, Object> getProductCaseList(@RequestParam @Nullable String keyword, @RequestParam @Nullable String page,@RequestParam @Nullable Boolean desc,@PathVariable @Nullable String type,@RequestParam @Nullable String search,@RequestParam @Nullable String ordertype) {
+    public Map<String, Object> getProductCaseList(@RequestParam @Nullable String keyword, @RequestParam @Nullable String page,@RequestParam @Nullable Boolean desc,@PathVariable String type,@RequestParam @Nullable String search,@RequestParam @Nullable String ordertype) {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
         if(search == null || search.equals("null")) search = "total" ;
         if (ordertype == null || ordertype.equals("null")) ordertype = "release_dt" ;
         Integer num = 1 ;
         if(page != null && !page.equals("null")) num = Integer.parseInt(page);
-        if (keyword.equals("null")) keyword = null ;
+        if (keyword == null || keyword.equals("null")) keyword = null ;
         List<Map<String, Object>> temp = prod_mapper.selectList((num-1)*10, keyword, desc,type,search,ordertype) ;
         List<Map<String, Object>> list = new LinkedList<Map<String,Object>>() ;
         String seq_type = utils.getTableNameBySeqType(type);
@@ -61,27 +61,28 @@ public class ProductAPIController {
         {
             String table = (String)i.get("tbl_name")+"_info" ;
             Integer seq = (Integer)i.get("seq") ;
+            if (type.equals("all")) seq_type = utils.getTableNameBySeqType((String)i.get("tbl_name"));
             Map<String,Object> data = new LinkedHashMap<String,Object>() ;
             for (Entry<String, Object> entrySet : prod_mapper.selectProductDetailBySeq(table,seq_type, seq).entrySet())
             {
                 String str = entrySet.getKey().replace(seq_type, "") ;
                 data.put(str,entrySet.getValue() ) ;
             }
-
+            data.put("type", (String)i.get("tbl_name"));
+            System.out.println((String)i.get("tbl_name"));
             list.add(data) ;
         }
         
 
         m.put("List", list);
         m.put("ListCnt", prod_mapper.selectListCnt((num-1)*10, keyword,type,search,ordertype));
+
+
         List<String> codiStr = new LinkedList<String>() ;
         for (String tempStr : prod_mapper.selectProductColumn(type+"_info"))
         {
-             codiStr.add(tempStr.replace(seq_type, "")) ;
-             
-            
+            codiStr.add(tempStr.replace(seq_type, "")) ;
         }
-        
         m.put("column",codiStr) ;
         m.put("column_kr",prod_mapper.selectProductColumnComment(type+"_info")) ;
         return m;
@@ -89,6 +90,7 @@ public class ProductAPIController {
 
     @GetMapping("/detail")
     public Map<String, Object> getDetailProduct(@RequestParam String type, @RequestParam Integer seq) {
+
         String seq_type = utils.getTableNameBySeqType(type) ;
         Map<String, Object> temp = prod_mapper.selectProductDetailBySeq(type+"_info", seq_type, seq);
         Map<String, Object> data = new LinkedHashMap<String,Object>() ;

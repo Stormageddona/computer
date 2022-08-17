@@ -8,6 +8,7 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
         url:"/api/product/"+url+"?keyword="+keyword+'&page='+page+'&desc='+Order+'&ordertype=price',
         type:"get",
         success:function(r) {
+            console.log(r.List)
             let List = new Array() ;
             for (let e = 0 ; e < r.List.length ; e++)
             {
@@ -18,20 +19,19 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                 }
                 List.push(tempcolumn)
             }
-            console.log(List)
             
-
-
+            
+            
             $(".product_box").html("");
             if(r.List.length == 0) {
                 let tag =
                 '<div class="product_box_content">'+
-                    '<p>상품이 없습니다</p>'+
+                '<p>상품이 없습니다</p>'+
                 '</div>'
                 $(".product_box").append(tag);
             } else{
-            for(let i=0; i < r.List.length; i++) {
-                let prod_type = "'/product/detail?seq="+r.List[i].seq+"&type="+type+"'"
+                for(let i=0; i < r.List.length; i++) {
+                let prod_type = "'/product/detail?seq="+r.List[i].seq+"&type="+r.List[i].type+"'"
                 let won = r.List[i].price.toLocaleString();
                 let tag =
                 '<div class="product_box_content">'+
