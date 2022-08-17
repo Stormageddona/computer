@@ -8,7 +8,20 @@ $("document").ready(function(){
         type:"get",
         success:function(r) {
             console.log(r);
-            console.log(r.length);
+
+            // let List = new Array() ;
+            // for (let e = 0 ; e < r.List.length ; e++)
+            // {
+            //     let tempcolumn = new Array() ;
+            //     for (let i = 0 ; i < r.column.length ; i++)
+            //     {
+            //         tempcolumn.push(r.column_kr[i] + " : " + eval("r.List["+e+"]."+r.column[i]) )
+
+            //     }
+            //     List.push(tempcolumn)
+            // }
+            // console.log(List[0])
+
 
             // 상품 이름, 모델명 내보내기
             $(".detail_product_info h3").html(""+r.name+"("+r.model_name+")")

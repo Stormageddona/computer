@@ -20,7 +20,6 @@ import com.team.computer.mapper.AccountMapper;
 import com.team.computer.mapper.AdminMapper;
 import com.team.computer.util.AESAlgorithm;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 
 @RestController
 @RequestMapping("/api/admin")

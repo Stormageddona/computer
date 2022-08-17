@@ -15,10 +15,12 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                 for (let i = 0 ; i < r.column.length ; i++)
                 {
                     tempcolumn.push(r.column_kr[i] + " : " + eval("r.List["+e+"]."+r.column[i]) )
+
                 }
                 List.push(tempcolumn)
             }
-            console.log(List)
+            console.log(List[0])
+            
             
 
 

@@ -1,10 +1,5 @@
 package com.team.computer.mapper;
 
-<<<<<<< HEAD
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-=======
->>>>>>> 127535a3a628179399e2ed00914e21fd17641b60
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +16,7 @@ public interface ProductMapper {
     public Integer selectListCnt(Integer offset, String keyword,String type, String search,String ordertype);
     public Map<String,Object> selectProductDetailBySeq(String table, String type, Integer seq) ;
     public List<String> selectProductColumn(String table) ;
-    public LinkedList<String> selectProductColumnComment(String table) ;
+    public List<String> selectProductColumnComment(String table) ;
     // public List<Map<String,Object>> selectCaseList(Integer offset, String keyword, Boolean desc);
 
     // public List<CoolerInfoVO> selectCoolerList(Integer offset, String keyword, Boolean desc);
