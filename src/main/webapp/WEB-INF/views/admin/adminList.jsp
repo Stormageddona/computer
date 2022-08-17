@@ -10,16 +10,17 @@
     <main>
         <button class="add_account">사용자추가</button>
         <div class="search_box">
-            <input type="text" name="keyword" placeholder="아이디 검색" value="${keyword}">
-            <button type="submit">검색</button>
+            <input type="text" class="keyword" placeholder="검색어 입력" value="${keyword}">
+            <button type="submit" class="submit_account">검색</button>
+            <button type="button" class="input_reset">초기화</button>
         </div>
         <table>
             <thead>
                 <tr>
                     <td>번호</td>
                     <td>아이디</td>
-                    <td>전화번호</td>
                     <td>이름</td>
+                    <td>전화번호</td>
                     <td>닉네임</td>
                     <td>생년월일</td>
                     <td>가입일</td>
@@ -70,6 +71,9 @@
             <br>
             <button class="add_submit">확인</button>
             <button class="add_cancel">취소</button>
+        </div>
+        <div class="page_area">
+
         </div>
     </main>
 </body>

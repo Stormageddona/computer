@@ -1,0 +1,6 @@
+.add_account {position: absolute; right: 0;}
+
+.account_box {width: 100%;}
+.account_box td {padding: 12px; border-bottom: 1px solid #000; text-align: center;}
+.account_box thead td { font-weight: 700; text-align: center; color: #f7f7f7;
+    background-color: #767676;}

@@ -4,6 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/css/admin/account.css">
     <script src="/assets/js/admin/account.js"></script>
 </head>
 <body>
@@ -14,7 +15,7 @@
                 <button type="submit" class="submit_account">검색</button>
                 <button type="button" class="input_reset">초기화</button>
             </div>
-        <table>
+        <table class="account_box">
             <thead>
                 <tr>
                     <td>번호</td>
@@ -25,6 +26,8 @@
                     <td>생년월일</td>
                     <td>가입일</td>
                     <td>회원상태</td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </thead>
             <tbody class="user_list">
