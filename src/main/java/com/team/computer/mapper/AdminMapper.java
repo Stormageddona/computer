@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.team.computer.data.AccountInfoVO;
 
-import com.team.computer.data.SsdInfoVO;
 
 @Mapper
 public interface AdminMapper {
