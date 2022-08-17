@@ -74,14 +74,13 @@ public class ProductAPIController {
 
         m.put("List", list);
         m.put("ListCnt", prod_mapper.selectListCnt((num-1)*10, keyword,type,search,ordertype));
+
+
         List<String> codiStr = new LinkedList<String>() ;
         for (String tempStr : prod_mapper.selectProductColumn(type+"_info"))
         {
-             codiStr.add(tempStr.replace(seq_type, "")) ;
-             
-            
+            codiStr.add(tempStr.replace(seq_type, "")) ;
         }
-        
         m.put("column",codiStr) ;
         m.put("column_kr",prod_mapper.selectProductColumnComment(type+"_info")) ;
         return m;
@@ -92,11 +91,21 @@ public class ProductAPIController {
         String seq_type = utils.getTableNameBySeqType(type) ;
         Map<String, Object> temp = prod_mapper.selectProductDetailBySeq(type+"_info", seq_type, seq);
         Map<String, Object> data = new LinkedHashMap<String,Object>() ;
+        Map<String, Object> pdata = new LinkedHashMap<String, Object>() ;
         for (Entry<String, Object> entrySet : temp.entrySet())
         {
-            data.put(entrySet.getKey().replace(seq_type, ""),entrySet.getValue() ) ;
-        
+            pdata.put(entrySet.getKey().replace(seq_type, ""),entrySet.getValue() ) ;
         }
+        System.out.println(pdata);
+
+        List<String> codiStr = new LinkedList<String>() ;
+        for (String tempStr : prod_mapper.selectProductColumn(type+"_info"))
+        {
+            codiStr.add(tempStr.replace(seq_type, "")) ;
+        }
+        data.put("data",pdata) ;
+        data.put("column",codiStr) ;
+        data.put("column_kr",prod_mapper.selectProductColumnComment(type+"_info")) ;
         return data;
     }
 

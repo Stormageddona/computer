@@ -15,10 +15,12 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                 for (let i = 0 ; i < r.column.length ; i++)
                 {
                     tempcolumn.push(r.column_kr[i] + " : " + eval("r.List["+e+"]."+r.column[i]) )
+
                 }
                 List.push(tempcolumn)
             }
-            console.log(List)
+            console.log(List[0])
+            
             
 
 
@@ -45,7 +47,7 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                                 '<p>'+r.List[i].name+'('+r.List[i].model_name+')</p>'+
                             '</div>'+
                             '<div class="product_summary_box">'+
-                                '<p> 저장소켓 갯수 : '+r.List[i].save_socket_num+' / 케이스 크기 : '+r.List[i].size+' / 사용가능 보드'+r.List[i].use_board+'</p>'+
+                                '<p> '+r.List[i]+' : '+r.List[i].save_socket_num+' / 케이스 크기 : '+r.List[i].size+' / 사용가능 보드'+r.List[i].use_board+'</p>'+
                             '</div>'+
                         '</div>'+
 
@@ -68,70 +70,27 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                     $(".product_box").append(tag);
 
                     $(".product_summary_box p").html("");
-                    let release = new Date(r.List[i].release_dt) ;
-                    let date = release.getFullYear() + "-" + release.getMonth() + "-" + release.getDate();
-                    let prod_summary =
-                        // 공용 내용
-                        '<span class="'+date+'">출시일 : '+date+'</span> '+
-                        '<span class="'+r.List[i].company+'">제조사 : '+r.List[i].company+'</span> '+
+                    for(e=0; e < r.column.length; e++){
+                        let release = new Date(r.List[i].release_dt) ;
+                        let date = release.getFullYear() + "-" + release.getMonth() + "-" + release.getDate();
+                        if(r.column_kr[e] == "이름" || r.column_kr[e] == "이미지" || r.column_kr[e] == "모델명" || r.column_kr[e] == "가격" || r.column_kr[e] == "등록일") continue;
+                        if (r.column_kr[e] == "출시일") 
+                        {$(".product_summary_box p").append(r.column_kr[e] + ":" + date+" / ") ;
+                        continue ;}
 
-                        // etc 기타 공용
-                        '<span class="'+r.List[i].type+'">타입 : '+r.List[i].type+'</span> '+
-                        '<span class="'+r.List[i].volume+'">용량 : '+r.List[i].volume+'</span> '+
-
-                        // cpu
-                        '<span class="'+r.List[i].clock+'">기본클럭 : '+r.List[i].clock+'</span> '+
-                        '<span class="'+r.List[i].thread_num+'">쓰레드 갯수 : '+r.List[i].thread_num+'</span> '+
-                        '<span class="'+r.List[i].core_num+'">코어갯수 : '+r.List[i].core_num+'</span> '+
-                        '<span class="'+r.List[i].cache+'">L3 캐쉬 :'+r.List[i].cache+'</span> '+
-                        '<span class="'+r.List[i].graphic+'">내장그래픽 유무 : '+r.List[i].graphic+'</span> '+
-
-                        // gpu 그래픽카드
-                        '<span class="'+r.List[i].boost_clock+'">부스트 클럭 : '+r.List[i].boost_clock+'Hz</span> '+
-                        '<span class="'+r.List[i].dp_num+'">출력단자 : DP'+r.List[i].dp_num+', HDMI'+r.List[i].hdmi_num+'</span> '+
-                        '<span class="'+r.List[i].interface+'">인터페이스 : '+r.List[i].interface+',</span> '+
-                        '<span class="'+r.List[i].length+'">크기 : '+r.List[i].length+'</span> '+
-                        '<span class="'+r.List[i].lineup+'">라인업 : '+r.List[i].lineup+'</span> '+
-                        '<span class="'+r.List[i].memory_volume+'">메모리 용량 : '+r.List[i].memory_volume+'</span> '+
-                        '<span class="'+r.List[i].power_use+'">파워 사용량 : '+r.List[i].power_use+'</span> '+
-
-                        // cooler 쿨러
-                        '<span class="'+r.List[i].size+'">사이즈 : '+r.List[i].size+'</span> '+
-                        '<span class="'+r.List[i].noize+'">소음 : '+r.List[i].noize+'</span> '+
-
-                        // memory 메모리
-                        '<span class="'+r.List[i].clock+'">타입 : '+r.List[i].type+'</span> '+
-
-
-                        // case 케이스
-                        '<span class="'+r.List[i].use_board+'">사용가능 보드 : '+r.List[i].use_board+'</span> '+
-                        '<span class="'+r.List[i].save_socket_num+'">저장소켓 : '+r.List[i].save_socket_num+'</span> '+
-
-                        // mainboard 메인보드
-                        '<span class="'+r.List[i].fomr_factor+'">폼팩터 : '+r.List[i].fomr_factor+'</span> '+
-                        '<span class="'+r.List[i].power_supply+'">파워 서플라이 : '+r.List[i].power_supply+'</span> '+
-                        '<span class="'+r.List[i].memory_version+'">메모리 버전 : '+r.List[i].memory_version+'</span> '+
-                        '<span class="'+r.List[i].memory_socket+'">메모리 소켓 : '+r.List[i].memory_socket+'</span> '+
-                        '<span class="'+r.List[i].pclex16_num+'">pclex16 : '+r.List[i].pclex16_num+'</span> '+
-                        '<span class="'+r.List[i].pclex1_num+'">pclex1 : '+r.List[i].pclex1_num+'</span> '+
-                        '<span class="'+r.List[i].sata_version+'">SATA버젼 : '+r.List[i].sata_version+'</span> '+
-                        '<span class="'+r.List[i].sata_num+'">사타케이블 수 : '+r.List[i].sata_num+'</span> '+
-
-                        // hdd 하드디스크, ssd 공용
-                        '<span class="'+r.List[i].read_speed+'">읽기속도 : '+r.List[i].read_speed+'</span> '+
-                        '<span class="'+r.List[i].write_speed+'">쓰기속도 : '+r.List[i].write_speed+'</span> '+
-
-                        // power 파워
-                        '<span class="'+r.List[i].reted_power+'">쓰기속도 : '+r.List[i].reted_power+'</span> '+
-                        '<span class="'+r.List[i].size+'">쓰기속도 : '+r.List[i].size+'</span> '+
-
-                        // ssd
-                        '<span class="'+r.List[i].standard+'">쓰기속도 : '+r.List[i].standard+'</span> '+
-                        '<span class="'+r.List[i].interface+'">쓰기속도 : '+r.List[i].interface+'</span> '
-                        $(".product_summary_box p").append(prod_summary)
-                        $("span.undefined").hide();
-            }
+                        let appendCol =  r.column_kr[e] + " : " + eval("r.List["+i+"]."+r.column[e]);
+                        console.log(e +"," +r.column.length)
+                        if (e != r.column.length-1)
+                        appendCol = appendCol + " / "
+                        
+                        $(".product_summary_box p").append(appendCol);
+                    }
+                    
+                    
+                }
         }
+    
+
 
                 
                 // console.log("페이지 A : "+r.ListCnt);

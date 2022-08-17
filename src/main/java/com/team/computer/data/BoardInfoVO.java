@@ -16,5 +16,7 @@ public class BoardInfoVO {
     private Date bdi_mod_dt;
     private Date bdi_del_dt;
 
-    private String img_src;
+    private String aci_id;
+    private String aci_nickname;
+    private Integer comment_cnt;
 }
