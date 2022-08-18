@@ -1,3 +1,4 @@
+let startPage=0;
 $(function()
 {
     $(".mod_box").hide()
@@ -99,10 +100,12 @@ $(function()
     
 })
 
-function getList(keyword)
+function getList(keyword,page)
 {
+    if(page == null || page == undefined) page =1;
+    if(keyword == null || keyword == undefined) keyword="";
     $.ajax({
-        url:"/api/admin/account?grade=1&keyword="+keyword+"&search_type=id",
+        url:"/api/admin/account?grade=1&keyword="+keyword+"&offset="+page+"&search_type=id",
         type:"get",
         success:function(result){
             console.log(result)
@@ -136,6 +139,21 @@ function getList(keyword)
                     '</tr>';
                 $(".user_list").append(tag)
             }
+            $(".page_area").html("");
+            for(let i=startPage; i<(result.pageCount>(startPage+10)?(startpage+10):result.pageCount); i++){
+                if(startPage >10){
+                    $(".page_area").append("<button class='prev_page'>이전페이지</button>")
+                }
+                if(result.pageCount == (startPage+10)) {
+                    $(".page_area").append("<button class='next_page'>다음페이지</button>")
+                }
+                $(".page_area").append("<button>"+(i+1)+"</button>") 
+                $(".page_area button").click(function(){
+                    let page = $(this).html();
+                    getList(keyword,page);
+                })
+            }
+
             $(".modify_btn").click(function(){
                 $(".mod_box").show()
                 let e = $(this).attr("data-seq")
