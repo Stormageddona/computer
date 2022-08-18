@@ -36,6 +36,9 @@
                     </tbody>
                 </table>
             </div>
+            <div class="pager_area">
+                
+            </div>
             <form action="/board/list" id="search_form">
                 <input type="text" id="keyword">
                 <button type="submit">검색</button>

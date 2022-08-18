@@ -64,4 +64,6 @@
     <delete id="deleteProductBySeq">
         delete from ${type} where ${typeseq} = #{seq}
     </delete>
+    <!-- 제품 추가 -->
+    <insert
 </mapper>
