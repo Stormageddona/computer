@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/assets/css/header.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" 
     integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -24,6 +25,7 @@
         let user = "${user}"
     </script>
     <script src="/assets/js/util.js"></script>
+    <script src="/assets/js/header/header.js"></script>
     <!-- <script src="/assets/js/header.js"></script> -->
 
 </head>
@@ -62,9 +64,9 @@
                                 <li><a href="">파츠1</a></li>
                         </ol> -->
                     </li>
-                    <li><a href="">견적페이지</a></li>
+                    <li><a href="/estimate">견적페이지</a></li>
                     <li><a href="/board/list">커뮤니티</a></li>
-                    <li><a href="">1:1질문</a></li>
+                    <li><a href="/qna/list">1:1질문</a></li>
                     <li><a href="/admin/account">관리자 페이지</a></li>
                 </ul>
                 <a href="">

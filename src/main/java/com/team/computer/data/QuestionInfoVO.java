@@ -17,4 +17,5 @@ public class QuestionInfoVO {
     private Date qsi_del_dt;
 
     private String img_src;
+    private String asi_comment;
 }

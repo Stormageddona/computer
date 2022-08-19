@@ -25,4 +25,11 @@ public class BoardAPIController {
         m.put("boardCnt", board_mapper.selectBoardListCnt((page-1)*10, keyword));
         return m;
     }
+
+    @GetMapping("/detail")
+    public Map<String, Object> getBoardDetail(@RequestParam Integer seq) {
+        Map<String, Object> m = new LinkedHashMap<String, Object>();
+        m.put("boardDetailInfo", board_mapper.selectBoardDetail(seq));
+        return m;
+    }
 }

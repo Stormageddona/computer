@@ -42,7 +42,7 @@ public class ManageAPIController {
     {
         Map<String,Object> map = new LinkedHashMap<String,Object>();
         
-        prod_mapper.insertProduct()
+        // prod_mapper.insertProduct()
 
         return map;
     }
