@@ -15,4 +15,7 @@ public class BoardCommentInfoVO {
     private Date bcmi_reg_dt;
     private Date bcmi_mod_dt;
     private Date bcmi_del_dt;
+    private Integer aci_seq;
+    private String aci_id;
+    private String aci_nickname;
 }

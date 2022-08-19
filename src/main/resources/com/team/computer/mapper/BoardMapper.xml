@@ -28,4 +28,28 @@
         on a.bdi_aci_seq = b.aci_seq
         where bdi_status = 1 and bdi_seq = #{seq}
     </select>
+
+    <select id="selectBoardDetailComment" resultType="com.team.computer.data.BoardCommentInfoVO">
+        SELECT a.*, b.aci_seq, b.aci_id, b.aci_nickname
+        FROM board_comment_info a
+        left outer join account_info b
+        on a.bcmi_aci_seq = b.aci_seq
+        where bcmi_bdi_seq = #{seq}
+        limit 10 offset #{offset}
+    </select>
+    <select id="selectBoardDetailCommentCnt" resultType="java.lang.Integer">
+        SELECT ceil(count(*)/10) from board_comment_info
+        limit 10 offset #{offset}
+    </select>
+
+    <insert id="insertBoardDetailComment">
+        INSERT INTO board_comment_info
+            (bcmi_aci_seq, bcmi_bdi_seq, bcmi_comment, bcmi_status)
+        VALUES
+            (#{bcmi_aci_seq}, #{bcmi_bdi_seq}, #{bcmi_comment}, 1);
+        <!-- INSERT INTO board_comment_info
+            (bcmi_aci_seq, bcmi_bdi_seq, bcmi_comment, bcmi_imgs, bcmi_status)
+        VALUES
+            (#{bcmi_aci_seq}, #{bcmi_bdi_seq}, #{bcmi_comment}, #{bcmi_imgs}, 1); -->
+    </insert>
 </mapper>
