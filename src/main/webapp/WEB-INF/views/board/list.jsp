@@ -42,6 +42,7 @@
             <form action="/board/list" id="search_form">
                 <input type="text" id="keyword">
                 <button type="submit">검색</button>
+                <button onclick="location.href='/board/form'">글 쓰기</button>
             </form>
 
         </div>
