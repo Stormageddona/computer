@@ -1,9 +1,5 @@
 package com.team.computer.mapper;
 
-<<<<<<< HEAD
-import java.util.LinkedList;
-=======
->>>>>>> b7663dc649ea1a8ded1ab446dfa7b22bac2628fd
 import java.util.List;
 import java.util.Map;
 
