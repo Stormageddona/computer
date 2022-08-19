@@ -63,7 +63,7 @@ $(function()
             aci_phone : $(".add_phone").val(),
             aci_nickname : $(".add_nickname").val(),
             aci_birth : $(".add_birth").val(),
-            aci_grade : $(".add_grade option:selected").val(),
+            aci_grade : $(".add_grade option:selected").val()
         }        
         $.ajax({
             url:"/api/admin/add_account",
@@ -101,10 +101,12 @@ $(function()
     
 })
 
-function getList(keyword)
+function getList(keyword, page)
 {
+    if(page == null || page == undefined) page = 1;
+    if(keyword == null || keyword == undefined) keyword = "";
     $.ajax({
-        url:"/api/admin/account?grade=2&keyword="+keyword+"&search_type=id",
+        url:"/api/admin/account?grade=2&keyword="+keyword+"&offset="+page+"&search_type=id",
         type:"get",
         success:function(result){
             console.log(result)
@@ -146,6 +148,11 @@ function getList(keyword)
                     $(".page_area").append("<button class='prev_page'>이전페이지</button>")
                 }
                 $(".page_area").append("<button>"+(i+1)+"</button>")
+                $(".page_area button").click(function(){
+                    let page = $(this).html();
+                    getList(keyword, page);
+                    console.log(page);
+                })
                 if(result.pageCount==(startPage+10)){
                     $(".page_area").append("<button class='next_page'>다음페이지</button>")
                 }

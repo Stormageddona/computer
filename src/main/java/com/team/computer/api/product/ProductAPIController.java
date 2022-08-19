@@ -68,8 +68,8 @@ public class ProductAPIController {
                 String str = entrySet.getKey().replace(seq_type, "") ;
                 data.put(str,entrySet.getValue() ) ;
             }
-            data.put("type",(String)i.get("tbl_name") ) ;
-
+            data.put("type", (String)i.get("tbl_name"));
+            System.out.println((String)i.get("tbl_name"));
             list.add(data) ;
         }
         
@@ -90,6 +90,7 @@ public class ProductAPIController {
 
     @GetMapping("/detail")
     public Map<String, Object> getDetailProduct(@RequestParam String type, @RequestParam Integer seq) {
+
         String seq_type = utils.getTableNameBySeqType(type) ;
         Map<String, Object> temp = prod_mapper.selectProductDetailBySeq(type+"_info", seq_type, seq);
         Map<String, Object> data = new LinkedHashMap<String,Object>() ;

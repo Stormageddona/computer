@@ -19,4 +19,5 @@ public class BoardInfoVO {
     private String aci_id;
     private String aci_nickname;
     private Integer comment_cnt;
+    private String bcmi_comment;
 }

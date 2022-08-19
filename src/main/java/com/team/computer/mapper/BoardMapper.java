@@ -10,4 +10,5 @@ import com.team.computer.data.BoardInfoVO;
 public interface BoardMapper {
     public List<BoardInfoVO> selectBoardList(Integer offset, String keyword);
     public Integer selectBoardListCnt(Integer offset, String keyword);
+    public BoardInfoVO selectBoardDetail(Integer seq);
 }

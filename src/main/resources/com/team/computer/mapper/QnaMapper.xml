@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.computer.mapper.QnaMapper">
+    <select id="selectQnaList" resultType="com.team.computer.data.QuestionInfoVO">
+        select a.*, b.asi_comment
+            from question_info a
+        left outer join answer_info b
+        on a.qsi_seq = b.asi_qsi_seq
+        where qsi_comment like '%${keyword}%'
+        limit 15 offset #{offset}
+    </select>
+    <select id="selectTotalPage" resultType="java.lang.Integer">
+        select ceil(count(*)/15) from question_info
+        where qsi_comment like '%${keyword}%'
+    </select>
+</mapper>
+
+
+
+
+
