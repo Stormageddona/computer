@@ -10,4 +10,5 @@ import com.team.computer.data.QuestionInfoVO;
 public interface QnaMapper {
     public List<QuestionInfoVO> selectQnaList(String keyword,Integer offset);
     public Integer selectTotalPage(String keyword);
+    public QuestionInfoVO selectQnaDetail(Integer seq);
 }

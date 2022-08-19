@@ -24,4 +24,10 @@ public class QnaAPIController {
         map.put("pageCount", qna_mapper.selectTotalPage(keyword));
         return map;
     }
+    @GetMapping("/detail")
+    public Map<String,Object> getQnaDetail(@RequestParam Integer seq) {
+        Map<String,Object> map = new LinkedHashMap<String,Object>();
+        map.put("qnaDetail", qna_mapper.selectQnaDetail(seq));
+        return map;
+    }
 }
