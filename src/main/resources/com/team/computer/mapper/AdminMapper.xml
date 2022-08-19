@@ -15,14 +15,15 @@
                 <if test="search_type == 'phone' ">aci_phone</if>
             like '%${keyword}%'
         </if>
-        order by aci_reg_dt desc
+        order by aci_reg_dt asc
         limit 15 offset #{offset}
     </select>
     <!-- 페이지 수 -->
     <select id="selectTotalPage" resultType="java.lang.Integer">
         select ceil(count(*)/15) from account_info
+    where aci_grade = #{grade}
     <if test="search_type !=null">
-    where
+    and
         <if test="search_type == 'id' ">aci_id</if>
         <if test="search_type == 'name' ">aci_name</if>
         <if test="search_type == 'nickname' ">aci_nickname</if>
