@@ -25,10 +25,15 @@ import com.team.computer.util.utils;
 public class ProductAPIController {
     @Autowired ProductMapper prod_mapper;
 
-    @GetMapping("/testcase")
-    public Map<String, Object> getProductCaseList(@RequestParam Integer count) {
+    @GetMapping("/test/{type}")
+    public Map<String, Object> getProductList(@PathVariable String type ,@RequestParam Integer count) {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
-        
+        List<String> str = prod_mapper.selectProductColumn(type+"_info") ;
+        for (String i : str)
+        {
+            
+        }
+
         for (Integer i = 0 ; i < count ; i++)
         {
             CaseInfoVO temp = new CaseInfoVO() ;
@@ -69,7 +74,7 @@ public class ProductAPIController {
                 data.put(str,entrySet.getValue() ) ;
             }
             data.put("type", (String)i.get("tbl_name"));
-            System.out.println((String)i.get("tbl_name"));
+            // System.out.println((String)i.get("tbl_name"));
             list.add(data) ;
         }
         
@@ -99,7 +104,7 @@ public class ProductAPIController {
         {
             pdata.put(entrySet.getKey().replace(seq_type, ""),entrySet.getValue() ) ;
         }
-        System.out.println(pdata);
+        // System.out.println(pdata);
 
         List<String> codiStr = new LinkedList<String>() ;
         for (String tempStr : prod_mapper.selectProductColumn(type+"_info"))

@@ -9,8 +9,11 @@ let search = null ;
 let ordertype = null ;
 let column_kr = new Array();
 let column = new Array();
+let Listcolumn_kr = new Array()
+let Listcolumn = new Array()
 $(function()
 {
+    $(".modify_area").hide()
     $(".add_area").hide()
     if(type == 1) prod = "cpu" ;
     else if(type == 2) prod = "mainboard" ;
@@ -31,15 +34,13 @@ $(function()
         '<td></td>';
     $(".product_table thead").html(tag)
     let data = getData(prod,page,keyword,desc,search,ordertype)
-
     $.ajax
     ({
         url:"/api/product/add/"+prod, type:"get",
         success:function(result)
         {
             console.log(result)
-            let Listcolumn_kr = new Array()
-            let Listcolumn = new Array()
+
             $(".add_btn").click(function()
             {
                 $(".add_area").show()
@@ -47,51 +48,8 @@ $(function()
                 
                 // console.log(result.column)
                 // console.log(result.column_kr)
-                let tempArr_kr = new Array();
-                let temp = new Array();
-                
-                for(let i=0; i<result.column_kr.length; i++) {
-                    tempArr_kr.push(result.column_kr[i]);
-                }
-            
-                // {
-                //     console.log(eval(tempArr_kr[i]))
-                // }
-                
-                
-                for (let i=0; i<tempArr_kr.length; i++)
-                {
-                    for (let e=0; e<tempArr_kr.length; e++)
-                    {
-                        console.log(tempArr_kr[e])
-                        if ((tempArr_kr[e] == "이미지" && i == 0) || (tempArr_kr[e] == "이름" && i == 1) ||
-                        (tempArr_kr[e] == "모델명" && i == 2) || (tempArr_kr[e] == "가격" && i == 3) ||
-                        (tempArr_kr[e] == "제조사" && i == 4) || (tempArr_kr[e] == "출시일" && i == 5) ||
-                        (tempArr_kr[e] != null && i >= 6)) 
-                        {
-                            tempArr_kr[e] = null
-                            temp.push(e)
-                            // tempArr_kr.splice(e,1)
-                            break;
-                        }
-                    }
-                    // temp.push(e)
-                    // console.log(e)
-                }
-                console.log(temp)
-                console.log(tempArr_kr)
-                console.log(result.column_kr)
 
-                for (let i = 0 ; i < temp.length ; i++)
-                {
-                    Listcolumn_kr.push(result.column_kr[temp[i]])
-                    Listcolumn.push(result.column[temp[i]])
-                }
-                
-
-                
-
-
+                getcolumnData(result)
                 for (let i=0; i < Listcolumn_kr.length ; i++)
                 {
                     if (Listcolumn_kr[i] == "번호" || Listcolumn_kr[i] == "등록일") continue ;
@@ -110,29 +68,46 @@ $(function()
                     let tag = '<span>' + Listcolumn_kr[i] + '</span><input type="text" class="'+ Listcolumn[i] +'"><br>'
                     $(".add_box").append(tag)
                 }
+                console.log(Listcolumn_kr)
                 
             })
             $(".add_submit").click(function()
             {
                 if (!confirm("제품을 등록 하시겠습니까?")) return ;
-                console.log(Listcolumn[0])            
                 let data = {} ;   
                 for (let i = 0 ; i < Listcolumn.length ; i++)
                 {
                     data[Listcolumn[i]] = $("."+[Listcolumn[i]]).val()
                 }
-
-                console.log(data)
                 $.ajax
                 ({
                     url:"/api/admin/product/"+prod , contentType:"application/json", 
                     data:JSON.stringify(data), type:"put",
                     success:function(result)
                     {
-                        
+                        alert(result.message);
+                        location.reload();
                     }
                 })
-        
+            })
+            $(".modify_submit").click(function()
+            {
+                if (!confirm("제품을 수정 하시겠습니까?")) return ;
+                let data = {} ;   
+                for (let i = 0 ; i < Listcolumn.length ; i++)
+                {
+                    data[Listcolumn[i]] = $("."+[Listcolumn[i]]).val()
+                }
+                $.ajax
+                ({
+                    url:"/api/admin/product/"+prod+"?seq="+$(this).attr("data-seq") , contentType:"application/json", 
+                    data:JSON.stringify(data), type:"patch",
+                    success:function(result)
+                    {
+                        alert(result.message);
+                        location.reload();
+                    }
+                })
             })
         }
     })
@@ -212,6 +187,48 @@ function deleteProduct(num)
     })
 }
 
+function getcolumnData(result)
+{
+    console.log(result)
+    let tempArr_kr = new Array();
+    let temp = new Array();
+    
+    for(let i=0; i<result.column_kr.length; i++) {
+        tempArr_kr.push(result.column_kr[i]);
+    }
+    for (let i=0; i<tempArr_kr.length; i++)
+    {
+        for (let e=0; e<tempArr_kr.length; e++)
+        {
+            if ((tempArr_kr[e] == "이미지" && i == 0) || (tempArr_kr[e] == "이름" && i == 1) ||
+            (tempArr_kr[e] == "모델명" && i == 2) || (tempArr_kr[e] == "출고가" && i == 3) ||
+            (tempArr_kr[e] == "제조사" && i == 4) || (tempArr_kr[e] == "출시일" && i == 5) ||
+            (tempArr_kr[e] != null && i >= 6)) 
+            {
+                tempArr_kr[e] = null
+                temp.push(e)
+                // tempArr_kr.splice(e,1)
+                break;
+            }
+        }
+        // temp.push(e)
+        // console.log(e)
+    }
+    Listcolumn_kr = new Array()
+    Listcolumn = new Array()
+    for (let i = 0 ; i < temp.length ; i++)
+    {
+        Listcolumn_kr.push(result.column_kr[temp[i]])
+        Listcolumn.push(result.column[temp[i]])
+    }
+    let data = new Array()
+    data.push(Listcolumn)
+    data.push(Listcolumn_kr)
+    return data
+}
+
+
+
 function getData(prod,page,keyword,desc,search,ordertype)
 {
     return $.ajax
@@ -220,6 +237,7 @@ function getData(prod,page,keyword,desc,search,ordertype)
         type:"get",
         success:function(result)
         {
+
             $(".product_table tbody").html("")
             for (let i = 0 ; i < result.List.length;i++)
             {
@@ -231,16 +249,52 @@ function getData(prod,page,keyword,desc,search,ordertype)
                     '<td>' + result.List[i].price + '</td>' +
                     '<td>' + result.List[i].release_dt + '</td>' +
                     '<td>' + result.List[i].reg_dt +'</td>' +
+                    '<td><button class="modify_btn" data-seq="'+result.List[i].seq+'" >수정</td>' +
                     '<td><button class="delete_btn" onClick=deleteProduct(' + result.List[i].seq + ')>삭제</td>' +
                 '</tr>'
                 $(".product_table tbody").append(tag)
-
             }
 
+            //제품 수정
+            $(".modify_btn").click(async function()
+            {
+                let data =  getcolumnData(result)
+                let Listcolumn_kr = data[1]
+                let Listcolumn = data[0]
+                let seq = $(this).attr("data-seq") ;
+                $(".modify_submit").attr("data-seq",seq) ;
+                $.ajax
+                ({
+                    url:"/api/admin/product/"+prod+"?seq="+seq,type:"get",
+                    success:function(r)
+                    {
+                        $(".modify_box").html("")
+                        for (let i=0; i < Listcolumn_kr.length ; i++)
+                        {
+                            if (Listcolumn_kr[i] == "번호" || Listcolumn_kr[i] == "등록일") continue ;
+                            if (Listcolumn_kr[i] == "이미지") 
+                            {
+                                let tag = 
+                                '<div class="img_area"></div>' +
+                                Listcolumn_kr[i] + 
+                                '<form class="img_form" hidden>'+
+                                    '<input type="file" id="input_image" name="file" accept="image/gif,image/jpeg,image/png" onchange="imgupload($(this))">'+
+                                '</form>'+
+                                '<button class="add_image" onclick="document.getElementById(\'input_image\').click()"><i class="fas fa-image"></i></button><br>';
+                                $(".modify_box").append(tag)
+                                continue ;
+                            }
+                            let tag = '<span>' + Listcolumn_kr[i] + '</span><input type="text" class="'+ Listcolumn[i] +'" value="'+ r[Listcolumn[i]] +'"><br>' ;
+                            
+                            
+                            $(".modify_box").append(tag)
+                        }
+                        $(".modify_area").show()
+                    } 
+                })
+            })
         }
     })
-
-
 }
 
 function orderProductAdd(result)

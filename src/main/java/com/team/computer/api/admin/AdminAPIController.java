@@ -96,7 +96,7 @@ public class AdminAPIController {
         }
         map.put("status", true);
         map.put("message", "회원정보가 추가되었습니다.");
-        System.out.println(data);
+        // System.out.println(data);
         return map;
     }
 }
