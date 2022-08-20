@@ -11,6 +11,8 @@ let column_kr = new Array();
 let column = new Array();
 let Listcolumn_kr = new Array()
 let Listcolumn = new Array()
+let img_file = null ;
+
 $(function()
 {
     $(".modify_area").hide()
@@ -81,7 +83,7 @@ $(function()
                 }
                 $.ajax
                 ({
-                    url:"/api/admin/product/"+prod , contentType:"application/json", 
+                    url:"/api/admin/product/"+prod+"?img="+img_file , contentType:"application/json", 
                     data:JSON.stringify(data), type:"put",
                     success:function(result)
                     {
@@ -136,7 +138,6 @@ $(function()
 
 })
 
-let img_files = new Array() ;
 function imgupload(data, type)
 {
     let form = $(".img_form");
@@ -157,14 +158,18 @@ function imgupload(data, type)
                 alert(result.message);
                 return;
             }
-            let tag = '<div class="board_img" filename="' + result.file + '" style="background-image:url(/images/product/'+result.file+'?temp=true)">'+
+            if (img_file != null) $.ajax({url:"/image/delete"+img_file, type:"delete"})
+
+            let tag = '<div class="board_img" filename="' + result.file + '" style="background-image:url(/images'+result.file+'?temp=true)">'+
             '<button onClick=deleteImg("'+result.file+'")>&times;</button>'+
             '</div>';
-            img_files.push(result.file) ;
-            $(".img_area").append(tag) ;
+            console.log(result)
+            img_file = result.file ;
+            $(".img_area").html(tag) ;
         }
     })
 }
+
 
 function pagerClick(num)
 {
@@ -297,9 +302,20 @@ function getData(prod,page,keyword,desc,search,ordertype)
     })
 }
 
+
+function deleteImg(filename)
+{
+    if (!confirm("이미지를 지우시겠습니까? 지운후에는 복구할수 없습니다.")) return ;
+
+    
+    $.ajax  
+    ({
+        url:"/image/delete"+filename, type:"delete"
+    })
+}
+
 function orderProductAdd(result)
 {
-
     if (result == "번호" || result == "등록일") return ;
     if (result == "이미지") 
     {
