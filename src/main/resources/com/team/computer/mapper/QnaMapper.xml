@@ -3,16 +3,28 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.computer.mapper.QnaMapper">
     <select id="selectQnaList" resultType="com.team.computer.data.QuestionInfoVO">
-        select a.*, b.asi_comment
-            from question_info a
+        select
+	        a.qsi_seq, a.qsi_title, a.qsi_aci_seq, a.qsi_reg_dt, a.qsi_mod_dt,
+	        b.asi_aci_seq, b.asi_title, b.asi_reg_dt, b.asi_mod_dt, b.asi_qsi_seq,
+	        c.aci_name, c.aci_id
+        from question_info a
         left outer join answer_info b
         on a.qsi_seq = b.asi_qsi_seq
+        left outer join account_info c
+        on a.qsi_aci_seq = c.aci_seq = b.asi_aci_seq
         where qsi_comment like '%${keyword}%'
         limit 15 offset #{offset}
     </select>
     <select id="selectTotalPage" resultType="java.lang.Integer">
         select ceil(count(*)/15) from question_info
         where qsi_comment like '%${keyword}%'
+    </select>
+    <select id="selectQnaDetail" resultType="com.team.computer.data.QuestionInfoVO">
+    SELECT a.*, b.aci_id, b.aci_name
+        FROM question_info a
+        left outer join account_info b
+        on a.qsi_aci_seq = b.aci_seq
+        where qsi_seq = #{seq}
     </select>
 </mapper>
 

@@ -18,4 +18,14 @@ public class QuestionInfoVO {
 
     private String img_src;
     private String asi_comment;
+
+    // 1:1문의 추가 정보
+    private Integer asi_aci_seq;
+    private String asi_title;
+    private Date asi_reg_dt;
+    private Date asi_mod_dt;
+    private String aci_id;
+    private String aci_name;
+    private Integer asi_qsi_seq;
+
 }
