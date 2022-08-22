@@ -17,4 +17,8 @@ public class QnaController {
     public String getQnaDetail(@RequestParam @Nullable Integer seq){
         return "/qna/detail";
     }
+    @GetMapping("/qna_form")
+    public String addQna() {
+        return "/qna/qna_form";
+    }
 }

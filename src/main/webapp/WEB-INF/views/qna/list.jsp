@@ -9,11 +9,6 @@
     <script src="/assets/js/qna/qna.js"></script>
 </head>
 <body>
-    <button class="add_question">문의추가</button>
-    <div class="qna_search">
-        <input type="text" class="qna_keyword" placeholder="검색어 입력" value="${keyword}">
-        <button type="submit" class="submit_qna">검색</button>
-    </div>
     <div class="qna_title">
 
     </div>
@@ -43,6 +38,11 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="qna_search">
+        <input type="text" class="qna_keyword" placeholder="검색어 입력" value="${keyword}">
+        <button type="submit" class="submit_qna">검색</button>
+        <button onclick="location.href='/qna/qna_form'">글 쓰기</button>
     </div>
 </body>
 </html>

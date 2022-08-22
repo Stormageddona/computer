@@ -30,4 +30,11 @@ public class QnaAPIController {
         map.put("qnaDetail", qna_mapper.selectQnaDetail(seq));
         return map;
     }
+
+    @GetMapping("/qna_form")
+    public Map<String,Object> addQna() {
+        Map<String,Object> map = new LinkedHashMap<String,Object>();
+
+        return map;
+    }
 }
