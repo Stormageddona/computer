@@ -60,6 +60,33 @@
         WHERE
         table_schema = 'computer_db' AND table_name = #{table}
     </select>
+    
+    <!-- 제품 추가 -->
+    <insert id="insertProduct">
+        INSERT INTO ${type}
+        (
+            <foreach collection="data" item="value" index="key" separator=",">
+                ${key}
+            </foreach>
+        )
+        VALUES(
+            <foreach collection="data" item="value" index="idx" separator=",">
+                #{value}
+            </foreach>
+            );
+
+    </insert>
+
+    <!-- 제품 수정 -->
+    <update id="updateProduct">
+        UPDATE ${type}
+        SET 
+            <foreach collection="data" item="value" index="key" separator=",">
+                ${prefix}${key} = #{value}
+            </foreach>
+        WHERE 
+            ${prefix}seq = #{data.seq};
+    </update>
 
 </mapper>
     <!-- <select id="selectCaseList" resultType="com.team.computer.data.CaseInfoVO">

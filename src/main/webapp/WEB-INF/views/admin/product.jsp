@@ -29,7 +29,14 @@
             
         </div>
         <button class="add_submit">등록</button>
-        <button class="cancel">취소</button>
+        <button onclick="cancel()">취소</button>
+    </div>
+    <div class="modify_area">
+        <div class="modify_box">
+            
+        </div>
+        <button class="modify_submit">등록</button>
+        <button onclick="cancel()">취소</button>
     </div>
 </body>
 </html>

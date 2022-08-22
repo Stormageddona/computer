@@ -1,0 +1,119 @@
+.board_detail_wrap {
+    width: 1200px;
+    padding: 0  20px;
+    margin: 0 auto;
+    font-size: 0;
+}
+
+
+.board_detail_wrap .board_detail_wrap {
+    width: 100%;
+}
+.board_head_area {
+    padding: 10px 0;
+    border-top: 2px solid #222;
+    border-bottom: 1px solid #eee;
+}
+
+.board_head_area p {
+    font-size: 16px;
+    padding: 10px 0;
+    font-weight: 500;
+}
+
+.board_head_area .head_user_info {
+    display: inline-block;
+    width: 50%;
+    overflow: hidden;
+
+}
+
+.board_head_area .board_info {
+    display: inline-block;
+    text-align: right;
+    width: 50%;
+    overflow: hidden;
+}
+
+.board_head_area .head_user_info p span , .board_head_area .board_info p span {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.board_content_area {
+    padding: 10px 0;
+    margin-bottom: 20px;
+    min-height: 500px;
+}
+
+.board_content_area p {
+    font-size: 16px;
+}
+
+.board_comment_area {
+    border-top: 2px solid #222;
+}
+.comment_area {
+    width: 100%;
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.comment_area .comment_user , .comment_area .comment_summary , .comment_area .comment_reg_dt  {
+    display: inline-block;
+}
+
+.comment_area .comment_user {
+    width: 10%;
+}
+.comment_area .comment_summary {
+    width: 70%;
+}
+
+.comment_area .comment_reg_dt {
+    width: 20%;
+    text-align: right;
+}
+
+.comment_area .comment_user p, .comment_area .comment_summary p, .comment_area .comment_reg_dt p{
+    font-size: 16px;
+}
+
+.comment_save_area {
+    width: 100%;
+    padding: 10px;
+}
+
+.comment_save_area .user_name {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 65px;
+}
+
+.comment_save_area .user_name p {
+    font-size: 16px;
+}
+
+.comment_save_area .comment_summary {
+    display: inline-block;
+    width: 1070px;
+}
+
+.comment_save_area .comment_summary textarea {
+    width: 100%;
+}
+
+.comment_save_area .btn_area {
+    text-align: right;
+    margin-right: 20px;
+}
+
+.comment_pager_area {
+    width: 100%;
+    text-align: center;
+}
+
+.comment_pager_area a {
+    font-size: 14px;
+    text-align: center;
+}

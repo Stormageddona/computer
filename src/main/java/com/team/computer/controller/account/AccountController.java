@@ -50,7 +50,7 @@ public class AccountController {
     @GetMapping("/test")
     public String getTest123213() throws Exception {
         String encSeq = "5W1lkSvmI3LgzGXM+Q3Hdw==";
-        System.out.println(AESAlgorithm.Decrypt(encSeq));
+        // System.out.println(AESAlgorithm.Decrypt(encSeq));
         return "asdasd";
     }
 }

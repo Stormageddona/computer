@@ -26,7 +26,7 @@ $("document").ready(function(){
             let List = new Array();
             for (let e = 0 ; e < r.column.length ; e++)
             {   
-                Selectundefined = r.column_kr[e] + " : "+eval("r.data."+r.column[e])+" / "
+                Selectundefined = r.column_kr[e] + " : "+r[data[r[column[e]]]]+" / "
                 if(r.column_kr[e] == "이름" || r.column_kr[e] == "이미지" || r.column_kr[e] == "모델명" || r.column_kr[e] == "가격" || r.column_kr[e] == "등록일") continue;
                 let release = new Date(r.data.release_dt) ;
                 let date = release.getFullYear() + "-" + release.getMonth() + "-" + release.getDate();

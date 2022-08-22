@@ -15,7 +15,8 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                 let tempcolumn = new Array() ;
                 for (let i = 0 ; i < r.column.length ; i++)
                 {
-                    tempcolumn.push(r.column_kr[i] + " : " + eval("r.List["+e+"]."+r.column[i]) )
+                    tempcolumn.push(r.column_kr[i] + " : " + r.List[e][r.column[i]])
+                    // tempcolumn.push(r.column_kr[i] + " : " + eval("r.List["+e+"]."+r.column[i]) )
 
                 }
                 List.push(tempcolumn)
@@ -78,9 +79,9 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                         if (r.column_kr[e] == "출시일") 
                         {$(".product_summary_box p").append(r.column_kr[e] + ":" + date+" / ") ;
                         continue ;}
-
-                        let appendCol =  r.column_kr[e] + " : " + eval("r.List["+i+"]."+r.column[e]);
-                        console.log(e +"," +r.column.length)
+                        
+                        let appendCol =  r.column_kr[e] + " : " + r.List[i][r.column[e]];
+                        // let appendCol =  r.column_kr[e] + " : " + eval("r.List["+i+"]."+r.column[e]);
                         if (e != r.column.length-1)
                         appendCol = appendCol + " / "
                         
