@@ -14,7 +14,7 @@
     <section class="board_detaile_section">
         <div class="board_detail_wrap">
             <div class="board_head_area">
-                <p>제목</p>
+                <input type="text">
                 <div class="head_user_info">
                     <p><span>유저명</span> | <span>작성일</span></p>
                 </div>

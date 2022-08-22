@@ -1,0 +1,30 @@
+.board_section_wrap {
+    width: 1200px;
+    margin: 0 auto;
+}
+.board_section_wrap h2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+    padding: 30px 0;
+}
+
+.board_section_wrap .board_list_box table {
+    width: 100%;
+}
+
+.board_section_wrap .board_list_box table tr th, .board_section_wrap .board_list_box table tr td {
+    padding: 10px;
+}
+
+.board_section_wrap .board_list_box table tr {
+    border-bottom: 1px solid #000;
+}
+
+.board_section_wrap .board_list_box table tr td {
+    text-align: center;
+}
+
+.board_section_wrap .board_list_box table tr td:nth-child(2) {
+    text-align-last: left;
+}

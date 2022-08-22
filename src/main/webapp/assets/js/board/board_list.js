@@ -37,7 +37,7 @@ function selectBoardList(keyword, page) {
                         '<td><a href="/board/detail?seq='+r.boardList[i].bdi_seq+'">'+r.boardList[i].bdi_title+'('+r.boardList[i].comment_cnt+')</a></td>'+
                         '<td class="board_writer">'+r.boardList[i].aci_nickname+'</td>'+
                         // '<td>'+r.boardList[i].+'조회수</td>'+
-                        '<td>조회수(추가예정)</td>'+
+                        '<td>(추가예정)</td>'+
                         '<td class="board_reg_dt">'+reg_date+'</td>'+
                     '</tr>';
                     $(".board_list_box table tbody").append(tag);

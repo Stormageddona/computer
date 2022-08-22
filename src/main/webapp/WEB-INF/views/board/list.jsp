@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/assets/js/board/board_list.js"></script>
+    <link rel="stylesheet" href="/assets/css/board_list.css">
     <title>Document</title>
 </head>
 <body>
@@ -16,6 +17,13 @@
             <h2>질문 게시판</h2>
             <div class="board_list_box">
                 <table>
+                    <colgroup>
+                        <col width="10%">
+                        <col width="*">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="10%">
+                    </colgroup>
                     <thead>
                         <tr>
                             <th>번호</th>
