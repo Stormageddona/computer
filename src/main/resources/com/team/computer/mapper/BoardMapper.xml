@@ -41,6 +41,12 @@
         SELECT ceil(count(*)/10) from board_comment_info
         limit 10 offset #{offset}
     </select>
+    
+    <insert id="insertBoardData">
+        INSERT INTO board_info
+        (bdi_aci_seq, bdi_title, bdi_comment, bdi_imgs)
+        VALUES(#{bdi_aci_seq},#{bdi_title},#{bdi_comment},#{bdi_imgs});
+    </insert>
 
     <insert id="insertBoardDetailComment">
         INSERT INTO board_comment_info

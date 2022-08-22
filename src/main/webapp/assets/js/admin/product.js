@@ -194,7 +194,6 @@ function deleteProduct(num)
 
 function getcolumnData(result)
 {
-    console.log(result)
     let tempArr_kr = new Array();
     let temp = new Array();
     

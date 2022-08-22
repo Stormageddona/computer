@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/board_detail.css">
+    <script src="/assets/js/board/board_reg.js"></script>
     <title>Document</title>
 </head>
 <body>
