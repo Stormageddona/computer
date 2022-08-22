@@ -78,7 +78,8 @@ public class FileAPIController {
     public Map<String,Object> putImageUpload(@PathVariable String type,@RequestPart MultipartFile file, @RequestParam @Nullable Boolean temp)
     {
         Map<String,Object> resultMap = new LinkedHashMap<String,Object>() ;
-        Path forderLocaion = Paths.get(path+"/images"+(temp!=null && temp?"/temp":type)) ;
+        String Location = temp!=null && temp?"/temp":"/"+type ;
+        Path forderLocaion = Paths.get(path+"/images"+Location) ;
         String fileName = file.getOriginalFilename() ;
         String[] fileNameSplit = fileName.split("\\.") ;
         String ext = fileNameSplit[fileNameSplit.length - 1] ;
@@ -106,7 +107,7 @@ public class FileAPIController {
         Long filesize = file.getSize() ;
         resultMap.put("status", true) ;
         resultMap.put("message", "파일 업로드 완료") ;
-        resultMap.put("file",saveFileName) ;
+        resultMap.put("file",Location+"/"+saveFileName) ;
         resultMap.put("ext",ext) ;
         resultMap.put("filesize",filesize) ;
 
@@ -147,11 +148,12 @@ public class FileAPIController {
     // }
 
 
-    @DeleteMapping("/image/delete/{filename}")
-    public  Map<String,Object> deleteImageFile(@PathVariable String filename)
+    @DeleteMapping("/image/delete/{type}/{filename}")
+    public  Map<String,Object> deleteImageFile(@PathVariable String type,@PathVariable String filename)
     {
         Map<String,Object> resultMap = new LinkedHashMap<String,Object>() ;
-        String filepath = path+"/images/"+filename ;
+        String filepath = path+"/images/"+type+"/"+filename ;
+        System.out.println(filepath);
         File deleteFile = new File(filepath) ;
         if (deleteFile.exists())
         {
@@ -168,6 +170,7 @@ public class FileAPIController {
         resultMap.put("message","파일이 삭제됬습니다.");
         return resultMap ;
     }
+
 
 
 }

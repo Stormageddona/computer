@@ -22,8 +22,7 @@ public interface AdminMapper {
     // 관리자 추가
     public void insertAdminAccountInfo(AccountInfoVO data);
 
-    // 제품 삭제
-    public void deleteProductBySeq(String type,String typeseq , Integer seq) ;
+
 
 }
 

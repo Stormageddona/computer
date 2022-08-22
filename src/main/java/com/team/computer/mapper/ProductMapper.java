@@ -17,6 +17,15 @@ public interface ProductMapper {
     public Map<String,Object> selectProductDetailBySeq(String table, String type, Integer seq) ;
     public List<String> selectProductColumn(String table) ;
     public List<String> selectProductColumnComment(String table) ;
+
+
+    // 제품 삭제
+    public void deleteProductBySeq(String type,String typeseq , Integer seq) ;
+    // 제품 추가
+    public void insertProduct(String type,Map<String,Object> data) ;
+    // 제품 수정
+    public void updateProduct(String type,String prefix,Map<String,Object> data) ;
+
     // public List<Map<String,Object>> selectCaseList(Integer offset, String keyword, Boolean desc);
 
     // public List<CoolerInfoVO> selectCoolerList(Integer offset, String keyword, Boolean desc);
