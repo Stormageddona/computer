@@ -1,0 +1,7 @@
+.ck.ck-editor {
+    width: 100%;
+}
+.ck-editor__editable {
+    height: 600px;
+    font-size: 14px;
+}
