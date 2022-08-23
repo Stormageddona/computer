@@ -6,10 +6,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team.computer.data.QuestionInfoVO;
 import com.team.computer.mapper.QnaMapper;
 
 @RestController
@@ -31,10 +34,12 @@ public class QnaAPIController {
         return map;
     }
 
-    @GetMapping("/qna_form")
-    public Map<String,Object> addQna() {
+    @PutMapping("/qna_form")
+    public Map<String,Object> addQna(@RequestBody QuestionInfoVO data) {
         Map<String,Object> map = new LinkedHashMap<String,Object>();
-
+        qna_mapper.insertQnaData(data);
+        map.put("status", true);
+        map.put("message", "등록되었습니다.");
         return map;
     }
 }

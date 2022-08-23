@@ -26,6 +26,7 @@ public class QuestionInfoVO {
     private Date asi_mod_dt;
     private String aci_id;
     private String aci_name;
+    private String aci_nickname;
     private Integer asi_qsi_seq;
 
 }

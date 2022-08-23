@@ -2,6 +2,7 @@ package com.team.computer.controller.qna;
 
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +15,8 @@ public class QnaController {
         return "/qna/list";
     }
     @GetMapping("/detail")
-    public String getQnaDetail(@RequestParam @Nullable Integer seq){
+    public String getQnaDetail(Model model,@RequestParam @Nullable Integer seq){
+        model.addAttribute("seq", seq);
         return "/qna/detail";
     }
     @GetMapping("/qna_form")

@@ -43,7 +43,7 @@ $(function(){
                     url:"/api/qna/detail?seq="+$(this).attr("data-seq"),
                     type:"get",
                     success:function(result){
-                        console.log(result); 
+                        console.log(result);
                     }
                 })
             })

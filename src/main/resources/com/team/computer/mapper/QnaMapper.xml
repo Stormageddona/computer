@@ -26,6 +26,11 @@
         on a.qsi_aci_seq = b.aci_seq
         where qsi_seq = #{seq}
     </select>
+    <insert id="insertQnaData">
+        INSERT INTO question_info
+        (qsi_aci_seq, qsi_title, qsi_comment)
+        VALUES (#{qsi_aci_seq}, #{qsi_title}, #{qsi_comment})
+    </insert>
 </mapper>
 
 
