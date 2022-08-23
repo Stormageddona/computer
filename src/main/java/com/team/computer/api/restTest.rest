@@ -1,0 +1,6 @@
+put http://localhost:8080/text/upload HTTP/1.1
+content-type:application/json
+
+{
+    "data":"테스트 텍스트 파일\n테스트\n\n테스트테스트"
+}

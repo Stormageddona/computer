@@ -1,0 +1,5 @@
+.info_area {width: 600px;height: 800px;margin-left: 300px; border: 1px solid #000;display: inline-block;}
+.product_box {width: 600px;height: 100px;border: 1px solid #000;display: block;}
+.img_box {width: 100px;height: 100px;display: inline-block;}
+.esti_area {width: 400px;height: 800px;margin-left: 20px; border: 1px solid #000;display: inline-block;}
+.esti {width: 380px;height: 40px;text-align: left; border: 1px solid #000;}

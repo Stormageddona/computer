@@ -73,7 +73,7 @@ public class ManageAPIController {
         map.put("message","정상적으로 추가되었습니다.") ;
         return map;
     }
-
+    
     @GetMapping("/{type}")
     public Map<String,Object> getProduct(@PathVariable String type,@RequestParam Integer seq)
     {

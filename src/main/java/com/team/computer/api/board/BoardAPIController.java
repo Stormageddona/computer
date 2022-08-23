@@ -1,10 +1,18 @@
 package com.team.computer.api.board;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.Nullable;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,14 +20,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team.computer.data.AccountInfoVO;
 import com.team.computer.data.BoardCommentInfoVO;
+import com.team.computer.data.BoardInfoVO;
 import com.team.computer.mapper.BoardMapper;
+import com.team.computer.mapper.ImageMapper;
 
 @RestController
 @RequestMapping("/api/board")
 public class BoardAPIController {
     @Autowired BoardMapper board_mapper;
-
+    @Autowired ImageMapper img_mapper ;
     @GetMapping("/list")
     public Map<String, Object> getBoardList(@RequestParam @Nullable Integer page, @RequestParam @Nullable String keyword) {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
@@ -45,5 +56,38 @@ public class BoardAPIController {
         m.put("status", true);
         m.put("msg", "등록되었습니다.");
         return m;
+    }
+    @Value("${spring.servlet.multipart.location}") String path;
+    @PutMapping("/post")
+    @Transactional
+    public Map<String,Object> putPost(@RequestBody BoardInfoVO data,HttpSession session) throws Exception
+    {
+        Map<String,Object> map = new LinkedHashMap<String,Object>() ;
+        AccountInfoVO user = (AccountInfoVO)session.getAttribute("user") ;
+        BoardInfoVO bidata = new BoardInfoVO() ;
+        bidata.setBdi_imgs("");
+        if (data.getImg_list() != null && data.getImg_list().size() > 0)
+        {
+            List<String> imglist = data.getImg_list() ;
+            for (String i : imglist)
+            {
+                Map<String,Object> s = new LinkedHashMap<String,Object>() ;
+                s.put("img_src",i.replace("temp", "board"));
+                img_mapper.insertImage(s);
+                bidata.setBdi_imgs(bidata.getBdi_imgs() + (bidata.getBdi_imgs()==""?"":",") + s.get("img_seq").toString());
+
+                File from = new File(path+"/images/temp/"+i) ;
+                File target = new File(path+"/images/board/"+i) ;
+                Files.move(from.toPath(),target.toPath(),StandardCopyOption.REPLACE_EXISTING) ;
+            }
+        }
+
+        bidata.setBdi_aci_seq(user.getAci_seq());
+        bidata.setBdi_title(data.getBdi_title());
+        bidata.setBdi_comment(data.getBdi_comment());
+        board_mapper.insertBoardData(bidata) ;
+        map.put("status",true) ;
+        map.put("message","게시글 등록이 완료되었습니다.") ;
+        return map ;
     }
 }

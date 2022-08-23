@@ -37,7 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class FileAPIController {
     @Value("${spring.servlet.multipart.location}") String path;
-    @GetMapping("/images/{type}/{filename}")
+    @GetMapping("/image/{type}/{filename}")
     public ResponseEntity<Resource> getImage(@PathVariable String type,@PathVariable String filename, HttpServletRequest request, @RequestParam @Nullable Boolean temp) throws Exception
     {
         String img_path = "/images/"+type ;
@@ -115,37 +115,37 @@ public class FileAPIController {
     }
 
 
-    // @PutMapping("/text/upload")
-    // @Transactional
-    // public  Map<String,Object> putTextFile(@RequestBody String data) throws IOException
-    // {
-    //     Map<String,Object> map = new LinkedHashMap<String,Object>() ;
-    //     Path forderLocaion = Paths.get(path+"/text") ;
-    //     Calendar c = Calendar.getInstance() ;
-    //     String saveFileName = StringUtils.cleanPath("text_" + c.getTimeInMillis() + ".txt") ;
-    //     File file = new File(forderLocaion+"/"+saveFileName) ;
-    //     BufferedWriter bw = new BufferedWriter(
-    //         new FileWriter(file,false   // true : 이어쓰기, false : 덮어쓰기
-    //             ))  ;
+    @PutMapping("/text/upload")
+    @Transactional
+    public  Map<String,Object> putTextFile(@RequestBody String data) throws IOException
+    {
+        Map<String,Object> map = new LinkedHashMap<String,Object>() ;
+        Path forderLocaion = Paths.get(path+"/text") ;
+        Calendar c = Calendar.getInstance() ;
+        String saveFileName = StringUtils.cleanPath("text_" + c.getTimeInMillis() + ".txt") ;
+        File file = new File(forderLocaion+"/"+saveFileName) ;
+        BufferedWriter bw = new BufferedWriter(
+            new FileWriter(file,false   // true : 이어쓰기, false : 덮어쓰기
+                ))  ;
                 
-    //     bw.write(data.getDetail());
-    //     bw.close();
-    //     map.put("file",saveFileName) ;
-    //     if (data.getComment() != null && data.getComment().length() > 0)
-    //     {
-    //         saveFileName = StringUtils.cleanPath("comment_" + c.getTimeInMillis() + ".txt") ;
-    //         file = new File(forderLocaion+"/"+saveFileName) ;
-    //         bw = new BufferedWriter(
-    //             new FileWriter(file,false   // true : 이어쓰기, false : 덮어쓰기
-    //                 ))  ;
-    //         bw.write(data.getComment());
-    //         bw.close();
-    //         map.put("comment",saveFileName) ;
-    //     }
-    //     map.put("status", true) ;
-    //     map.put("message", "파일 업로드 완료") ;
-    //     return map ;
-    // }
+        bw.write(data);
+        bw.close();
+        map.put("file",saveFileName) ;
+        // if (data.getComment() != null && data.getComment().length() > 0)
+        // {
+        //     saveFileName = StringUtils.cleanPath("comment_" + c.getTimeInMillis() + ".txt") ;
+        //     file = new File(forderLocaion+"/"+saveFileName) ;
+        //     bw = new BufferedWriter(
+        //         new FileWriter(file,false   // true : 이어쓰기, false : 덮어쓰기
+        //             ))  ;
+        //     bw.write(data.getComment());
+        //     bw.close();
+        //     map.put("comment",saveFileName) ;
+        // }
+        map.put("status", true) ;
+        map.put("message", "파일 업로드 완료") ;
+        return map ;
+    }
 
 
     @DeleteMapping("/image/delete/{type}/{filename}")
