@@ -43,9 +43,12 @@
     </select>
     
     <insert id="insertBoardData">
-        INSERT INTO board_info
+        <!-- INSERT INTO board_info
         (bdi_aci_seq, bdi_title, bdi_comment, bdi_imgs)
-        VALUES(#{bdi_aci_seq},#{bdi_title},#{bdi_comment},#{bdi_imgs});
+        VALUES(#{bdi_aci_seq},#{bdi_title},#{bdi_comment},#{bdi_imgs}); -->
+        INSERT INTO board_info
+        (bdi_aci_seq, bdi_title, bdi_comment)
+        VALUES(#{bdi_aci_seq},#{bdi_title},#{bdi_comment});
     </insert>
 
     <insert id="insertBoardDetailComment">

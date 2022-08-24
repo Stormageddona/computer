@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/assets/css/board_form.css">
 
     <script type="text/javascript" src="/assets/plugin/ckeditor/ckeditor.js"></script>
+    <script src="/assets/js/board/board_edit.js"></script>
 
     <!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
@@ -32,52 +33,8 @@
             <button id="btn_publish">
                 제출하기
             </button>
-            <script type="text/javascript">
-                CKEDITOR.replace(
-                    'ckedit' ,{
-                        height:500,
-                        filebrowserImageUploadUrl:'/api/ckedit/image/upload',
-                        filebrowserUploadUrl:'/Student/computer'
-                        // filebrowserUploadUrl:"/Student/computer"
-                    }
-                    );
-
-                CKEDITOR.on('dialogDefinnition', function(e){
-                    var dialogName = e.data.name;
-                    var dialogDefinnition = e.data.definition;
-
-                    switch(dialogName) {
-                        case 'image':
-                            // dialogDefinnition.removeContents('info');
-                            dialogDefinnition.removeContents('Link');
-                            dialogDefinnition.removeContents('advanced');
-                        break;
-                    }
-                })
-
-                $("#btn_publish").click(function(){
-                    alert(CKEDITOR.instances.ckedit.getData());
-                })
-            </script>
-
-            <!-- <script>
-                $(document).ready(function() {
-                    $('#summernote').summernote();
-                });
-            </script>
-
-            <div id="summernote"></div>  -->
-
-
-            <!-- <div id="classic">
+            <div class="test_div">
             </div>
-            <script>
-                ClassicEditor
-                    .create( document.querySelector( '#classic' ))
-                    .catch( error => {
-                        console.error( error );
-                    } );
-            </script> -->
 
 
 
