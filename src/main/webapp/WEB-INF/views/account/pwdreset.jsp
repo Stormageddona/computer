@@ -18,8 +18,8 @@
         $("#newpass_submit").click(function()
             {
                 if (!confirm("새로운 비밀번호로 변경하시겠습니까?")) return ;
-                console.log ($(this).attr("data-type"))
-                console.log ($("#input_newpass").val())
+                // console.log ($(this).attr("data-type"))
+                // console.log ($("#input_newpass").val())
                 $.ajax
                 ({
                     url:"/api/account/pwd/"+$(this).attr("data-type")+"?pwd="+$("#input_newpass").val(),

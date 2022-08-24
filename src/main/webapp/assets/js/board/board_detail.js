@@ -70,7 +70,7 @@ function selectBoardDetail(seq, page) {
                 }
             }
             $(".comment_pager_area").html("");
-            console.log(r.boardDetailCommentCnt)
+            // console.log(r.boardDetailCommentCnt)
             for(let i =0; i < r.boardDetailCommentCnt; i++) {
                 if(r.boardDetailComment.length < 10) {
                     $(".comment_pager_area").html("");
@@ -81,7 +81,7 @@ function selectBoardDetail(seq, page) {
                 }
             }
 
-            console.log(r.boardDetailComment)
+            // console.log(r.boardDetailComment)
         }
     })
 }

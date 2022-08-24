@@ -95,7 +95,7 @@ $(function()
     $(".submit_account").click(function()
     {
         getList($(".keyword").val())
-        console.log($(".keyword").val())
+        // console.log($(".keyword").val())
         
     })
     
@@ -109,7 +109,7 @@ function getList(keyword, page)
         url:"/api/admin/account?grade=2&keyword="+keyword+"&offset="+page+"&search_type=id",
         type:"get",
         success:function(result){
-            console.log(result)
+            // console.log(result)
             $(".admin_list").html("")
             for(let i=0; i<result.list.length; i++){
                 let str = null ;
@@ -151,7 +151,7 @@ function getList(keyword, page)
                 $(".page_area button").click(function(){
                     let page = $(this).html();
                     getList(keyword, page);
-                    console.log(page);
+                    // console.log(page);
                 })
                 if(result.pageCount==(startPage+10)){
                     $(".page_area").append("<button class='next_page'>다음페이지</button>")

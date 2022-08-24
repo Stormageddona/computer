@@ -39,6 +39,9 @@
             <div class="hdd"></div>
             <button class="esti" data-type="case">케이스</button>
             <div class="case"></div>
+            <span class="total_price"></span>
+            <button class="cart_save">견적 정보 저장</button>
+            <button class="cart_delete">견적 정보 삭제</button>
     </div>
 </body>
 </html>

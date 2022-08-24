@@ -94,7 +94,7 @@ $(function()
     $(".submit_account").click(function()
     {
         getList($(".keyword").val())
-        console.log($(".keyword").val())
+        // console.log($(".keyword").val())
         
     })
     

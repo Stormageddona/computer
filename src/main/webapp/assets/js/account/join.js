@@ -12,7 +12,7 @@ $(function()
                 aci_phone:$(".join_phone").val(),
                 aci_birth:makeDateString(new Date($(".join_birth").val()))
             }
-        console.log(data)
+        // console.log(data)
         $.ajax
         ({
             url:"/api/account/join",type:"put", data:JSON.stringify(data), contentType:"application/json",

@@ -8,7 +8,7 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
         url:"/api/product/"+url+"?keyword="+keyword+'&page='+page+'&desc='+Order+'&ordertype=price',
         type:"get",
         success:function(r) {
-            console.log(r.List)
+            // console.log(r.List)
             let List = new Array() ;
             for (let e = 0 ; e < r.List.length ; e++)
             {
@@ -21,7 +21,7 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                 }
                 List.push(tempcolumn)
             }
-            console.log(List[0])
+            // console.log(List[0])
             
             
             

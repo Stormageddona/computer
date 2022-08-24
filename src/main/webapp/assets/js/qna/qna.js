@@ -9,7 +9,7 @@ $(function(){
         url:"/api/qna/list?keyword="+keyword+"&page="+page,
         type:"get",
         success:function(result){
-            console.log(result);
+            // console.log(result);
             $(".qna_list").html("")
             for(let i=0; i<result.list.length; i++) {
                 let tag= '';
@@ -43,7 +43,7 @@ $(function(){
                     url:"/api/qna/detail?seq="+$(this).attr("data-seq"),
                     type:"get",
                     success:function(result){
-                        console.log(result);
+                        // console.log(result);
                     }
                 })
             })

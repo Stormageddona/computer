@@ -5,7 +5,7 @@ $(function()
         url:"/api/account/modify", type:"get",
         success:function(result)
         {
-            console.log(result.message)
+            // console.log(result.message)
             if (result.user == null) return ;
             $(".input_id").val(result.user.aci_id).prop("disabled",true)
             $(".input_name").val(result.user.aci_name)

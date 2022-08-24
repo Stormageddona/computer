@@ -10,7 +10,7 @@ $(function(){
         contentType:"application/json",
         data:JSON.stringify(data),
         success:function(result){
-            console.log(result)
+            // console.log(result)
         }
     })
     $(".btn_area .save").click(function(){

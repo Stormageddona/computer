@@ -1,9 +1,12 @@
 package com.team.computer.mapper;
 
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.team.computer.data.AccountInfoVO;
+import com.team.computer.data.request.CartRequest;
 
 @Mapper
 public interface AccountMapper {
@@ -22,4 +25,10 @@ public interface AccountMapper {
     public String selectFindId(String name, String phone) ;
     public String selectFindPwd(String id,String name, String phone) ;
     public void updateAccountInfoPwd(Integer seq, String pwd) ;
+
+    // 카트
+    public void insertCartData(Integer account_seq, String table, Integer product_seq, Integer product_count) ;
+    public List<CartRequest> selectCartInfoBySeq(Integer seq) ;
+    public CartRequest selectCartDetailBySeq(String table, String type, Integer seq) ;
+    public void deleteCartInfoByAccountSeq(Integer seq) ;
 }

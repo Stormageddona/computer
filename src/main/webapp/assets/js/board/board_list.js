@@ -23,10 +23,10 @@ function selectBoardList(keyword, page) {
         url:"/api/board/list?page="+page+"&keyword="+keyword,
         type:"get",
         success:function(r) {
-            console.log(r.boardList);
+            // console.log(r.boardList);
             $(".board_list_box table tbody").html("");
             for(let i=0; i < r.boardList.length; i++) {
-                console.log("보드리스트 수 : "+(i+1))
+                // console.log("보드리스트 수 : "+(i+1))
                 let release = new Date(r.boardList[i].bdi_mod_dt);
                 let mod_date = release.getFullYear() + "-" + release.getMonth() + "-" + release.getDate();
                 let release2 = new Date(r.boardList[i].bdi_reg_dt);

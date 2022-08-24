@@ -42,5 +42,23 @@
     <update id="updateAccountInfoPwd">
         update account_info set aci_pwd = #{pwd} where aci_seq = #{seq}
     </update>
+    <!-- 견적 부분  -->
+    <insert id="insertCartData">
+        INSERT INTO computer_db.cart_info
+            (ci_aci_seq, ci_prod_table, ci_prod_seq, ci_prod_count)
+            VALUES(#{account_seq}, #{table}, #{product_seq}, #{product_count});
+    </insert>
+    <select id="selectCartInfoBySeq" resultType="com.team.computer.data.request.CartRequest">
+        select ci_prod_table as ci_table, ci_prod_seq as ci_seq , ci_prod_count as ci_count
+        from cart_info where ci_aci_seq = #{seq}
+    </select>
+    <select id="selectCartDetailBySeq" resultType="com.team.computer.data.request.CartRequest">
+        select ${type}name as ci_name, ${type}price as ci_price 
+        from ${table}
+        where ${type}seq = ${seq}
+    </select>
+    <delete id="deleteCartInfoByAccountSeq">
+        delete from cart_info where ci_aci_seq = #{seq}
+    </delete>
 
 </mapper>

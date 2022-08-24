@@ -41,7 +41,7 @@ $(function()
         url:"/api/product/add/"+prod, type:"get",
         success:function(result)
         {
-            console.log(result)
+            // console.log(result)
 
             $(".add_btn").click(function()
             {
@@ -70,7 +70,7 @@ $(function()
                     let tag = '<span>' + Listcolumn_kr[i] + '</span><input type="text" class="'+ Listcolumn[i] +'"><br>'
                     $(".add_box").append(tag)
                 }
-                console.log(Listcolumn_kr)
+                // console.log(Listcolumn_kr)
                 
             })
             $(".add_submit").click(function()
@@ -160,10 +160,10 @@ function imgupload(data, type)
             }
             if (img_file != null) $.ajax({url:"/image/delete"+img_file, type:"delete"})
 
-            let tag = '<div class="board_img" filename="' + result.file + '" style="background-image:url(/images'+result.file+'?temp=true)">'+
+            let tag = '<div class="board_img" filename="' + result.file + '" style="background-image:url(/image'+result.file+'?temp=true)">'+
             '<button onClick=deleteImg("'+result.file+'")>&times;</button>'+
             '</div>';
-            console.log(result)
+            // console.log(result)
             img_file = result.file ;
             $(".img_area").html(tag) ;
         }

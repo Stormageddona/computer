@@ -1,16 +1,20 @@
 
+let CartList = new Array()
 $("document").ready(function()
 {
-    let CartList = new Array()
-    let List_cpu = new Array()
-    let List_cooler = new Array()
-    let List_gpu = new Array()
-    let List_memory = new Array()
-    let List_mainboard = new Array()
-    let List_power = new Array()
-    let List_ssd = new Array()
-    let List_hhd = new Array()
-    let List_case = new Array()
+    if (user_seq != null && user_seq != undefined && user_seq != "")
+    {
+        $.ajax
+        ({
+            url:"/api/account/cart" , type:"get",
+            success:function(result)
+            {
+                CartList = result.CartList
+                listreload()
+            }
+        })
+    }
+
 
     $(".esti").click(function()
     {
@@ -23,16 +27,21 @@ $("document").ready(function()
             success:function(result)
             {
                 
-                console.log(result.List)
+                // console.log(result.List)
                 $(".info_area > table > tbody").html("")
                 let column = getcolumnData(result)
-                console.log(column)
+                // console.log(column)
                 for (let i = 0 ; i < result.List.length ; i++)
                 {
                     let detail = "" ;
                     for (let j = 0 ; j < column[1].length;j++)
                     {
                         detail = detail + column[1][j] + ":" + result.List[i][column[0][j]] + " / "
+                    }
+                    let str = "담기"
+                    for (let e = 0 ; e < CartList.length ; e++)
+                    {
+                        if (CartList[e].ci_seq == result.List[i].seq && CartList[e].ci_table == adr) str = "해제"
                     }
                     let tag = 
                         '<tr>' +
@@ -42,7 +51,7 @@ $("document").ready(function()
                                     '<div class="detail_box"><span class="prod_name">' + result.List[i].name + '</span>' +
                                     '<span class="prod_detail">' + detail + '</span>' +
                                     '<span class="prod_price">가격 : ' + result.List[i].price + '</span>' +
-                                    '<button class="prod_select" data-seq="'+i+'" >담기</button></div>' +
+                                    '<button class="prod_select" data-seq="'+i+'" >'+str+'</button></div>' +
                                 '</div>' +
                             '</td>' +
                         '</tr>'
@@ -52,51 +61,143 @@ $("document").ready(function()
                 {
                     
                     let seq = $(this).attr("data-seq")
+                    let temp = 
+                    {
+                        ci_seq:result.List[seq].seq,
+                        ci_table:adr, 
+                        ci_name:result.List[seq].name, 
+                        ci_price:result.List[seq].price, 
+                        ci_count:1
+                    }
                     let data = -1
-
-                    data = ("List_"+adr).indexOf(result.List[seq].seq)
+                    for (let i = 0 ; i < CartList.length ; i++)
+                    {
+                        if (CartList[i].ci_seq == result.List[seq].seq && CartList[i].ci_table == adr) data = i
+                    }
+                    // data = eval("List_"+adr).findIndex(result.List[seq])
 
                     if (data == -1)
                     {
                         $(this).html("해제");
-                        eval("List_"+adr).push(result.List[seq])
-                        let tag =
-                            '<div class="cart_product_box">' +
-                            result.List[seq].name +
-                            result.List[seq].price + '원' +
-                            '<button class="listcancel" data-seq="'+seq+'">X</button>' +
-                            '</div>'
-                        $("."+adr).append(tag)
-                        console.log(eval("List_"+adr))
 
+                        let i = CartList.push(temp)-1
+                        listreload()
+                        // console.log(CartList)
+                        // console.log(i)
+                        // console.log(CartList[i])
+                        // let tag =
+                        //     '<div class="cart_product_box">' +
+                        //     CartList[i].name +
+                        //     (CartList[i].price*CartList[i].count) + '원' +
+                        //     '<button onclick="listreload('+i+')">X</button>' +
+                        //     '<input type="number" class="count_input_'+i+'" value="'+CartList[i].count+'"><button onclick="count_up('+i+')">∧</button><button onclick="count_down('+i+')">∨</button>' +
+                        //     '</div>'
+                        // $("."+adr).append(tag)
                     }
                     else
                     {
                         $(this).html("담기")
-                        CartList["List_"+adr].splice(data,1)
-                        $("."+adr).html("")
-                        for (let i = 0 ; i < CartList["List_"+adr].length ; i++)
-                        {
-                            let tag =
-                                '<div class="cart_product_box">' +
-                                result.List[seq].name +
-                                result.List[seq].price + '원' +
-                                '<button class="listcancel" data-seq="'+seq+'">X</button>' +
-                                '</div>'
-                            $("."+adr).append(tag)
-                        }
+                        // CartList.splice(data,1)
+                        listreload(data)
+                        // tableinit()
+                        // for (let i = 0 ; i < CartList.length ; i++)
+                        // {
+                        //     // if (CartList[i].table != $(this).attr("data-type")) continue ;
+                        //     let tag =
+                        //         '<div class="cart_product_box">' +
+                        //         CartList[i].name +
+                        //         (CartList[i].price*CartList[i].count) + '원' +
+                        //         '<button onclick="listreload('+i+')">X</button>' +
+                        //         '<input type="number" class="count_input_'+i+'" value="'+CartList[i].count+'"><button onclick="count_up('+i+')">∧</button><button onclick="count_down('+i+')">∨</button>' +
+                        //         '</div>'
+                        //     $("."+CartList[i].table).append(tag)
+                        // }
                     }
 
                 })
-
+            }
+        })
+    })
+    $(".cart_save").click(function()
+    {
+        if (!confirm("견적정보를 저장하시겠습니까?")) return ;
+        $.ajax
+        ({
+            url:"/api/account/cart", type:"put", data:JSON.stringify(CartList), contentType:"application/json",
+            success:function(result)
+            {
+                // console.log(result.message)
+            }
+        })
+        
+    })
+    $(".cart_delete").click(function()
+    {
+        if (!confirm("견적정보를 삭제하시겠습니까?")) return ;
+        $.ajax
+        ({
+            url:"/api/account/cart", type:"delete",
+            success:function(result)
+            {
+                // console.log(result.message)
+                location.reload()
             }
         })
     })
 })
 
-function addDataCart(result)
+
+function count_up(i)
 {
-    
+    $(".count_input_"+i).val(parseInt(CartList[i].ci_count)+1)
+    CartList[i].ci_count = $(".count_input_"+i).val()
+    listreload()
+}
+function count_down(i)
+{
+    if ($(".count_input_"+i).val() > 1)
+    {
+        $(".count_input_"+i).val(parseInt(CartList[i].ci_count)-1)
+        CartList[i].ci_count = $(".count_input_"+i).val()
+    }
+    listreload()
+}
+
+function listreload(seq = null)
+{
+    if (seq != null) 
+    {
+        CartList.splice(seq,1)
+    }
+    tableinit()
+    let total_price = 0 ;
+    for (let i = 0 ; i < CartList.length ; i++)
+    {
+        let tag =
+            '<div class="cart_product_box">' +
+            CartList[i].ci_name +
+            (CartList[i].ci_price*CartList[i].ci_count)+ '원' +
+            '<button onclick="listreload('+i+')">X</button>' +
+            '<input type="number" class="count_input_'+i+'" value="'+CartList[i].ci_count+'"><button onclick="count_up('+i+')">∧</button><button onclick="count_down('+i+')">∨</button>' +
+            '</div>'
+        $("."+CartList[i].ci_table).append(tag)
+        total_price += CartList[i].ci_price*CartList[i].ci_count
+    }
+    $(".total_price").html( total_price+"원")
+}
+
+
+function tableinit()
+{
+    $(".cpu").html("")
+    $(".cooler").html("")
+    $(".gpu").html("")
+    $(".memory").html("")
+    $(".mainboard").html("")
+    $(".power").html("")
+    $(".ssd").html("")
+    $(".hdd").html("")
+    $(".case").html("")
 }
 
 function getcolumnData(result)

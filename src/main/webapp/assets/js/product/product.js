@@ -6,7 +6,7 @@ $("document").ready(function(){
     let pageURL = location.href;
     let pageURLSplit = pageURL.split("/");
     let pageControll = null ;
-    console.log(pageURLSplit);
+    // console.log(pageURLSplit);
     let realURL = "/";
     for(let i=3; i<pageURLSplit.length; i++) {
         realURL += pageURLSplit[i]

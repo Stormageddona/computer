@@ -94,8 +94,8 @@ public class ProductAPIController {
     }
 
     @GetMapping("/detail")
-    public Map<String, Object> getDetailProduct(@RequestParam String type, @RequestParam Integer seq) {
-
+    public Map<String, Object> getDetailProduct(@RequestParam String type, @RequestParam Integer seq) 
+    {
         String seq_type = utils.getTableNameBySeqType(type) ;
         Map<String, Object> temp = prod_mapper.selectProductDetailBySeq(type+"_info", seq_type, seq);
         Map<String, Object> data = new LinkedHashMap<String,Object>() ;
@@ -117,6 +117,7 @@ public class ProductAPIController {
         return data;
     }
 
+    
     @GetMapping("/add/{type}")
     public Map<String, Object> getProductAddData(@PathVariable String type)
     {

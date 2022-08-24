@@ -7,7 +7,7 @@ $("document").ready(function(){
         url:"/api/product/detail?type="+type+"&seq="+seq,
         type:"get",
         success:function(r) {
-            console.log(r);
+            // console.log(r);
 
             // let List = new Array() ;
             // for (let e = 0 ; e < r.List.length ; e++)
@@ -36,7 +36,7 @@ $("document").ready(function(){
                 }
                 List.push(Selectundefined)
             }
-            console.log(List)
+            // console.log(List)
 
             $(".product_info").append(List)
 

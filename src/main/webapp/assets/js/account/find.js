@@ -22,9 +22,9 @@ $(function()
     
     $(".submit_pwd").click(function()
     {
-        console.log( $(".find_pwd_input_id").val())
-        console.log( $(".find_pwd_input_name").val())
-        console.log( $(".find_pwd_input_phone").val())
+        // console.log( $(".find_pwd_input_id").val())
+        // console.log( $(".find_pwd_input_name").val())
+        // console.log( $(".find_pwd_input_phone").val())
         $.ajax
         ({
             url:"/api/account/find/pwd?id="+$(".find_pwd_input_id").val()+"&name="+$(".find_pwd_input_name").val()+"&phone="+$(".find_pwd_input_phone").val(),
