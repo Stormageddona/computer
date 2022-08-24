@@ -20,12 +20,10 @@ $(function(){
                 '<p>'+result.qnaDetail.qsi_comment+'</p>'+'</div>'
             $(".qna_content_area").append(content)
 
-<<<<<<< HEAD
             $(".qna_answer_area").html("");
             let a_content = 
                 '<p>'+result.qnaDetail.asi_comment+'</p>'+'</div>'
             $(".qna_answer_area").append(a_content)
-=======
             // $(".answer_btn").attr("onclick", "location.href='/qna/form?seq="+seq+"'")
 
             $(".answer_btn").click(function(){
@@ -35,7 +33,6 @@ $(function(){
                 }
                 location.href='/qna/form?seq='+seq;
             })
->>>>>>> board
         }
     })
     $(".btn_area .save").click(function(){
