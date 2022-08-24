@@ -26,21 +26,10 @@
             </div>
 
             <div class="qna_answer_area">
-                <div class="qna_answer_box">
-                    
-                </div>
-                <div class="qna_pager_area">
+                <p>답글 내용</p>
+            </div>
+            <div class="qna_pager_area">
 
-                </div>
-                <div class="qna_save_area">
-                    <div class="qna_summary">
-                        <textarea name="" id="" cols="30" rows="10"></textarea>
-                        
-                    </div>
-                    <div class="btn_area">
-                        <button class="save">등록</button>
-                    </div>
-                </div>
             </div>
         </div>
     </section>

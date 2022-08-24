@@ -3,6 +3,8 @@ package com.team.computer.api.qna;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team.computer.data.AccountInfoVO;
 import com.team.computer.data.QuestionInfoVO;
 import com.team.computer.mapper.QnaMapper;
 
@@ -34,8 +37,8 @@ public class QnaAPIController {
         return map;
     }
 
-    @PutMapping("/qna_form")
-    public Map<String,Object> addQna(@RequestBody QuestionInfoVO data) {
+    @PutMapping("/qna_add")
+    public Map<String,Object> addQna(@RequestBody QuestionInfoVO data, HttpSession session) {
         Map<String,Object> map = new LinkedHashMap<String,Object>();
         qna_mapper.insertQnaData(data);
         map.put("status", true);

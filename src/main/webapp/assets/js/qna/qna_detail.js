@@ -19,6 +19,11 @@ $(function(){
             let content = 
                 '<p>'+result.qnaDetail.qsi_comment+'</p>'+'</div>'
             $(".qna_content_area").append(content)
+
+            $(".qna_answer_area").html("");
+            let a_content = 
+                '<p>'+result.qnaDetail.asi_comment+'</p>'+'</div>'
+            $(".qna_answer_area").append(a_content)
         }
     })
     $(".btn_area .save").click(function(){
