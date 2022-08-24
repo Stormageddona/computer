@@ -24,7 +24,10 @@
 <body>
     <section class="board_detaile_section">
         <div class="board_detail_wrap">
-
+            <div class="board_title">
+                <p>제목</p>
+                <input type="text">
+            </div>
             <textarea class="form-control" id="ckedit"></textarea>
             <button id="btn_publish">
                 제출하기
@@ -53,7 +56,7 @@
                 })
 
                 $("#btn_publish").click(function(){
-                    alert(CKEDITOR.instances.ekedit.getData());
+                    alert(CKEDITOR.instances.ckedit.getData());
                 })
             </script>
 
