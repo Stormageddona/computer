@@ -21,18 +21,24 @@
         </table>
     </div>
     <div class="esti_area">
-        <table>
-            <tr><td><button class="esti" data-type="cpu">CPU</button></td></tr>
-            <tr><td><button class="esti" data-type="cooler">쿨러</button></td></tr>
-            <tr><td><button class="esti" data-type="gpu">그래픽카드</button></td></tr>
-            <tr><td><button class="esti" data-type="memory">메모리</button></td></tr>
-            <tr><td><button class="esti" data-type="mainboard">메인보드</button></td></tr>
-            <tr><td><button class="esti" data-type="power">파워</button></td></tr>
-            <tr><td><button class="esti" data-type="ssd">SSD</button></td></tr>
-            <tr><td><button class="esti" data-type="hdd">HDD</button></td></tr>
-            <tr><td><button class="esti" data-type="case">케이스</button></td></tr>
-        </table>
-        
+            <button class="esti" data-type="cpu">CPU</button>
+            <div class="cpu"></div>
+            <button class="esti" data-type="cooler">쿨러</button>
+            <div class="cooler"></div>
+            <button class="esti" data-type="gpu">그래픽카드</button>
+            <div class="gpu"></div>
+            <button class="esti" data-type="memory">메모리</button>
+            <div class="memory"></div>
+            <button class="esti" data-type="mainboard">메인보드</button>
+            <div class="mainboard"></div>
+            <button class="esti" data-type="power">파워</button>
+            <div class="power"></div>
+            <button class="esti" data-type="ssd">SSD</button>
+            <div class="ssd"></div>
+            <button class="esti" data-type="hdd">HDD</button>
+            <div class="hdd"></div>
+            <button class="esti" data-type="case">케이스</button>
+            <div class="case"></div>
     </div>
 </body>
 </html>
