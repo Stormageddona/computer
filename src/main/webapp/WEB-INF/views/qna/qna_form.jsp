@@ -20,9 +20,10 @@
             <p>내용</p>
             <textarea class="q_content" cols="30" rows="10"></textarea>
         </div>
-        <div class="btn_area"></div>
-        <button class="submit_qna">등록</button>
-        <button class="cancel_qna">취소</button>
+        <div class="btn_area">
+            <button class="submit">등록</button>
+            <button class="cancel">취소</button>
+        </div>
     </main>
 </body>
 </html>

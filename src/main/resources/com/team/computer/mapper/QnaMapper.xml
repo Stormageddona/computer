@@ -11,7 +11,7 @@
         left outer join answer_info b
         on a.qsi_seq = b.asi_qsi_seq
         left outer join account_info c
-        on a.qsi_aci_seq = c.aci_seq = b.asi_aci_seq
+        on a.qsi_aci_seq = c.aci_seq
         where qsi_comment like '%${keyword}%'
         limit 15 offset #{offset}
     </select>

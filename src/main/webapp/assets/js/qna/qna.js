@@ -17,13 +17,13 @@ $(function(){
                     tag+=
                         '<tr class="question_tr" data-seq="'+result.list[i].qsi_seq+'">' +
                             '<td>'+ result.list[i].qsi_seq+'</td>' +
-                            '<td>'+ result.list[i].qsi_aci_seq+'</td>' +
+                            '<td class="user_name">'+ result.list[i].aci_name+'</td>' +
                             '<td><a href="/qna/detail?seq='+result.list[i].qsi_seq+'"&>'+ result.list[i].qsi_title+'</a></td>' +
                             '<td>'+ makeDateString(new Date(result.list[i].qsi_reg_dt))+'</td>' +
                         '<tr>'+
                         '<tr>' +
                             '<td><i class="fa-solid fa-arrow-turn-down-right"></i></td>' +
-                            '<td>'+ result.list[i].asi_aci_seq+'</td>' +
+                            '<td class="user_name">'+ result.list[i].aci_name+'</td>' +
                             '<td><a href="/qna/detail?seq='+result.list[i].qsi_seq+'"&>'+ result.list[i].asi_title+'</a></td>' +
                             '<td>'+ makeDateString(new Date(result.list[i].asi_reg_dt))+'</td>' +
                         '<tr>';
@@ -31,12 +31,16 @@ $(function(){
                     tag+=
                     '<tr class="question_tr" data-seq="'+result.list[i].qsi_seq+'">' +
                         '<td>'+ result.list[i].qsi_seq+'</td>' +
-                        '<td>'+ result.list[i].qsi_aci_seq+'</td>' +
+                        '<td class="user_name">'+ result.list[i].aci_name+'</td>' +
                         '<td><a href="/qna/detail?seq='+result.list[i].qsi_seq+'"&>'+ result.list[i].qsi_title+'</a></td>' +
                         '<td>'+ makeDateString(new Date(result.list[i].qsi_reg_dt))+'</td>' +
                     '<tr>';
                 }
                 $(".qna_list").append(tag)
+
+                // if($(".user_name").html() == null || $(".user_name").html() == undefined || $(".user_name").html() == "") {
+                //     $(this).html(result.list[i].aci_id);
+                // }
             }
             $(".question_tr").click(function(){
                 $.ajax({
