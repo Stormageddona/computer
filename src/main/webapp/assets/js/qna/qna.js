@@ -17,22 +17,13 @@ $(function(){
                     tag=
                         '<tr class="question_tr" data-seq="'+result.list[i].qsi_seq+'">' +
                             '<td>'+ result.list[i].qsi_seq+'</td>' +
-<<<<<<< HEAD
-                            '<td class="user_name">'+ result.list[i].aci_name+'</td>' +
-=======
->>>>>>> board
                             '<td><a href="/qna/detail?seq='+result.list[i].qsi_seq+'"&>'+ result.list[i].qsi_title+'</a></td>' +
                             '<td>'+ result.list[i].qua_id+'</td>' +
                             '<td>'+ makeDateString(new Date(result.list[i].qsi_reg_dt))+'</td>' +
                         '<tr>'+
                         '<tr>' +
-<<<<<<< HEAD
-                            '<td><i class="fa-solid fa-arrow-turn-down-right"></i></td>' +
-                            '<td class="user_name">'+ result.list[i].aci_name+'</td>' +
-=======
-                            '<td><i class="fa-brands fa-adn"></i></td>' +
->>>>>>> board
-                            '<td><a href="/qna/detail?seq='+result.list[i].qsi_seq+'"&>'+ result.list[i].asi_title+'</a></td>' +
+                        '<td><i class="fa-brands fa-adn"></i></td>' +    
+                        '<td><a href="/qna/detail?seq='+result.list[i].qsi_seq+'"&>'+ result.list[i].asi_title+'</a></td>' +
                             '<td>'+ result.list[i].ans_id+'</td>' +
                             '<td>'+ makeDateString(new Date(result.list[i].asi_reg_dt))+'</td>' +
                         '<tr>';
@@ -40,17 +31,12 @@ $(function(){
                     tag=
                     '<tr class="question_tr" data-seq="'+result.list[i].qsi_seq+'">' +
                         '<td>'+ result.list[i].qsi_seq+'</td>' +
-<<<<<<< HEAD
-                        '<td class="user_name">'+ result.list[i].aci_name+'</td>' +
-=======
->>>>>>> board
                         '<td><a href="/qna/detail?seq='+result.list[i].qsi_seq+'"&>'+ result.list[i].qsi_title+'</a></td>' +
                         '<td>'+ result.list[i].qua_id+'</td>' +
                         '<td>'+ makeDateString(new Date(result.list[i].qsi_reg_dt))+'</td>' +
                     '<tr>';
                 }
                 $(".qna_list").append(tag)
-
                 // if($(".user_name").html() == null || $(".user_name").html() == undefined || $(".user_name").html() == "") {
                 //     $(this).html(result.list[i].aci_id);
                 // }
