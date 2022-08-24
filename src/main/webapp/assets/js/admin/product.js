@@ -160,7 +160,7 @@ function imgupload(data, type)
             }
             if (img_file != null) $.ajax({url:"/image/delete"+img_file, type:"delete"})
 
-            let tag = '<div class="board_img" filename="' + result.file + '" style="background-image:url(/images'+result.file+'?temp=true)">'+
+            let tag = '<div class="board_img" filename="' + result.file + '" style="background-image:url(/image'+result.file+'?temp=true)">'+
             '<button onClick=deleteImg("'+result.file+'")>&times;</button>'+
             '</div>';
             console.log(result)
