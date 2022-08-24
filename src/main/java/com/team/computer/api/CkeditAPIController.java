@@ -31,7 +31,6 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/api/ckedit")
 @Slf4j
 public class CkeditAPIController {
     @Value("${image.upload.path}")
@@ -40,16 +39,22 @@ public class CkeditAPIController {
     @Value("${image.upload.url}")
     String uploadurl;
 
-    @GetMapping("/img/{type}/{filename}")
+    @GetMapping("/upload/Student/computer/ckeditImg/{filename}")
     // ResponseEntity 
     // Resource = import org.springframework.core.io.Resource
-    public ResponseEntity<Resource> getImages(@PathVariable String type, @PathVariable String filename, HttpServletRequest request) throws Exception {
-        Path folderLocation = Paths.get(uploadpath+"/"+type); // /movie/actor = d:/movie/actor
-        Path filePath = folderLocation.resolve(filename); // /movie/actor/default.jpg = d:/movie/actor/default.jpg
+    public ResponseEntity<Resource> getImages(@RequestPart MultipartFile upload,@PathVariable String type, @PathVariable String filename, HttpServletRequest request) throws Exception {
+        String sourceName = upload.getOriginalFilename();
+        String sourceExt = FilenameUtils.getExtension(sourceName).toLowerCase();
+
+        String destFileName;
+
+        destFileName = RandomStringUtils.randomAlphabetic(8).concat(".").concat(sourceExt);
+        Path folderLocaion = Paths.get(uploadpath);
+        Path target = folderLocaion.resolve(destFileName);
         Resource r = null;
         try
         {
-            r = new UrlResource(filePath.toUri());
+            r = new UrlResource(target.toUri());
         }
         catch(Exception e) {
             System.out.println("파일을 찾을 수 없거나, 잘못된 파일 경로입니다.");
@@ -89,7 +94,7 @@ public class CkeditAPIController {
         // do {
         destFileName = RandomStringUtils.randomAlphabetic(8).concat(".").concat(sourceExt);
         Path folderLocaion = Paths.get(uploadpath);
-        Path target = folderLocaion.resolve(destFileName) ;
+        Path target = folderLocaion.resolve(destFileName);
         // destFile = new File(uploadpath+"/"+destFileName);
         // log.info("{}", uploadpath.concat(uploadpath+"/"+destFileName));
         try {
@@ -108,7 +113,7 @@ public class CkeditAPIController {
         // destFile.getParentFile().mkdir();
         // upload.transferTo(destFile);
 
-        String imgUrl = uploadpath+"/"+destFileName;
+        String imgUrl = "/upload"+uploadpath+"/"+destFileName;
         System.out.println(imgUrl);
         //ckedit upload callback
         StringBuffer sb = new StringBuffer();
@@ -116,7 +121,7 @@ public class CkeditAPIController {
         sb.append(callback);
         sb.append(", '");
         // sb.append(testUrl);
-        sb.append("/img"+imgUrl);
+        sb.append(imgUrl);
         sb.append("', 'image upload success!!')</script>");
 
         // return imgUrl;

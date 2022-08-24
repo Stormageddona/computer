@@ -30,7 +30,14 @@
             </div>
             <div class="qna_pager_area">
 
+<<<<<<< HEAD:src/main/webapp/WEB-INF/views/qna/qna_detail.jsp
+=======
+                </div>
+>>>>>>> board:src/main/webapp/WEB-INF/views/qna/detail.jsp
             </div>
+            <button class="answer_btn">
+                답변
+            </button>
         </div>
     </section>
 </body>

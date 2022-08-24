@@ -20,10 +20,22 @@ $(function(){
                 '<p>'+result.qnaDetail.qsi_comment+'</p>'+'</div>'
             $(".qna_content_area").append(content)
 
+<<<<<<< HEAD
             $(".qna_answer_area").html("");
             let a_content = 
                 '<p>'+result.qnaDetail.asi_comment+'</p>'+'</div>'
             $(".qna_answer_area").append(a_content)
+=======
+            // $(".answer_btn").attr("onclick", "location.href='/qna/form?seq="+seq+"'")
+
+            $(".answer_btn").click(function(){
+                if(user_seq == null || user_seq == undefined || user_seq == "") {
+                    alert("로그인후 사용가능합니다.")
+                    return;
+                }
+                location.href='/qna/form?seq='+seq;
+            })
+>>>>>>> board
         }
     })
     $(".btn_area .save").click(function(){

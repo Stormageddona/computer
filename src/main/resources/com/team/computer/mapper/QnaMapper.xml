@@ -3,6 +3,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.computer.mapper.QnaMapper">
     <select id="selectQnaList" resultType="com.team.computer.data.QuestionInfoVO">
+<<<<<<< HEAD
         select
 	        a.qsi_seq, a.qsi_title, a.qsi_aci_seq, a.qsi_reg_dt, a.qsi_mod_dt,
 	        b.asi_aci_seq, b.asi_title, b.asi_reg_dt, b.asi_mod_dt, b.asi_qsi_seq,
@@ -12,6 +13,22 @@
         on a.qsi_seq = b.asi_qsi_seq
         left outer join account_info c
         on a.qsi_aci_seq = c.aci_seq
+=======
+    select * from (
+	    select a.aci_id as qua_id, a.aci_name as qua_name, a.aci_nickname as qua_nickname, b.*
+	    from account_info a
+	    left outer join question_info b
+	    on a.aci_seq = b.qsi_aci_seq
+    ) e left outer join
+    (
+	    select c.aci_id as ans_id, c.aci_name as ans_name, c.aci_nickname as ans_nickname, d.*
+	    from account_info c
+	    left outer join answer_info d
+	    on c.aci_seq = d.asi_aci_seq
+    )
+    f
+        on e.qsi_seq = f.asi_qsi_seq
+>>>>>>> board
         where qsi_comment like '%${keyword}%'
         limit 15 offset #{offset}
     </select>
@@ -30,6 +47,12 @@
         INSERT INTO question_info
         (qsi_aci_seq, qsi_title, qsi_comment)
         VALUES (#{qsi_aci_seq}, #{qsi_title}, #{qsi_comment})
+    </insert>
+
+    <insert id="insertAnswerData">
+        INSERT INTO answer_info
+        (asi_aci_seq, asi_qsi_seq, asi_title, asi_comment)
+        VALUES(#{asi_aci_seq}, #{asi_qsi_seq}, #{asi_title}, #{asi_comment});
     </insert>
 </mapper>
 
