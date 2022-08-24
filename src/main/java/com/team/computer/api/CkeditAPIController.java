@@ -2,6 +2,10 @@ package com.team.computer.api;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,31 +27,58 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/ckedit")
 @Slf4j
 public class CkeditAPIController {
-    @Value("${spring.servlet.multipart.location}")
+    @Value("${image.upload.path}")
     String uploadpath;
+
+    @Value("${image.upload.url}")
+    String uploadurl;
 
     @PostMapping("/image/upload")
     @SneakyThrows
-    public String upload(@RequestPart MultipartFile upload, HttpServletRequest request) {
+    public String upload(@RequestPart MultipartFile upload, @RequestParam("CKEditorFuncNum") String callback, HttpServletRequest request) {
         String sourceName = upload.getOriginalFilename();
         String sourceExt = FilenameUtils.getExtension(sourceName).toLowerCase();
-
-        File destFile;
+        
+        // File destFile;
         String destFileName;
+        
+        // System.out.println(uploadpath);
 
-        do {
-            destFileName = RandomStringUtils.randomAlphabetic(8).concat(".").concat(sourceExt);
-            destFile = new File(uploadpath.concat(destFileName));
-            log.info("{}", uploadpath.concat(destFileName));
-        }while (destFile.exists());
-        destFile.getParentFile().mkdirs();
-        upload.transferTo(destFile);
+        // do {
+        destFileName = RandomStringUtils.randomAlphabetic(8).concat(".").concat(sourceExt);
+        Path folderLocaion = Paths.get(uploadpath);
+        Path target = folderLocaion.resolve(destFileName) ;
+        // destFile = new File(uploadpath+"/"+destFileName);
+        // log.info("{}", uploadpath.concat(uploadpath+"/"+destFileName));
+        try {
+            System.out.println(folderLocaion.toString());
+            System.out.println(target.toString());
+            Files.copy(upload.getInputStream(),target,StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception e) {
+            // resultMap.put("status", false) ;
+            // resultMap.put("message", e.getMessage()) ;
+            e.printStackTrace();
+            // System.out.println();
+            // return "Success" ;
+        }
+        // }while (destFile.exists());
 
-        // String imgUrl = request.getScheme().concat("//").concat(request.getServerName()+":8080").concat(uploadPath);
-        String imgUrl = request.getScheme().concat("//").concat(request.getServerName()+":8080").concat(uploadpath);
+        // destFile.getParentFile().mkdir();
+        // upload.transferTo(destFile);
 
-        // return request.getScheme().concat("://").concat(request.getServerName()).concat(uploadPath).concat(destFileName);
-        System.out.println("경로 : "+imgUrl);
-        return imgUrl;
+        String imgUrl = uploadpath+"/"+destFileName;
+        String testUrl = "/api/ckedit/image/upload"+imgUrl+destFileName;
+        System.out.println(imgUrl);
+        //ckedit upload callback
+        StringBuffer sb = new StringBuffer();
+        sb.append("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction(");
+        sb.append(callback);
+        sb.append(", '");
+        // sb.append(testUrl);
+        sb.append("C:"+imgUrl);
+        sb.append("', 'image upload success!!')</script>");
+
+        // return imgUrl;
+        return sb.toString();
     }
 }

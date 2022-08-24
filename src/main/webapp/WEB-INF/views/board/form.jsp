@@ -19,21 +19,23 @@
 
     <script src="https://cdn.ckeditor.com/ckeditor5/29.1.0/classic/ckeditor.js"></script> -->
     <title>Document</title>
+    <!-- <script type="text/javascript">window.parent.CKEDITOR.tools.callFunction(callback, 'imgUrl', 'image upload success!!')</script> -->
 </head>
 <body>
     <section class="board_detaile_section">
         <div class="board_detail_wrap">
 
-            <textarea class="form-control" id="ekedit"></textarea>
+            <textarea class="form-control" id="ckedit"></textarea>
             <button id="btn_publish">
                 제출하기
             </button>
             <script type="text/javascript">
                 CKEDITOR.replace(
-                    'ekedit' ,{
+                    'ckedit' ,{
                         height:500,
-                        filebrowserImageUploadUrl:'/ckedit/upload',
-                        filebrowserUploadUrl:"/Student/computer"
+                        filebrowserImageUploadUrl:'/api/ckedit/image/upload',
+                        filebrowserUploadUrl:'/Student/computer'
+                        // filebrowserUploadUrl:"/Student/computer"
                     }
                     );
 
