@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.team.computer.data.AnswerInfoVO;
 import com.team.computer.data.QuestionInfoVO;
 
 @Mapper
@@ -12,4 +13,5 @@ public interface QnaMapper {
     public Integer selectTotalPage(String keyword);
     public QuestionInfoVO selectQnaDetail(Integer seq);
     public void insertQnaData(QuestionInfoVO data);
+    public void insertAnswerData(AnswerInfoVO data);
 }

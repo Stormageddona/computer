@@ -29,4 +29,10 @@ public class QuestionInfoVO {
     private String aci_nickname;
     private Integer asi_qsi_seq;
 
+    private String qua_id;
+    private String qua_name;
+    private String qua_nickname;
+    private String ans_id;
+    private String ans_name;
+    private String ans_nickname;
 }

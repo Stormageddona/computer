@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/assets/css/board_form.css">
 
     <script type="text/javascript" src="/assets/plugin/ckeditor/ckeditor.js"></script>
-    <script src="/assets/js/board/board_edit.js"></script>
+    <script src="/assets/js/qna/qna_edit.js"></script>
 
     <!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
@@ -33,8 +33,9 @@
             <button id="btn_publish">
                 제출하기
             </button>
-            <div class="test_div">
-            </div>
+            <!-- <button id="answer_btn">
+                답변등록
+            </button> -->
 
 
 
