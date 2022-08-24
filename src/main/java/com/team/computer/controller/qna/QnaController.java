@@ -19,8 +19,8 @@ public class QnaController {
         model.addAttribute("seq", seq);
         return "/qna/detail";
     }
-    @GetMapping("/qna_form")
+    @GetMapping("/form")
     public String addQna() {
-        return "/qna/qna_form";
+        return "/qna/form";
     }
 }

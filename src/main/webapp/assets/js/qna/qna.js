@@ -14,25 +14,25 @@ $(function(){
             for(let i=0; i<result.list.length; i++) {
                 let tag= '';
                 if(result.list[i].qsi_seq == result.list[i].asi_qsi_seq){
-                    tag+=
+                    tag=
                         '<tr class="question_tr" data-seq="'+result.list[i].qsi_seq+'">' +
                             '<td>'+ result.list[i].qsi_seq+'</td>' +
-                            '<td>'+ result.list[i].qsi_aci_seq+'</td>' +
                             '<td><a href="/qna/detail?seq='+result.list[i].qsi_seq+'"&>'+ result.list[i].qsi_title+'</a></td>' +
+                            '<td>'+ result.list[i].qua_id+'</td>' +
                             '<td>'+ makeDateString(new Date(result.list[i].qsi_reg_dt))+'</td>' +
                         '<tr>'+
                         '<tr>' +
-                            '<td><i class="fa-solid fa-arrow-turn-down-right"></i></td>' +
-                            '<td>'+ result.list[i].asi_aci_seq+'</td>' +
+                            '<td><i class="fa-brands fa-adn"></i></td>' +
                             '<td><a href="/qna/detail?seq='+result.list[i].qsi_seq+'"&>'+ result.list[i].asi_title+'</a></td>' +
+                            '<td>'+ result.list[i].ans_id+'</td>' +
                             '<td>'+ makeDateString(new Date(result.list[i].asi_reg_dt))+'</td>' +
                         '<tr>';
                 } else {
-                    tag+=
+                    tag=
                     '<tr class="question_tr" data-seq="'+result.list[i].qsi_seq+'">' +
                         '<td>'+ result.list[i].qsi_seq+'</td>' +
-                        '<td>'+ result.list[i].qsi_aci_seq+'</td>' +
                         '<td><a href="/qna/detail?seq='+result.list[i].qsi_seq+'"&>'+ result.list[i].qsi_title+'</a></td>' +
+                        '<td>'+ result.list[i].qua_id+'</td>' +
                         '<td>'+ makeDateString(new Date(result.list[i].qsi_reg_dt))+'</td>' +
                     '<tr>';
                 }

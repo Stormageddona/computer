@@ -1,6 +1,12 @@
 $("document").ready(function(){
 
+    let query = window.location.search;
+    let param = new URLSearchParams(query);
+    let seq = param.get('seq');
+
     editMethod();
+
+    console.log();
 
     $("#btn_publish").click(function(){
         if(!(confirm("등록하시겠습니까?"))) return;
@@ -10,12 +16,8 @@ $("document").ready(function(){
             return;
         }
         let edit_txt = CKEDITOR.instances.ckedit.getData()
-        alert(edit_txt);
-        editTxtFile(edit_txt);
-
-        console.log(editTxtFile(edit_txt));
-
-        // insertBoardData(data);
+        alert(seq);
+        editTxtFile(edit_txt, seq);
     })
 })
 
@@ -42,7 +44,7 @@ function editMethod() {
     })
 }
 
-function editTxtFile(data) {
+function editTxtFile(data, seq) {
     $.ajax({
         url:"/text/upload",
         type:"put",
@@ -51,21 +53,51 @@ function editTxtFile(data) {
         success:function(r) {
             console.log();
 
-            let data = {
-                bdi_aci_seq:user_seq,
-                bdi_title:$(".board_title input").val(),
-                bdi_comment:r.file
+            // let data = {
+            //     qsi_aci_seq:user_seq,
+            //     qsi_title:$(".board_title input").val(),
+            //     qsi_comment:r.file
+            // }
+
+            insertQnaData(data)
+            if (seq == null || seq == "" || seq == undefined) {
+                let data = {
+                    qsi_aci_seq:user_seq,
+                    qsi_title:$(".board_title input").val(),
+                    qsi_comment:r.file
+                }
+    
+                insertQnaData(data)
+            } else {
+                let data = {
+                    asi_aci_seq:user_seq,
+                    asi_qsi_seq:seq,
+                    asi_title:$(".board_title input").val(),
+                    asi_comment:r.file
+                }
+                insertAnserData(data);
             }
 
-            insertBoardData(data)
         }
     })
 
 }
 
-function insertBoardData(data) {
+function insertQnaData(data) {
     $.ajax({
-        url:"/api/board/post",
+        url:"/api/qna/qna_form",
+        type:"put",
+        contentType:"application/json",
+        data:JSON.stringify(data),
+        success:function(r) {
+            alert(r.message);
+        }
+    })
+}
+
+function insertAnserData(data) {
+    $.ajax({
+        url:"/api/qna/answer_form",
         type:"put",
         contentType:"application/json",
         data:JSON.stringify(data),

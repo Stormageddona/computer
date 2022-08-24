@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team.computer.data.AnswerInfoVO;
 import com.team.computer.data.QuestionInfoVO;
 import com.team.computer.mapper.QnaMapper;
 
@@ -38,6 +39,15 @@ public class QnaAPIController {
     public Map<String,Object> addQna(@RequestBody QuestionInfoVO data) {
         Map<String,Object> map = new LinkedHashMap<String,Object>();
         qna_mapper.insertQnaData(data);
+        map.put("status", true);
+        map.put("message", "등록되었습니다.");
+        return map;
+    }
+
+    @PutMapping("/answer_form")
+    public Map<String, Object> putAnswerData(@RequestBody AnswerInfoVO data) {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        qna_mapper.insertAnswerData(data);
         map.put("status", true);
         map.put("message", "등록되었습니다.");
         return map;

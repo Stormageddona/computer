@@ -4,7 +4,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <script src="/assets/js/qna/qna_form.js"></script>
+    <!-- <script src="/assets/js/qna/qna_form.js"></script> -->
+    <script src="/assets/js/qna/qna_edit"></script>
     <title>Document</title>
 </head>
 <body>
