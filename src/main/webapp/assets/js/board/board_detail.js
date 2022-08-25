@@ -47,7 +47,7 @@ function selectBoardDetail(seq, page) {
 
             $(".board_content_area").html("");
             let board_summary =
-                '<p>'+r.boardDetailInfo.bdi_comment+'</p>';
+                r.boardDetailInfo.bdi_comment;
             $(".board_content_area").append(board_summary);
 
             $(".comment_box").html("");

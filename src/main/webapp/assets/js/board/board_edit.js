@@ -13,7 +13,7 @@ $("document").ready(function(){
         alert(edit_txt);
         editTxtFile(edit_txt);
 
-        console.log(editTxtFile(edit_txt));
+        // console.log(editTxtFile(edit_txt));
 
         // insertBoardData(data);
     })

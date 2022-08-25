@@ -1,6 +1,8 @@
 package com.team.computer.api.board;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.LinkedHashMap;
@@ -41,9 +43,22 @@ public class BoardAPIController {
     }
 
     @GetMapping("/detail")
-    public Map<String, Object> getBoardDetail(@RequestParam Integer seq, @RequestParam @Nullable Integer page) {
+    public Map<String, Object> getBoardDetail(@RequestParam Integer seq, @RequestParam @Nullable Integer page) throws Exception {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
-        m.put("boardDetailInfo", board_mapper.selectBoardDetail(seq));
+        BoardInfoVO data = board_mapper.selectBoardDetail(seq) ;
+        BufferedReader br = new BufferedReader(
+            new FileReader(new File(path+"/text/"+data.getBdi_comment()) 
+        ))  ;
+        String s = "";
+        String content = "";
+        while(s != null) 
+        {
+            content += s ;
+            s = br.readLine();
+        }
+        data.setBdi_comment(content);
+        br.close();
+        m.put("boardDetailInfo", data) ;
         m.put("boardDetailComment", board_mapper.selectBoardDetailComment(seq, (page-1)*10));
         m.put("boardDetailCommentCnt", board_mapper.selectBoardDetailCommentCnt((page-1)*10));
         return m;
