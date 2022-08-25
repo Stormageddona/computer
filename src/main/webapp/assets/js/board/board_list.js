@@ -34,7 +34,7 @@ function selectBoardList(keyword, page) {
                 let tag =
                     '<tr>'+
                         '<td>'+r.boardList[i].bdi_seq+'</td>'+
-                        '<td><a href="/board/detail?seq='+r.boardList[i].bdi_seq+'">'+r.boardList[i].bdi_title+'('+r.boardList[i].comment_cnt+')</a></td>'+
+                        '<td><a href="/board/detail?seq='+r.boardList[i].bdi_seq+'&page='+page+'">'+r.boardList[i].bdi_title+'('+r.boardList[i].comment_cnt+')</a></td>'+
                         '<td class="board_writer">'+r.boardList[i].aci_nickname+'</td>'+
                         // '<td>'+r.boardList[i].+'조회수</td>'+
                         '<td>(추가예정)</td>'+

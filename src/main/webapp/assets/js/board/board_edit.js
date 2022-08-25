@@ -1,6 +1,14 @@
 $("document").ready(function(){
 
+    let query = window.location.search;
+    let param = new URLSearchParams(query);
+    let page = param.get('page');
+    let seq = param.get('seq');
+    if(page == null || page == undefined) page = 1;
+
     editMethod();
+
+    testdetail(12, page);
 
     $("#btn_publish").click(function(){
         if(!(confirm("등록하시겠습니까?"))) return;
@@ -71,6 +79,20 @@ function insertBoardData(data) {
         data:JSON.stringify(data),
         success:function(r) {
             alert(r.message);
+        }
+    })
+}
+
+function testdetail(seq, page) {
+    $.ajax({
+        url:"/api/board/detail?seq="+seq+"&page="+page,
+        type:"get",
+        success:function(r) {
+            $("#ckedit").html("")
+            console.log(r.boardDetailInfo.bdi_comment)
+            let board_summary =
+                r.boardDetailInfo.bdi_comment;
+            $("#ckedit").html(board_summary)
         }
     })
 }

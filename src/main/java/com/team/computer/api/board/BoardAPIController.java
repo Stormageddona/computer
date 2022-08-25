@@ -11,11 +11,14 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,6 +75,14 @@ public class BoardAPIController {
         m.put("msg", "등록되었습니다.");
         return m;
     }
+    @DeleteMapping("/comment_remove")
+    public Map<String, Object> deleteComment(@RequestParam Integer coment_seq) {
+        Map<String, Object> m = new LinkedHashMap<String, Object>();
+        board_mapper.deleteBoardDetailComment(coment_seq);
+        m.put("status", true);
+        m.put("msg", "삭제되었습니다");
+        return m;
+    }
     @Value("${spring.servlet.multipart.location}") String path;
     @PutMapping("/post")
     @Transactional
@@ -104,5 +115,21 @@ public class BoardAPIController {
         map.put("status",true) ;
         map.put("message","게시글 등록이 완료되었습니다.") ;
         return map ;
+    }
+    @DeleteMapping("/delete_board")
+    public Map<String, Object> deleteBoardList(@RequestParam Integer bod_seq) {
+        Map<String, Object> m = new LinkedHashMap<String, Object>();
+        board_mapper.deleteBoardList(bod_seq);
+        m.put("status", true);
+        m.put("msg", "삭제하시겠습니까?");
+        return m;
+    }
+    @PatchMapping("/update_comment")
+    public Map<String, Object> updateBoardComment(@RequestBody BoardCommentInfoVO data) {
+        Map<String, Object> m = new LinkedHashMap<String, Object>();
+        board_mapper.updateBoardComment(data);
+        m.put("status", true);
+        m.put("msg", "수정되었습니다.");
+        return m;
     }
 }

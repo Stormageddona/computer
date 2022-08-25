@@ -15,5 +15,8 @@ public interface BoardMapper {
     public List<BoardCommentInfoVO> selectBoardDetailComment(Integer seq, Integer offset);
     public Integer selectBoardDetailCommentCnt(Integer offset);
     public void insertBoardDetailComment(BoardCommentInfoVO data);
+    public void deleteBoardDetailComment(Integer seq);
+    public void deleteBoardList(Integer seq);
     public void insertBoardData(BoardInfoVO data) ;
+    public void updateBoardComment(BoardCommentInfoVO data);
 }
