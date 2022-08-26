@@ -19,4 +19,10 @@ public interface BoardMapper {
     public void deleteBoardList(Integer seq);
     public void insertBoardData(BoardInfoVO data) ;
     public void updateBoardComment(BoardCommentInfoVO data);
+
+    //게시판 조회수 체크
+
+    public Boolean isLookupCountTime(Integer user, Integer board) ;
+    public void insertLookupCountData(Integer user, Integer board) ;
+    public Integer selectLookupCountData(Integer board) ;
 }

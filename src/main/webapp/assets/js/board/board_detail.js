@@ -39,7 +39,7 @@ function selectBoardDetail(seq, page) {
                     '<p><span class="user_name">'+r.boardDetailInfo.aci_nickname+'</span> | <span>'+r.boardDetailInfo.bdi_reg_dt+'</span></p>'+
                 '</div>'+
                 '<div class="board_info">'+
-                    '<p><span>조회수 100(추가예정)</span></p>'+
+                    '<p><span>조회 수'+r.boardDetailInfo.boardCount+'</span></p>'+
                 '</div>'
                 $(".board_head_area").append(boardHeadTag);
             }else {
@@ -49,7 +49,7 @@ function selectBoardDetail(seq, page) {
                     '<p><span class="user_name">'+r.boardDetailInfo.aci_nickname+'</span> | <span>'+r.boardDetailInfo.bdi_reg_dt+'</span></p>'+
                 '</div>'+
                 '<div class="board_info">'+
-                    '<p><span>조회수 100(추가예정)</span></p>'+
+                    '<p><span>조회 수 '+r.boardDetailInfo.boardCount+'</span></p>'+
                 '</div>'
                 $(".board_head_area").append(boardHeadTag);
             }
@@ -129,8 +129,8 @@ function selectBoardDetail(seq, page) {
                 // console.log(r.boardDetailComment[i]);
             }
 
-            updateComment();
-            deleteCommentMethod();
+            // updateComment();
+            // deleteCommentMethod();
 
             $(".comment_pager_area").html("");
             // console.log(r.boardDetailCommentCnt)

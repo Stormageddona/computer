@@ -10,14 +10,15 @@
         left outer join board_comment_info c
         on a.bdi_seq = c.bcmi_bdi_seq 
         where bdi_status = 1 and
-        (bdi_title like '%${keyword}%' or bcmi_comment like '%${keyword}%')
+        bdi_title like '%${keyword}%'
         group by a.bdi_seq
+        order by bdi_reg_dt desc
         limit 10 offset #{offset}
     </select>
     <select id="selectBoardListCnt" resultType="java.lang.Integer">
         SELECT ceil(count(*)/10) from board_info
         where bdi_status = 1 and
-        bdi_title like '%${keyword}%' or bdi_comment like '%${keyword}%'
+        bdi_title like '%${keyword}%'
         limit 10 offset #{offset}
     </select>
 
@@ -81,4 +82,23 @@
         SET bcmi_comment=#{bcmi_comment}, bcmi_mod_dt=#{bcmi_mod_dt}
         WHERE bcmi_seq=#{bcmi_seq};
     </update>
+
+    <!-- 게시판 조회수 체크 -->
+
+    
+    <update id ="insertLookupCountData">
+        INSERT INTO board_count_info
+        (bci_aci_seq, bci_bdi_seq)
+        VALUES(#{user}, #{board});
+    </update>
+
+
+    <select id="isLookupCountTime" resultType ="java.lang.Boolean">
+        select ( <![CDATA[UNIX_TIMESTAMP() > UNIX_TIMESTAMP(bci_count_dt)+10]]> ) from board_count_info 
+        where bci_aci_seq = #{user} and bci_bdi_seq = #{board} order by bci_count_dt desc limit 1
+    </select>
+
+    <select id="selectLookupCountData" resultType ="java.lang.Integer">
+        select count(*) from board_count_info where bci_bdi_seq = #{board}
+    </select>
 </mapper>

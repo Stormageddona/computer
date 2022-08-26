@@ -3,6 +3,8 @@ package com.team.computer.data;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.crypto.KeySelector.Purpose;
+
 import lombok.Data;
 
 @Data
@@ -17,6 +19,7 @@ public class BoardInfoVO {
     private Date bdi_mod_dt;
     private Date bdi_del_dt;
 
+    private Integer boardCount;
     private List<String> img_list ;
     private String aci_id;
     private String aci_nickname;

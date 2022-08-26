@@ -40,31 +40,41 @@ public class BoardAPIController {
     public Map<String, Object> getBoardList(@RequestParam @Nullable Integer page, @RequestParam @Nullable String keyword) {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
         if(page==null) page=1;
-        m.put("boardList", board_mapper.selectBoardList((page-1)*10, keyword));
+        List<BoardInfoVO> list = board_mapper.selectBoardList((page-1)*10, keyword) ;
+        for(BoardInfoVO i : list)
+        {
+            i.setBoardCount(board_mapper.selectLookupCountData(i.getBdi_seq()));
+        }
+        m.put("boardList", list);
         m.put("boardCnt", board_mapper.selectBoardListCnt((page-1)*10, keyword));
         return m;
     }
 
     @GetMapping("/detail")
-    public Map<String, Object> getBoardDetail(@RequestParam Integer seq, @RequestParam @Nullable Integer page) throws Exception {
+    public Map<String, Object> getBoardDetail(HttpSession session ,@RequestParam Integer seq, @RequestParam @Nullable Integer page) throws Exception {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
+        AccountInfoVO user = (AccountInfoVO)session.getAttribute("user") ;
         BoardInfoVO data = board_mapper.selectBoardDetail(seq) ;
-        BufferedReader br = new BufferedReader(
-            new FileReader(new File(path+"/text/"+data.getBdi_comment()) 
-        ))  ;
-        String s = "";
-        String content = "";
-        
-        while(s != null) 
+        // BufferedReader br = new BufferedReader(
+        //     new FileReader(new File(path+"/text/"+data.getBdi_comment()) 
+        // ))  ;
+        // String s = "";
+        // String content = "";
+        // while(s != null) 
+        // {
+        //     content += s ;
+        //     s = br.readLine();
+        // }
+        // data.setBdi_comment(content);
+        // br.close();
+        if (user != null  )
         {
-            content += s ;
-            s = br.readLine();
+            Boolean temp = board_mapper.isLookupCountTime(user.getAci_seq(), data.getBdi_seq()) ;
+            if (temp == null) temp = true ;
+            if (temp)
+                board_mapper.insertLookupCountData(user.getAci_seq(), data.getBdi_seq()) ;
         }
-        content = content.replace("\\n", "") ;
-        content = content.substring(1, content.length()-1);
-        System.out.println(content);
-        data.setBdi_comment(content);
-        br.close();
+        data.setBoardCount(board_mapper.selectLookupCountData(data.getBdi_seq()));
         m.put("boardDetailInfo", data) ;
         m.put("boardDetailComment", board_mapper.selectBoardDetailComment(seq, (page-1)*10));
         m.put("boardDetailCommentCnt", board_mapper.selectBoardDetailCommentCnt((page-1)*10));
