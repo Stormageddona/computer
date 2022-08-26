@@ -16,5 +16,9 @@ public class AnswerInfoVO {
     private Date asi_mod_dt;
     private Date asi_del_dt;
 
+    private String aci_id;
+    private String aci_name;
+    private String aci_nickname;
+
     private String img_src;
 }

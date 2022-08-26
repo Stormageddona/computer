@@ -9,7 +9,7 @@ $(function(){
         url:"/api/qna/list?keyword="+keyword+"&page="+page,
         type:"get",
         success:function(result){
-            // console.log(result);
+            console.log(result);
             $(".qna_list").html("")
             for(let i=0; i<result.list.length; i++) {
                 let tag= '';
@@ -17,13 +17,13 @@ $(function(){
                     tag=
                         '<tr class="question_tr" data-seq="'+result.list[i].qsi_seq+'">' +
                             '<td>'+ result.list[i].qsi_seq+'</td>' +
-                            '<td><a href="/qna/detail?seq='+result.list[i].qsi_seq+'"&>'+ result.list[i].qsi_title+'</a></td>' +
+                            '<td><a href="/qna/detail?seq='+result.list[i].qsi_seq+'">'+ result.list[i].qsi_title+'</a></td>' +
                             '<td>'+ result.list[i].qua_id+'</td>' +
                             '<td>'+ makeDateString(new Date(result.list[i].qsi_reg_dt))+'</td>' +
                         '<tr>'+
                         '<tr>' +
                         '<td><i class="fa-brands fa-adn"></i></td>' +    
-                        '<td><a href="/qna/detail?seq='+result.list[i].qsi_seq+'"&>'+ result.list[i].asi_title+'</a></td>' +
+                        '<td><a href="/qna/detail?qsi_seq='+result.list[i].qsi_seq+'"&>'+ result.list[i].asi_title+'</a></td>' +
                             '<td>'+ result.list[i].ans_id+'</td>' +
                             '<td>'+ makeDateString(new Date(result.list[i].asi_reg_dt))+'</td>' +
                         '<tr>';

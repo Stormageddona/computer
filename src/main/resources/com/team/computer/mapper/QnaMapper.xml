@@ -31,6 +31,13 @@
         on a.qsi_aci_seq = b.aci_seq
         where qsi_seq = #{seq}
     </select>
+    <select id="selectAnswerDetail" resultType="com.team.computer.data.AnswerInfoVO">
+            SELECT a.*, b.aci_id, b.aci_name
+        FROM answer_info a
+        left outer join account_info b
+        on a.qsi_aci_seq = b.aci_seq
+        where asi_seq = #{asi_seq}
+    </select>
     <insert id="insertQnaData">
         INSERT INTO question_info
         (qsi_aci_seq, qsi_title, qsi_comment)
