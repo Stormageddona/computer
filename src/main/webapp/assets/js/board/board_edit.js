@@ -7,20 +7,28 @@ $("document").ready(function(){
     if(page == null || page == undefined) page = 1;
 
     editMethod();
+    testdetail(seq, page);
 
-    testdetail(13, page);
+    // testdetail(13, page);
 
     $("#btn_publish").click(function(){
-        if(!(confirm("등록하시겠습니까?"))) return;
+        // if(!(confirm("등록하시겠습니까?"))) return;
 
         // if(user_seq == null || user_seq == undefined || user_seq == "") {
         //     alert("로그인후 사용가능합니다.")
         //     return;
         // }
         let edit_txt = CKEDITOR.instances.ckedit.getData().replace("\\n", "")
-        alert(edit_txt);
 
-        insertBoardData(edit_txt);
+        if(seq == null || seq == "" || seq == undefined){
+            if(!(confirm("등록하시겠습니까?"))) return;
+            insertBoardData(edit_txt);
+        } else {
+            if(!(confirm("수정하시겠습니까?"))) return;
+
+            updateBoard(seq, edit_txt);
+        }
+
 
         // editTxtFile(edit_txt);
 
@@ -28,7 +36,9 @@ $("document").ready(function(){
 
         // insertBoardData(data);
     })
+
 })
+
 
 function editMethod() {
     CKEDITOR.replace(
@@ -94,11 +104,32 @@ function insertBoardData(board_text) {
     })
 }
 
+function updateBoard(seq, board_text) {
+    data = {
+        bdi_seq:seq,
+        bdi_title:$(".board_title input").val(),
+        bdi_comment:board_text
+    }
+    $.ajax({
+        url:"/api/board/mod_board",
+        type:"patch",
+        contentType:"application/json",
+        data:JSON.stringify(data),
+        success:function(r) {
+            alert(r.msg);
+            location.href="/board/detail?seq="+seq;
+        }
+    })
+}
+
 function testdetail(seq, page) {
     $.ajax({
         url:"/api/board/detail?seq="+seq+"&page="+page,
         type:"get",
         success:function(r) {
+
+            $(".board_title input").val(r.boardDetailInfo.bdi_title)
+
             $("#ckedit").html("")
             
             console.log(r.boardDetailInfo.bdi_comment)

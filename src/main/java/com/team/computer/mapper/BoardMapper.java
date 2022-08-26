@@ -19,6 +19,7 @@ public interface BoardMapper {
     public void deleteBoardList(Integer seq);
     public void insertBoardData(BoardInfoVO data) ;
     public void updateBoardComment(BoardCommentInfoVO data);
+    public void updateBoard(BoardInfoVO data);
 
     //게시판 조회수 체크
 

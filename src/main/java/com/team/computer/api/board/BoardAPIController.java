@@ -135,6 +135,16 @@ public class BoardAPIController {
         m.put("msg", "삭제하시겠습니까?");
         return m;
     }
+    @PatchMapping("/mod_board") 
+    public Map<String, Object> updateBoardList(@RequestBody BoardInfoVO data) {
+        Map<String, Object> m = new LinkedHashMap<String, Object>();
+        board_mapper.updateBoard(data);
+        m.put("status", true);
+        m.put("msg", "수정되었습니다.");
+        return m;
+    }
+
+
     @PatchMapping("/update_comment")
     public Map<String, Object> updateBoardComment(@RequestBody BoardCommentInfoVO data) {
         Map<String, Object> m = new LinkedHashMap<String, Object>();

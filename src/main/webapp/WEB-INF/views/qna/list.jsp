@@ -44,7 +44,7 @@
             <div class="qna_search">
                 <input type="text" class="qna_keyword" placeholder="검색어 입력" value="${keyword}">
                 <button type="submit" class="submit_qna">검색</button>
-                <button onclick="location.href='/qna/form'">글 쓰기</button>
+                <button class="board_write">글 쓰기</button>
             </div>
 
         </div>

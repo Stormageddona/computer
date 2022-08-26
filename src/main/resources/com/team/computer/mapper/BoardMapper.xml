@@ -3,14 +3,14 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.computer.mapper.BoardMapper">
     <select id="selectBoardList" resultType="com.team.computer.data.BoardInfoVO">
-        SELECT a.*, b.aci_id, b.aci_name, count(c.bcmi_bdi_seq) as comment_cnt
+        SELECT a.*, b.aci_id, b.aci_nickname, b.aci_name, count(c.bcmi_bdi_seq) as comment_cnt
         FROM board_info a
         left outer join account_info b
         on a.bdi_aci_seq = b.aci_seq
         left outer join board_comment_info c
-        on a.bdi_seq = c.bcmi_bdi_seq 
-        where bdi_status = 1 and
-        (bdi_title like '%${keyword}%' or bcmi_comment like '%${keyword}%')
+        on a.bdi_seq = c.bcmi_bdi_seq
+        <![CDATA[where bdi_status <= 2]]> and
+        bdi_title like '%${keyword}%'
         group by a.bdi_seq
         order by bdi_reg_dt desc
         limit 10 offset #{offset}
@@ -68,10 +68,19 @@
         WHERE bcmi_seq=#{seq};
     </delete>
 
-    <delete id="deleteBoardList">
-        DELETE FROM board_info
-        WHERE bdi_seq=#{seq};
-    </delete>
+    <update id="deleteBoardList">
+        UPDATE board_info
+		SET bdi_status=2, bdi_del_dt=CURRENT_TIMESTAMP
+		WHERE bdi_seq=#{seq};
+        <!-- DELETE FROM board_info
+        WHERE bdi_seq=#{seq}; -->
+    </update>
+
+    <update id="updateBoard">
+        UPDATE board_info
+        SET bdi_title=#{bdi_title}, bdi_comment=#{bdi_comment}, bdi_mod_dt=CURRENT_TIMESTAMP
+        WHERE bdi_seq=#{bdi_seq};
+    </update>
 
     <update id="updateBoardComment">
         UPDATE board_comment_info

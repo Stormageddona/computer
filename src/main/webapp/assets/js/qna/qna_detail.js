@@ -1,15 +1,38 @@
 $(function(){
+    let query = window.location.search;
+    let param = new URLSearchParams(query);
+    let seq = param.get('seq');
+    let asi_seq = param.get('asi_seq');
+    if(seq == null || seq == undefined) seq = "";
+    if(asi_seq == null || asi_seq == undefined) asi_seq = "";
+    selectQnaDetail(seq, asi_seq)
+    $(".btn_area .save").click(function(){
+
+    })
+})
+
+function selectQnaDetail(seq, asi_seq) {
     $.ajax({
-        url:"/api/qna/detail?seq="+seq,
+        url:"/api/qna/detail?seq="+seq+"&asi_seq="+asi_seq,
         type:"get",
         success:function(result){
             $(".qna_head_area").html("");
-            let headtag = 
+            let headtag = ""
+            if(seq == null || seq == undefined || seq == "") {
+                headtag = 
+                    '<p>'+result.answerDetail.asi_title+'</p>'+
+                    '<div class="qna_head_user_info">'+'<p><span class="user_name">'+result.answerDetail.aci_nickname+
+                    '</span> | <span>'+ makeDateString (new Date(result.answerDetail.asi_reg_dt))+'</span></p>'
+                    +'</div>'+'</div>'
+                $(".qna_head_area").append(headtag);
+            } else {
+                headtag = 
                 '<p>'+result.qnaDetail.qsi_title+'</p>'+
                 '<div class="qna_head_user_info">'+'<p><span class="user_name">'+result.qnaDetail.aci_nickname+
                 '</span> | <span>'+ makeDateString (new Date(result.qnaDetail.qsi_reg_dt))+'</span></p>'
                 +'</div>'
             $(".qna_head_area").append(headtag);
+            }
 
             if(result.qnaDetail.aci_nickname == null || result.qnaDetail.aci_nickname == undefined) {
                 $(".qna_head_user_info .user_name").html(result.qnaDetail.aci_id);
@@ -35,7 +58,4 @@ $(function(){
             })
         }
     })
-    $(".btn_area .save").click(function(){
-
-    })
-})
+}

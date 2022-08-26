@@ -32,9 +32,10 @@ public class QnaAPIController {
         return map;
     }
     @GetMapping("/detail")
-    public Map<String,Object> getQnaDetail(@RequestParam Integer seq) {
+    public Map<String,Object> getQnaDetail(@RequestParam @Nullable Integer seq, @RequestParam @Nullable Integer asi_seq) {
         Map<String,Object> map = new LinkedHashMap<String,Object>();
         map.put("qnaDetail", qna_mapper.selectQnaDetail(seq));
+        map.put("answerDetail", qna_mapper.selectAnswerDetail(asi_seq));
         return map;
     }
 

@@ -35,4 +35,5 @@ public class QuestionInfoVO {
     private String ans_id;
     private String ans_name;
     private String ans_nickname;
+    private Integer asi_seq;
 }
