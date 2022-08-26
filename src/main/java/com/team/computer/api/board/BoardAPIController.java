@@ -1,8 +1,6 @@
 package com.team.computer.api.board;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.LinkedHashMap;
@@ -11,7 +9,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.Nullable;

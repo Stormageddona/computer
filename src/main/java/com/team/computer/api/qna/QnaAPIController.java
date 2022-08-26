@@ -38,7 +38,7 @@ public class QnaAPIController {
         return map;
     }
 
-    @PutMapping("/qna_add")
+    @PutMapping("/qna_form")
     public Map<String,Object> addQna(@RequestBody QuestionInfoVO data, HttpSession session) {
         Map<String,Object> map = new LinkedHashMap<String,Object>();
         qna_mapper.insertQnaData(data);

@@ -45,12 +45,12 @@ function editMethod() {
 }
 
 function editTxtFile(data, seq) {
-    $.ajax({
-        url:"/text/upload",
-        type:"put",
-        contentType:"application/json",
-        data:JSON.stringify(data),
-        success:function(r) {
+    // $.ajax({
+    //     url:"/text/upload",
+    //     type:"put",
+    //     contentType:"application/json",
+    //     data:JSON.stringify(data),
+    //     success:function(r) {
             console.log();
 
             // let data = {
@@ -58,28 +58,26 @@ function editTxtFile(data, seq) {
             //     qsi_title:$(".board_title input").val(),
             //     qsi_comment:r.file
             // }
-
-            insertQnaData(data)
             if (seq == null || seq == "" || seq == undefined) {
-                let data = {
+                let dataa = {
                     qsi_aci_seq:user_seq,
                     qsi_title:$(".board_title input").val(),
-                    qsi_comment:r.file
+                    qsi_comment:data
                 }
     
-                insertQnaData(data)
+                insertQnaData(dataa)
             } else {
-                let data = {
+                let dataa = {
                     asi_aci_seq:user_seq,
                     asi_qsi_seq:seq,
                     asi_title:$(".board_title input").val(),
-                    asi_comment:r.file
+                    asi_comment:data
                 }
-                insertAnserData(data);
+                insertAnserData(dataa);
             }
 
-        }
-    })
+        // }
+    // })
 
 }
 

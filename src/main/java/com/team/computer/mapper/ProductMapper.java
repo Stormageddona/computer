@@ -13,7 +13,7 @@ public interface ProductMapper {
     
     public List<Map<String,Object>> selectList(
         Integer offset, String keyword, Boolean desc,String type, String search,String ordertype) ;
-    public Integer selectListCnt(Integer offset, String keyword,String type, String search,String ordertype);
+    public Integer selectListCnt(String keyword,String type, String search,String ordertype);
     public Map<String,Object> selectProductDetailBySeq(String table, String type, Integer seq) ;
     public List<String> selectProductColumn(String table) ;
     public List<String> selectProductColumnComment(String table) ;

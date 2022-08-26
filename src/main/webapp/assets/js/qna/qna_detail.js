@@ -8,7 +8,7 @@ $(function(){
                 '<p>'+result.qnaDetail.qsi_title+'</p>'+
                 '<div class="qna_head_user_info">'+'<p><span class="user_name">'+result.qnaDetail.aci_nickname+
                 '</span> | <span>'+ makeDateString (new Date(result.qnaDetail.qsi_reg_dt))+'</span></p>'
-                +'</div>'+'</div>'
+                +'</div>'
             $(".qna_head_area").append(headtag);
 
             if(result.qnaDetail.aci_nickname == null || result.qnaDetail.aci_nickname == undefined) {

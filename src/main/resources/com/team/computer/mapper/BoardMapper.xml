@@ -10,7 +10,7 @@
         left outer join board_comment_info c
         on a.bdi_seq = c.bcmi_bdi_seq 
         where bdi_status = 1 and
-        bdi_title like '%${keyword}%'
+        (bdi_title like '%${keyword}%' or bcmi_comment like '%${keyword}%')
         group by a.bdi_seq
         order by bdi_reg_dt desc
         limit 10 offset #{offset}
@@ -18,7 +18,7 @@
     <select id="selectBoardListCnt" resultType="java.lang.Integer">
         SELECT ceil(count(*)/10) from board_info
         where bdi_status = 1 and
-        bdi_title like '%${keyword}%'
+        bdi_title like '%${keyword}%' or bdi_comment like '%${keyword}%'
         limit 10 offset #{offset}
     </select>
 
@@ -35,8 +35,7 @@
         FROM board_comment_info a
         left outer join account_info b
         on a.bcmi_aci_seq = b.aci_seq
-        <![CDATA[where bcmi_status <= 2]]>
-        and bcmi_bdi_seq = #{seq}
+        where bcmi_bdi_seq = #{seq}
         limit 10 offset #{offset}
     </select>
     <select id="selectBoardDetailCommentCnt" resultType="java.lang.Integer">
@@ -64,13 +63,10 @@
             (#{bcmi_aci_seq}, #{bcmi_bdi_seq}, #{bcmi_comment}, #{bcmi_imgs}, 1); -->
     </insert>
 
-    <update id="deleteBoardDetailComment">
-        <!-- DELETE FROM board_comment_info
-        WHERE bcmi_seq=#{seq}; -->
-        UPDATE board_comment_info
-		SET bcmi_status=3, bcmi_del_dt=CURRENT_TIMESTAMP
-		WHERE bcmi_seq=#{seq};
-    </update>
+    <delete id="deleteBoardDetailComment">
+        DELETE FROM board_comment_info
+        WHERE bcmi_seq=#{seq};
+    </delete>
 
     <delete id="deleteBoardList">
         DELETE FROM board_info

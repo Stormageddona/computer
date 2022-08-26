@@ -59,6 +59,7 @@ public class ProductAPIController {
         Integer num = 1 ;
         if(page != null && !page.equals("null")) num = Integer.parseInt(page);
         if (keyword == null || keyword.equals("null")) keyword = null ;
+        System.out.println((num-1)*10 + keyword + desc + type+search+ordertype);
         List<Map<String, Object>> temp = prod_mapper.selectList((num-1)*10, keyword, desc,type,search,ordertype) ;
         List<Map<String, Object>> list = new LinkedList<Map<String,Object>>() ;
         String seq_type = utils.getTableNameBySeqType(type);
@@ -80,7 +81,7 @@ public class ProductAPIController {
         
 
         m.put("List", list);
-        m.put("ListCnt", prod_mapper.selectListCnt((num-1)*10, keyword,type,search,ordertype));
+        m.put("ListCnt", prod_mapper.selectListCnt( keyword,type,search,ordertype));
 
 
         List<String> codiStr = new LinkedList<String>() ;

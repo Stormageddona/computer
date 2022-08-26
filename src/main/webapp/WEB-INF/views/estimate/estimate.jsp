@@ -19,6 +19,7 @@
             <tbody>
             </tbody>
         </table>
+        <div class="pager_area"></div>
     </div>
     <div class="esti_area">
             <button class="esti" data-type="cpu">CPU</button>

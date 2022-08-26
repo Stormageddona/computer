@@ -71,7 +71,7 @@ $(function()
                     $(".add_box").append(tag)
                 }
                 // console.log(Listcolumn_kr)
-                
+
             })
             $(".add_submit").click(function()
             {
@@ -257,6 +257,11 @@ function getData(prod,page,keyword,desc,search,ordertype)
                     '<td><button class="delete_btn" onClick=deleteProduct(' + result.List[i].seq + ')>삭제</td>' +
                 '</tr>'
                 $(".product_table tbody").append(tag)
+            }
+            $(".pager_box").html("")
+            for (let i = 0; i < result.ListCnt ; i++)
+            {
+                $(".pager_box").append('<button onclick="getData(\''+prod+'\','+i+','+keyword+','+desc+','+search+','+ordertype+')">'+(i+1)+'</button>')
             }
 
             //제품 수정
