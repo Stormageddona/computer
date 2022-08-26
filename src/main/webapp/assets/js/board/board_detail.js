@@ -70,25 +70,28 @@ function selectBoardDetail(seq, page) {
             $(".comment_box").html("");
             let comment_info = ""
             for(let i=0; i < r.boardDetailComment.length; i++) {
-                if(r.boardDetailComment[i].aci_seq == user_seq) {
+                if(r.boardDetailComment[i].bcmi_status == 2) {
+                    if(r.boardDetailComment[i].aci_seq == user_seq) {
                     comment_info =
                     '<div class="comment_area">'+
                     '<div class="comment_user">'+
                         '<p>'+r.boardDetailComment[i].aci_nickname+'</p>'+
                     '</div>'+
                     '<div class="comment_summary">'+
-                        '<p>'+r.boardDetailComment[i].bcmi_comment+'</p>'+
+                        '<p>블라인드 처리된 글입니다.</p>'+
                     '</div>'+
                     '<div class="comment_reg_dt">'+
                         '<p>'+r.boardDetailComment[i].bcmi_reg_dt+'</p>'+
-                        '<button class="comment_delete" data-seq="'+r.boardDetailComment[i].bcmi_seq+'">삭제</button>'+
-                        '<button class="comment_mod">수정</button>'+
                     '</div>'+
                 '</div>';
                 $(".comment_box").append(comment_info);
-                } else {
-                    comment_info =
-                    '<div class="comment_area">'+
+                    }else {
+                        
+                    }
+                }else if (r.boardDetailComment[i].bcmi_status == 1){
+                    if(r.boardDetailComment[i].aci_seq == user_seq) {
+                        comment_info =
+                        '<div class="comment_area">'+
                         '<div class="comment_user">'+
                             '<p>'+r.boardDetailComment[i].aci_nickname+'</p>'+
                         '</div>'+
@@ -97,12 +100,31 @@ function selectBoardDetail(seq, page) {
                         '</div>'+
                         '<div class="comment_reg_dt">'+
                             '<p>'+r.boardDetailComment[i].bcmi_reg_dt+'</p>'+
+                            '<button class="comment_delete" data-seq="'+r.boardDetailComment[i].bcmi_seq+'">삭제</button>'+
+                            '<button class="comment_mod">수정</button>'+
                         '</div>'+
                     '</div>';
                     $(".comment_box").append(comment_info);
-                }
-                if(r.boardDetailComment[i].aci_nickname == null || r.boardDetailComment[i].aci_nickname == undefined) {
-                    $(".comment_user p").html(r.boardDetailComment[i].aci_id) 
+                    } else {
+    
+                        comment_info =
+                        '<div class="comment_area">'+
+                            '<div class="comment_user">'+
+                                '<p>'+r.boardDetailComment[i].aci_nickname+'</p>'+
+                            '</div>'+
+                            '<div class="comment_summary">'+
+                                '<p>'+r.boardDetailComment[i].bcmi_comment+'</p>'+
+                            '</div>'+
+                            '<div class="comment_reg_dt">'+
+                                '<p>'+r.boardDetailComment[i].bcmi_reg_dt+'</p>'+
+                            '</div>'+
+                        '</div>';
+                        $(".comment_box").append(comment_info);
+                    }
+                    if(r.boardDetailComment[i].aci_nickname == null || r.boardDetailComment[i].aci_nickname == undefined) {
+                        $(".comment_user p").html(r.boardDetailComment[i].aci_id) 
+                    }
+
                 }
                 // console.log(r.boardDetailComment[i]);
             }

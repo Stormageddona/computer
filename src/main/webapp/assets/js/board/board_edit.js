@@ -8,18 +8,21 @@ $("document").ready(function(){
 
     editMethod();
 
-    testdetail(12, page);
+    testdetail(13, page);
 
     $("#btn_publish").click(function(){
         if(!(confirm("등록하시겠습니까?"))) return;
 
-        if(user_seq == null || user_seq == undefined || user_seq == "") {
-            alert("로그인후 사용가능합니다.")
-            return;
-        }
-        let edit_txt = CKEDITOR.instances.ckedit.getData()
+        // if(user_seq == null || user_seq == undefined || user_seq == "") {
+        //     alert("로그인후 사용가능합니다.")
+        //     return;
+        // }
+        let edit_txt = CKEDITOR.instances.ckedit.getData().replace("\\n", "")
         alert(edit_txt);
-        editTxtFile(edit_txt);
+
+        insertBoardData(edit_txt);
+
+        // editTxtFile(edit_txt);
 
         // console.log(editTxtFile(edit_txt));
 
@@ -50,28 +53,34 @@ function editMethod() {
     })
 }
 
-function editTxtFile(data) {
-    $.ajax({
-        url:"/text/upload",
-        type:"put",
-        contentType:"application/json",
-        data:JSON.stringify(data),
-        success:function(r) {
-            console.log();
+// function editTxtFile(data) {
+//     $.ajax({
+//         url:"/text/upload",
+//         type:"put",
+//         contentType:"application/json",
+//         data:JSON.stringify(data),
+//         success:function(r) {
+//             console.log();
+            
+//             let data = {
+//                 bdi_aci_seq:user_seq,
+//                 bdi_title:$(".board_title input").val(),
+//                 bdi_comment:r.file
+//             }
 
-            let data = {
-                bdi_aci_seq:user_seq,
-                bdi_title:$(".board_title input").val(),
-                bdi_comment:r.file
-            }
+//             insertBoardData(data)
+//         }
+//     })
 
-            insertBoardData(data)
-        }
-    })
+// }
 
-}
+function insertBoardData(board_text) {
+    let data = {
+        bdi_aci_seq:user_seq,
+        bdi_title:$(".board_title input").val(),
+        bdi_comment:board_text
+    }
 
-function insertBoardData(data) {
     $.ajax({
         url:"/api/board/post",
         type:"put",
@@ -79,6 +88,8 @@ function insertBoardData(data) {
         data:JSON.stringify(data),
         success:function(r) {
             alert(r.message);
+
+
         }
     })
 }
@@ -89,6 +100,7 @@ function testdetail(seq, page) {
         type:"get",
         success:function(r) {
             $("#ckedit").html("")
+            
             console.log(r.boardDetailInfo.bdi_comment)
             let board_summary =
                 r.boardDetailInfo.bdi_comment;

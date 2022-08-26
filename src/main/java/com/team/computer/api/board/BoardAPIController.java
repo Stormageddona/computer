@@ -54,11 +54,15 @@ public class BoardAPIController {
         ))  ;
         String s = "";
         String content = "";
+        
         while(s != null) 
         {
             content += s ;
             s = br.readLine();
         }
+        content = content.replace("\\n", "") ;
+        content = content.substring(1, content.length()-1);
+        System.out.println(content);
         data.setBdi_comment(content);
         br.close();
         m.put("boardDetailInfo", data) ;

@@ -3,6 +3,8 @@ $("document").ready(function(){
     let param = new URLSearchParams(query);
     let page = param.get('page');
     let keyword = param.get('keyword');
+    if(page == null || page == undefined) page = 1;
+    if(keyword == null || keyword == undefined) keyword = "";
 
     if(keyword != null){
         selectBoardList(keyword, page);
@@ -47,10 +49,11 @@ function selectBoardList(keyword, page) {
                     }
             }
 
+            console.log(r.boardCnt);
+            $(".pager_area").html("");
             for(let i=0; i < r.boardCnt; i++) {
                 let tag =
                 '<a href="#" onclick="return false;">'+(i+1)+'</a>';
-                $(".pager_area").html("");
                 $(".pager_area").append(tag);
             }
         }

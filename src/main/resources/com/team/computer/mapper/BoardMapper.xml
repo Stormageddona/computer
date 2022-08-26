@@ -34,7 +34,8 @@
         FROM board_comment_info a
         left outer join account_info b
         on a.bcmi_aci_seq = b.aci_seq
-        where bcmi_bdi_seq = #{seq}
+        <![CDATA[where bcmi_status <= 2]]>
+        and bcmi_bdi_seq = #{seq}
         limit 10 offset #{offset}
     </select>
     <select id="selectBoardDetailCommentCnt" resultType="java.lang.Integer">
@@ -62,10 +63,13 @@
             (#{bcmi_aci_seq}, #{bcmi_bdi_seq}, #{bcmi_comment}, #{bcmi_imgs}, 1); -->
     </insert>
 
-    <delete id="deleteBoardDetailComment">
-        DELETE FROM board_comment_info
-        WHERE bcmi_seq=#{seq};
-    </delete>
+    <update id="deleteBoardDetailComment">
+        <!-- DELETE FROM board_comment_info
+        WHERE bcmi_seq=#{seq}; -->
+        UPDATE board_comment_info
+		SET bcmi_status=3, bcmi_del_dt=CURRENT_TIMESTAMP
+		WHERE bcmi_seq=#{seq};
+    </update>
 
     <delete id="deleteBoardList">
         DELETE FROM board_info
