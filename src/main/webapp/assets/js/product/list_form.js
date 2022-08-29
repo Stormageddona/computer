@@ -34,6 +34,8 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                 '</div>'
                 $(".product_box").append(tag);
             } else{
+                $(".product_summary_box p").html("");
+
                 for(let i=0; i < r.List.length; i++) {
                 let prod_type = "'/product/detail?seq="+r.List[i].seq+"&type="+r.List[i].type+"'"
                 let won = r.List[i].price.toLocaleString();
@@ -70,8 +72,7 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                     '</div>'
 
                     $(".product_box").append(tag);
-
-                    $(".product_summary_box p").html("");
+                    let appendCol = "" ;
                     for(e=0; e < r.column.length; e++){
                         let release = new Date(r.List[i].release_dt) ;
                         let date = release.getFullYear() + "-" + release.getMonth() + "-" + release.getDate();
@@ -80,13 +81,17 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                         {$(".product_summary_box p").append(r.column_kr[e] + ":" + date+" / ") ;
                         continue ;}
                         
-                        let appendCol =  r.column_kr[e] + " : " + r.List[i][r.column[e]];
+                        appendCol = appendCol + r.column_kr[e] + " : " + r.List[i][r.column[e]];
+                        console.log(e)
+                        console.log(r.column_kr[e])
+                        console.log(r.column[e])
                         // let appendCol =  r.column_kr[e] + " : " + eval("r.List["+i+"]."+r.column[e]);
                         if (e != r.column.length-1)
                         appendCol = appendCol + " / "
                         
-                        $(".product_summary_box p").append(appendCol);
                     }
+                    console.log(appendCol)
+                    $(".product_summary_box p").eq(i).append(appendCol);
                     
                     
                 }

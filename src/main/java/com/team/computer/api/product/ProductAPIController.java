@@ -59,7 +59,7 @@ public class ProductAPIController {
         Integer num = 1 ;
         if(page != null && !page.equals("null")) num = Integer.parseInt(page);
         if (keyword == null || keyword.equals("null")) keyword = null ;
-        System.out.println((num-1)*10 + keyword + desc + type+search+ordertype);
+        // System.out.println((num-1)*10 + keyword + desc + type+search+ordertype);
         List<Map<String, Object>> temp = prod_mapper.selectList((num-1)*10, keyword, desc,type,search,ordertype) ;
         List<Map<String, Object>> list = new LinkedList<Map<String,Object>>() ;
         String seq_type = utils.getTableNameBySeqType(type);
