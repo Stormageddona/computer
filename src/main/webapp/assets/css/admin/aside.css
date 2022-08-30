@@ -1,0 +1,16 @@
+.section_wrap {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+nav#side_gnb {
+    width: 198px;
+    display: inline-block;
+    bottom: 1px solid #000;
+}
+
+.section_wrap_content {
+    width: 950px;
+    display: inline-block;
+    vertical-align: top;
+}

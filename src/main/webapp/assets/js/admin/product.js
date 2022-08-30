@@ -27,13 +27,16 @@ $(function()
     else if(type == 8) prod = "hdd" ;
     else if(type == 9) prod = "ssd" ;
     let tag =
-        '<td>제품 번호</td>' +
+        '<tr>' +
+        '<td>번호</td>' +
         '<td>제품 이름</td>' +
         '<td>모델명</td>' +
         '<td>가격</td>' +
-        '<td>제품 출시일</td>' +
-        '<td>제품 등록일</td>' +
-        '<td></td>';
+        '<td>출시일</td>' +
+        '<td>등록일</td>' +
+        '<td></td>'+
+        '<td></td>'+
+        '</tr>';
     $(".product_table thead").html(tag)
     let data = getData(prod,page,keyword,desc,search,ordertype)
     $.ajax
@@ -250,9 +253,9 @@ function getData(prod,page,keyword,desc,search,ordertype)
                     '<td>' + result.List[i].seq + '</td>' +
                     '<td>' + result.List[i].name + '</td>' +
                     '<td>' + result.List[i].model_name + '</td>' +
-                    '<td>' + result.List[i].price + '</td>' +
-                    '<td>' + result.List[i].release_dt + '</td>' +
-                    '<td>' + result.List[i].reg_dt +'</td>' +
+                    '<td>' + result.List[i].price.toLocaleString() + '원</td>' +
+                    '<td>' + makeDateString(new Date(result.List[i].release_dt)) + '</td>' +
+                    '<td>' + makeDateString(new Date(result.List[i].reg_dt)) +'</td>' +
                     '<td><button class="modify_btn" data-seq="'+result.List[i].seq+'" >수정</td>' +
                     '<td><button class="delete_btn" onClick=deleteProduct(' + result.List[i].seq + ')>삭제</td>' +
                 '</tr>'

@@ -1,6 +1,7 @@
 let startPage=0;
 $(function()
 {
+
     $(".mod_box").hide()
     $(".add_box").hide()
     

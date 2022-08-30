@@ -1,20 +1,25 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/includes/admin_aside.jsp"%>
+<%@include file="/WEB-INF/includes/header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/css/admin/account.css">
     <script src="/assets/js/admin/adminList.js"></script>
 </head>
 <body>
     <main>
+        <section>
+            <div class="section_wrap">
+                <%@include file="/WEB-INF/includes/admin_aside.jsp"%>
+                <div class="section_wrap_content">
         <button class="add_account">사용자추가</button>
         <div class="search_box">
             <input type="text" class="keyword" placeholder="검색어 입력" value="${keyword}">
             <button type="submit" class="submit_account">검색</button>
             <button type="button" class="input_reset">초기화</button>
         </div>
-        <table>
+        <table class="account_box">
             <thead>
                 <tr>
                     <td>번호</td>
@@ -35,6 +40,9 @@
         <div class="page_area">
             
         </div>
+        </div>
+        </div>
+        </section>
     </main>
     <%@include file="/WEB-INF/views/admin/popupbox.jsp"%>
 </body>

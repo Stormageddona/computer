@@ -28,7 +28,7 @@ $("document").ready(function()
             url:"/api/account/cart", type:"put", data:JSON.stringify(CartList), contentType:"application/json",
             success:function(result)
             {
-                // console.log(result.message)
+                alert(result.message)
             }
         })
         
@@ -41,8 +41,8 @@ $("document").ready(function()
             url:"/api/account/cart", type:"delete",
             success:function(result)
             {
-                // console.log(result.message)
-                location.reload()
+                alert(result.message)
+                // location.reload()
             }
         })
     })
@@ -80,7 +80,7 @@ function GetList(adr,page = null)
                                 '<div class="img_box" style="background-image: url(/image'+result.List[i].img_src+');"></div>' +
                                 '<div class="detail_box"><span class="prod_name">' + result.List[i].name + '</span>' +
                                 '<span class="prod_detail">' + detail + '</span>' +
-                                '<span class="prod_price">가격 : ' + result.List[i].price + '</span>' +
+                                '<span class="prod_price">가격 : ' + result.List[i].price.toLocaleString() + '원</span>' +
                                 '<button class="prod_select" data-seq="'+i+'" >'+str+'</button></div>' +
                             '</div>' +
                         '</td>' +
@@ -186,15 +186,15 @@ function listreload(seq = null)
     {
         let tag =
             '<div class="cart_product_box">' +
-            CartList[i].ci_name +
-            (CartList[i].ci_price*CartList[i].ci_count)+ '원' +
+            CartList[i].ci_name +'<br>' +
+            (CartList[i].ci_price*CartList[i].ci_count).toLocaleString()+ '원' +
             '<button onclick="listreload('+i+')">X</button>' +
             '<input type="number" class="count_input_'+i+'" value="'+CartList[i].ci_count+'"><button onclick="count_up('+i+')">∧</button><button onclick="count_down('+i+')">∨</button>' +
             '</div>'
         $("."+CartList[i].ci_table).append(tag)
         total_price += CartList[i].ci_price*CartList[i].ci_count
     }
-    $(".total_price").html( total_price+"원")
+    $(".total_price").html( total_price.toLocaleString()+"원")
 }
 
 

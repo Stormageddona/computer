@@ -11,6 +11,8 @@ $("document").ready(function(){
 
     // testdetail(13, page);
 
+
+
     $("#btn_publish").click(function(){
         // if(!(confirm("등록하시겠습니까?"))) return;
 
@@ -18,6 +20,9 @@ $("document").ready(function(){
         //     alert("로그인후 사용가능합니다.")
         //     return;
         // }
+        let test = $("#ckedit img").attr("src")
+        console.log(test)
+
         let edit_txt = CKEDITOR.instances.ckedit.getData().replace("\\n", "")
 
         if(seq == null || seq == "" || seq == undefined){
