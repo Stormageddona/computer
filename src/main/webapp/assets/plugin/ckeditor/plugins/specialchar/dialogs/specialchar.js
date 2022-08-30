@@ -68,17 +68,17 @@ CKEDITOR.dialog.add("specialchar", function (h) {
         buttons: [CKEDITOR.dialog.cancelButton],
         charColumns: 17,
         onLoad: function () {
-            for (var c = this.definition.charColumns, b = h.config.specialChars, a = CKEDITOR.tools.getNextId() + "_specialchar_table_label", d = ['\x3ctable role\x3d"listbox" aria-labelledby\x3d"' + a + '" style\x3d"width: 320px; height: 100%; border-collapse: separate;" align\x3d"center" cellspacing\x3d"2" cellpadding\x3d"2" border\x3d"0"\x3e'], e = 0, f = b.length, g, m; e < f;) {
-                d.push('\x3ctr role\x3d"presentation"\x3e');
+            for (var c = this.definition.charColumns, b = h.config.specialChars, a = CKEDITOR.tools.getNextId() + "_specialchar_table_label", d = ['<table role="listbox" aria-labelledby="' + a + '" style="width: 320px; height: 100%; border-collapse: separate;" align="center" cellspacing="2" cellpadding="2" border="0">'], e = 0, f = b.length, g, m; e < f;) {
+                d.push('<tr role="presentation">');
                 for (var k = 0; k < c; k++, e++)
                     if (g = b[e]) {
                         g instanceof Array ? (m = g[1], g = g[0]) : (m = g.replace("\x26", "").replace(";", "").replace("#", ""), m = n[m] || g);
                         var l = "cke_specialchar_label_" + e + "_" + CKEDITOR.tools.getNextNumber();
-                        d.push('\x3ctd class\x3d"cke_dark_background" style\x3d"cursor: default" role\x3d"presentation"\x3e\x3ca href\x3d"javascript: void(0);" role\x3d"option" aria-posinset\x3d"' + (e + 1) + '"', ' aria-setsize\x3d"' + f + '"', ' aria-labelledby\x3d"' + l + '"', ' class\x3d"cke_specialchar" title\x3d"', CKEDITOR.tools.htmlEncode(m),
-                            '" onkeydown\x3d"CKEDITOR.tools.callFunction( ' + q + ', event, this )" onclick\x3d"CKEDITOR.tools.callFunction(' + p + ', this); return false;" tabindex\x3d"-1"\x3e\x3cspan style\x3d"margin: 0 auto;cursor: inherit"\x3e' + g + '\x3c/span\x3e\x3cspan class\x3d"cke_voice_label" id\x3d"' + l + '"\x3e' + m + "\x3c/span\x3e\x3c/a\x3e\x3c/td\x3e")
-                    } d.push("\x3c/tr\x3e")
+                        d.push('<td class="cke_dark_background" style="cursor: default" role="presentation"><a href="javascript: void(0);" role="option" aria-posinset="' + (e + 1) + '"', ' aria-setsize="' + f + '"', ' aria-labelledby="' + l + '"', ' class="cke_specialchar" title="', CKEDITOR.tools.htmlEncode(m),
+                            '" onkeydown="CKEDITOR.tools.callFunction( ' + q + ', event, this )" onclick="CKEDITOR.tools.callFunction(' + p + ', this); return false;" tabindex="-1"><span style="margin: 0 auto;cursor: inherit">' + g + '</span><span class="cke_voice_label" id="' + l + '">' + m + "</span></a></td>")
+                    } d.push("</tr>")
             }
-            d.push("\x3c/tbody\x3e\x3c/table\x3e", '\x3cspan id\x3d"' + a + '" class\x3d"cke_voice_label"\x3e' + n.options + "\x3c/span\x3e");
+            d.push("</tbody></table>", '<span id="' + a + '" class="cke_voice_label">' + n.options + "</span>");
             this.getContentElement("info", "charContainer").getElement().setHtml(d.join(""))
         },
         contents: [{
@@ -124,19 +124,19 @@ CKEDITOR.dialog.add("specialchar", function (h) {
                             align: "top",
                             children: [{
                                 type: "html",
-                                html: "\x3cdiv\x3e\x3c/div\x3e"
+                                html: "<div></div>"
                             }, {
                                 type: "html",
                                 id: "charPreview",
                                 className: "cke_dark_background",
                                 style: "border:1px solid #eeeeee;font-size:28px;height:40px;width:70px;padding-top:9px;font-family:'Microsoft Sans Serif',Arial,Helvetica,Verdana;text-align:center;",
-                                html: "\x3cdiv\x3e\x26nbsp;\x3c/div\x3e"
+                                html: "<div>\x26nbsp;</div>"
                             }, {
                                 type: "html",
                                 id: "htmlPreview",
                                 className: "cke_dark_background",
                                 style: "border:1px solid #eeeeee;font-size:14px;height:20px;width:70px;padding-top:2px;font-family:'Microsoft Sans Serif',Arial,Helvetica,Verdana;text-align:center;",
-                                html: "\x3cdiv\x3e\x26nbsp;\x3c/div\x3e"
+                                html: "<div>\x26nbsp;</div>"
                             }]
                         }]
                     }

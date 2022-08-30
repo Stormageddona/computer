@@ -66,7 +66,7 @@ CKEDITOR.dialog.add("paste", function (c) {
             elements: [{
                 type: "html",
                 id: "pasteMsg",
-                html: '\x3cdiv style\x3d"white-space:normal;width:340px"\x3e' + h.pasteMsg + "\x3c/div\x3e"
+                html: '<div style="white-space:normal;width:340px">' + h.pasteMsg + "</div>"
             }, {
                 type: "html",
                 id: "editing_area",
@@ -79,11 +79,11 @@ CKEDITOR.dialog.add("paste", function (c) {
                 },
                 setup: function () {
                     var a = this.getDialog(),
-                        b = '\x3chtml dir\x3d"' + c.config.contentsLangDirection + '" lang\x3d"' + (c.config.contentsLanguage || c.langCode) + '"\x3e\x3chead\x3e\x3cstyle\x3ebody{margin:3px;height:95%;word-break:break-all;}\x3c/style\x3e\x3c/head\x3e\x3cbody\x3e\x3cscript id\x3d"cke_actscrpt" type\x3d"text/javascript"\x3ewindow.parent.CKEDITOR.tools.callFunction(' +
-                        CKEDITOR.tools.addFunction(k, a) + ",this);\x3c/script\x3e\x3c/body\x3e\x3c/html\x3e",
+                        b = '<html dir="' + c.config.contentsLangDirection + '" lang="' + (c.config.contentsLanguage || c.langCode) + '"><head><style>body{margin:3px;height:95%;word-break:break-all;}</style></head><body><script id="cke_actscrpt" type="text/javascript">window.parent.CKEDITOR.tools.callFunction(' +
+                        CKEDITOR.tools.addFunction(k, a) + ",this);</script></body></html>",
                         g = CKEDITOR.env.air ? "javascript:void(0)" : CKEDITOR.env.ie && !CKEDITOR.env.edge ? "javascript:void((function(){" + encodeURIComponent("document.open();(" + CKEDITOR.tools.fixDomain + ")();document.close();") + '})())"' : "",
-                        d = CKEDITOR.dom.element.createFromHtml('\x3ciframe class\x3d"cke_pasteframe" frameborder\x3d"0"  allowTransparency\x3d"true" src\x3d"' + g + '" aria-label\x3d"' + h.pasteArea + '" aria-describedby\x3d"' + a.getContentElement("general",
-                            "pasteMsg").domId + '"\x3e\x3c/iframe\x3e');
+                        d = CKEDITOR.dom.element.createFromHtml('<iframe class="cke_pasteframe" frameborder="0"  allowTransparency="true" src="' + g + '" aria-label="' + h.pasteArea + '" aria-describedby="' + a.getContentElement("general",
+                            "pasteMsg").domId + '"></iframe>');
                     f = null;
                     d.on("load", function (a) {
                         a.removeListener();
@@ -97,7 +97,7 @@ CKEDITOR.dialog.add("paste", function (c) {
                     a.setHtml("");
                     a.append(d);
                     if (CKEDITOR.env.ie && !CKEDITOR.env.edge) {
-                        var e = CKEDITOR.dom.element.createFromHtml('\x3cspan tabindex\x3d"-1" style\x3d"position:absolute" role\x3d"presentation"\x3e\x3c/span\x3e');
+                        var e = CKEDITOR.dom.element.createFromHtml('<span tabindex="-1" style="position:absolute" role="presentation"></span>');
                         e.on("focus", function () {
                             setTimeout(function () {
                                 d.$.contentWindow.focus()

@@ -142,7 +142,7 @@ public class CkeditAPIController {
         sb.append(imgUrl);
         
         sb.append("', 'image upload success!!')</script>");
-
+        System.out.println(sb.toString());
         // return imgUrl;
         return sb.toString();
     }

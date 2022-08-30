@@ -53,21 +53,21 @@ CKEDITOR.dialog.add("smiley", function (f) {
                     37: if (b = c.getParent().getPrevious()) b = b.getChild(0), b.focus(), a.preventDefault(!0);
                         else if (b = c.getParent().getParent().getPrevious()) b = b.getLast().getChild(0), b.focus(), a.preventDefault(!0)
             }
-        }), d = CKEDITOR.tools.getNextId() + "_smiley_emtions_label", d = ['\x3cdiv\x3e\x3cspan id\x3d"' + d + '" class\x3d"cke_voice_label"\x3e' + a.options + "\x3c/span\x3e", '\x3ctable role\x3d"listbox" aria-labelledby\x3d"' +
-            d + '" style\x3d"width:100%;height:100%;border-collapse:separate;" cellspacing\x3d"2" cellpadding\x3d"2"', CKEDITOR.env.ie && CKEDITOR.env.quirks ? ' style\x3d"position:absolute;"' : "", "\x3e\x3ctbody\x3e"
+        }), d = CKEDITOR.tools.getNextId() + "_smiley_emtions_label", d = ['<div><span id="' + d + '" class="cke_voice_label">' + a.options + "</span>", '<table role="listbox" aria-labelledby="' +
+            d + '" style="width:100%;height:100%;border-collapse:separate;" cellspacing="2" cellpadding="2"', CKEDITOR.env.ie && CKEDITOR.env.quirks ? ' style="position:absolute;"' : "", "><tbody>"
         ], n = h.length, a = 0; a < n; a++) {
-        0 === a % g && d.push('\x3ctr role\x3d"presentation"\x3e');
+        0 === a % g && d.push('<tr role="presentation">');
         var p = "cke_smile_label_" + a + "_" + CKEDITOR.tools.getNextNumber();
-        d.push('\x3ctd class\x3d"cke_dark_background cke_centered" style\x3d"vertical-align: middle;" role\x3d"presentation"\x3e\x3ca href\x3d"javascript:void(0)" role\x3d"option"',
-            ' aria-posinset\x3d"' + (a + 1) + '"', ' aria-setsize\x3d"' + n + '"', ' aria-labelledby\x3d"' + p + '"', ' class\x3d"cke_smile cke_hand" tabindex\x3d"-1" onkeydown\x3d"CKEDITOR.tools.callFunction( ', q, ', event, this );"\x3e', '\x3cimg class\x3d"cke_hand" title\x3d"', e.smiley_descriptions[a], '" cke_src\x3d"', CKEDITOR.tools.htmlEncode(e.smiley_path + h[a]), '" alt\x3d"', e.smiley_descriptions[a], '"', ' src\x3d"', CKEDITOR.tools.htmlEncode(e.smiley_path + h[a]), '"', CKEDITOR.env.ie ? " onload\x3d\"this.setAttribute('width', 2); this.removeAttribute('width');\" " :
-            "", '\x3e\x3cspan id\x3d"' + p + '" class\x3d"cke_voice_label"\x3e' + e.smiley_descriptions[a] + "\x3c/span\x3e\x3c/a\x3e", "\x3c/td\x3e");
-        a % g == g - 1 && d.push("\x3c/tr\x3e")
+        d.push('<td class="cke_dark_background cke_centered" style="vertical-align: middle;" role="presentation"><a href="javascript:void(0)" role="option"',
+            ' aria-posinset="' + (a + 1) + '"', ' aria-setsize="' + n + '"', ' aria-labelledby="' + p + '"', ' class="cke_smile cke_hand" tabindex="-1" onkeydown="CKEDITOR.tools.callFunction( ', q, ', event, this );">', '<img class="cke_hand" title="', e.smiley_descriptions[a], '" cke_src="', CKEDITOR.tools.htmlEncode(e.smiley_path + h[a]), '" alt="', e.smiley_descriptions[a], '"', ' src="', CKEDITOR.tools.htmlEncode(e.smiley_path + h[a]), '"', CKEDITOR.env.ie ? " onload=\"this.setAttribute('width', 2); this.removeAttribute('width');\" " :
+            "", '><span id="' + p + '" class="cke_voice_label">' + e.smiley_descriptions[a] + "</span></a>", "</td>");
+        a % g == g - 1 && d.push("</tr>")
     }
     if (a < g - 1) {
-        for (; a < g - 1; a++) d.push("\x3ctd\x3e\x3c/td\x3e");
-        d.push("\x3c/tr\x3e")
+        for (; a < g - 1; a++) d.push("<td></td>");
+        d.push("</tr>")
     }
-    d.push("\x3c/tbody\x3e\x3c/table\x3e\x3c/div\x3e");
+    d.push("</tbody></table></div>");
     e = {
         type: "html",
         id: "smileySelector",
