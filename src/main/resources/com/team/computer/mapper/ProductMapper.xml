@@ -10,7 +10,7 @@
     </insert>
 
     <select id="selectList" resultType="java.util.Map">
-        select tbl_name, seq
+        select tbl_name, seq, img_src
         FROM product_summary
         where 
         <if test="type != 'all'">tbl_name = #{type} and </if> 

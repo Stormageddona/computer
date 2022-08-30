@@ -103,6 +103,7 @@ public class BoardAPIController {
         AccountInfoVO user = (AccountInfoVO)session.getAttribute("user") ;
         BoardInfoVO bidata = new BoardInfoVO() ;
         bidata.setBdi_imgs("");
+        data.getBdi_comment().replace("<img alt=\"\" src=\"/image/temp/", "<img alt=\"\" src=\"/image/board/") ;
         if (data.getImg_list() != null && data.getImg_list().size() > 0)
         {
             List<String> imglist = data.getImg_list() ;

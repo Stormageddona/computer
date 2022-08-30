@@ -73,6 +73,7 @@ public class ProductAPIController {
             {
                 String str = entrySet.getKey().replace(seq_type, "") ;
                 data.put(str,entrySet.getValue() ) ;
+                data.put("img_src",i.get("img_src")) ;
             }
             data.put("type", (String)i.get("tbl_name"));
             // System.out.println((String)i.get("tbl_name"));

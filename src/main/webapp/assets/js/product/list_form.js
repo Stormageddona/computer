@@ -33,25 +33,27 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                 '<p>상품이 없습니다</p>'+
                 '</div>'
                 $(".product_box").append(tag);
-            } else{
-                $(".product_summary_box p").html("");
-
-                for(let i=0; i < r.List.length; i++) {
-                let prod_type = "'/product/detail?seq="+r.List[i].seq+"&type="+r.List[i].type+"'"
-                let won = r.List[i].price.toLocaleString();
-                let tag =
-                '<div class="product_box_content">'+
-                
+            } 
+            else
+            {
+                for(let i=0; i < r.List.length; i++) 
+                {
+                    let prod_type = "'/product/detail?seq="+r.List[i].seq+"&type="+r.List[i].type+"'"
+                    let won = r.List[i].price.toLocaleString();
+                    console.log(r.List[i])
+                    let tag =
+                    '<div class="product_box_content">'+
                         '<div class="product_img_box" data-seq="'+r.List[i].seq+'">'+
-                            '<img src="'+r.List[i].img_src+'" alt="">'+
+                            '<img src="/image/'+r.List[i].img_src+'" alt="">'+
                         '</div>'+
-
                         '<div class="product_text_box">'+
                             '<div class="product_tittle_box">'+
                                 '<p>'+r.List[i].name+'('+r.List[i].model_name+')</p>'+
                             '</div>'+
                             '<div class="product_summary_box">'+
-                                '<p> '+r.List[i]+' : '+r.List[i].save_socket_num+' / 케이스 크기 : '+r.List[i].size+' / 사용가능 보드'+r.List[i].use_board+'</p>'+
+                                '<p> '+
+                                // r.List[i]+' : '+r.List[i].save_socket_num+' / 케이스 크기 : '+r.List[i].size+' / 사용가능 보드'+r.List[i].use_board+
+                                '</p>'+
                             '</div>'+
                         '</div>'+
 
@@ -70,21 +72,25 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                             '</div>'+
                         '</div>'+
                     '</div>'
+                    $(".product_summary_box p").eq(i).html("");
 
                     $(".product_box").append(tag);
                     let appendCol = "" ;
                     for(e=0; e < r.column.length; e++){
                         let release = new Date(r.List[i].release_dt) ;
                         let date = release.getFullYear() + "-" + release.getMonth() + "-" + release.getDate();
+                        console.log(e)
                         if(r.column_kr[e] == "이름" || r.column_kr[e] == "이미지" || r.column_kr[e] == "모델명" || r.column_kr[e] == "가격" || r.column_kr[e] == "등록일") continue;
                         if (r.column_kr[e] == "출시일") 
-                        {$(".product_summary_box p").append(r.column_kr[e] + ":" + date+" / ") ;
-                        continue ;}
+                        {
+                            $(".product_summary_box p").eq(i).append(r.column_kr[e] + ":" + date+" / ") ;
+                            continue ;
+                        }
                         
                         appendCol = appendCol + r.column_kr[e] + " : " + r.List[i][r.column[e]];
-                        console.log(e)
-                        console.log(r.column_kr[e])
-                        console.log(r.column[e])
+                        // console.log(e)
+                        // console.log(r.column_kr[e])
+                        // console.log(r.column[e])
                         // let appendCol =  r.column_kr[e] + " : " + eval("r.List["+i+"]."+r.column[e]);
                         if (e != r.column.length-1)
                         appendCol = appendCol + " / "
@@ -92,8 +98,6 @@ function selectList(keyword, page, Order, url, temp = null, ListCnt) {
                     }
                     console.log(appendCol)
                     $(".product_summary_box p").eq(i).append(appendCol);
-                    
-                    
                 }
         }
     

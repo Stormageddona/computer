@@ -44,7 +44,7 @@ function editMethod() {
     CKEDITOR.replace(
         'ckedit' ,{
             height:500,
-            filebrowserImageUploadUrl:'/image/upload',
+            filebrowserImageUploadUrl:'/image/upload?temp=true',
             // filebrowserUploadUrl:"/Student/computer"
         }
         );
@@ -90,18 +90,19 @@ function insertBoardData(board_text) {
         bdi_title:$(".board_title input").val(),
         bdi_comment:board_text
     }
+    
+    console.log(sessionStorage.getItem("img_file_G"))
+    // $.ajax({
+    //     url:"/api/board/post",
+    //     type:"put",
+    //     contentType:"application/json",
+    //     data:JSON.stringify(data),
+    //     success:function(r) {
+    //         alert(r.message);
 
-    $.ajax({
-        url:"/api/board/post",
-        type:"put",
-        contentType:"application/json",
-        data:JSON.stringify(data),
-        success:function(r) {
-            alert(r.message);
 
-
-        }
-    })
+    //     }
+    // })
 }
 
 function updateBoard(seq, board_text) {
