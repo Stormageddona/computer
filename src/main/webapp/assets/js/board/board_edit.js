@@ -19,7 +19,11 @@ $("document").ready(function(){
         //     return;
         // }
         let edit_txt = CKEDITOR.instances.ckedit.getData().replace("\\n", "")
-
+    
+        // console.log(edit_txt)
+        // let index = edit_txt.indexOf('src="/image/temp')
+        // edit_txt.
+        // console.log(edit_txt.indexOf('<img alt="" src="/image/temp'))
         if(seq == null || seq == "" || seq == undefined){
             if(!(confirm("등록하시겠습니까?"))) return;
             insertBoardData(edit_txt);
@@ -91,18 +95,18 @@ function insertBoardData(board_text) {
         bdi_comment:board_text
     }
     
-    console.log(sessionStorage.getItem("img_file_G"))
-    // $.ajax({
-    //     url:"/api/board/post",
-    //     type:"put",
-    //     contentType:"application/json",
-    //     data:JSON.stringify(data),
-    //     success:function(r) {
-    //         alert(r.message);
+    // console.log(sessionStorage.getItem("img_file_G"))
+    $.ajax({
+        url:"/api/board/post",
+        type:"put",
+        contentType:"application/json",
+        data:JSON.stringify(data),
+        success:function(r) {
+            alert(r.message);
 
 
-    //     }
-    // })
+        }
+    })
 }
 
 function updateBoard(seq, board_text) {

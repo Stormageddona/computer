@@ -106,7 +106,7 @@ var CKBUILDER_CONFIG = {
 		'showblocks' : 1,
 		'showborders' : 1,
 		'smiley' : 1,
-		'sourcearea' : 1,
+		// 'sourcearea' : 1,
 		'specialchar' : 1,
 		'stylescombo' : 1,
 		'tab' : 1,

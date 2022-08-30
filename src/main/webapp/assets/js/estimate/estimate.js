@@ -77,7 +77,7 @@ function GetList(adr,page = null)
                     '<tr>' +
                         '<td>' +
                             '<div class="product_box">' +
-                                '<div class="img_box" style="background-image: url(/image'+result.List[i].img_src+');"></div>' +
+                                '<div class="img_box" style="background-image: url(/image/'+result.List[i].img_src+');background-size: cover;"></div>' +
                                 '<div class="detail_box"><span class="prod_name">' + result.List[i].name + '</span>' +
                                 '<span class="prod_detail">' + detail + '</span>' +
                                 '<span class="prod_price">가격 : ' + result.List[i].price + '</span>' +

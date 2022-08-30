@@ -37,7 +37,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 appendTimestamp: function (a) {
                     if (!this.timestamp || "/" === a.charAt(a.length - 1) || /[&?]t=/.test(a)) return a;
                     var b = 0 <= a.indexOf("?") ? "\x26" : "?";
-                    return a + b + "t\x3d" + this.timestamp
+                    return a + b + "t=" + this.timestamp
                 },
                 domReady: function () {
                     function a() {
@@ -379,8 +379,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             h = /"/g,
             p = /&(lt|gt|amp|quot|nbsp|shy|#\d{1,5});/g,
             m = {
-                lt: "\x3c",
-                gt: "\x3e",
+                lt: "<",
+                gt: ">",
                 amp: "\x26",
                 quot: '"',
                 nbsp: " ",
@@ -473,7 +473,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             buildStyleHtml: function (a) {
                 a = [].concat(a);
                 for (var b, c = [], g = 0; g < a.length; g++)
-                    if (b = a[g]) /@import|[{}]/.test(b) ? c.push("\x3cstyle\x3e" + b + "\x3c/style\x3e") : (b = CKEDITOR.appendTimestamp(b), c.push('\x3clink type\x3d"text/css" rel\x3dstylesheet href\x3d"' + b + '"\x3e'));
+                    if (b = a[g]) /@import|[{}]/.test(b) ? c.push("<style>" + b + "</style>") : (b = CKEDITOR.appendTimestamp(b), c.push('<link type="text/css" rel=stylesheet href="' + b + '">'));
                 return c.join("")
             },
             htmlEncode: function (a) {
@@ -496,15 +496,15 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     h = b == CKEDITOR.ENTER_P ? "p" : "div";
                 if (!c) {
                     var l = /\n{2}/g;
-                    if (l.test(g)) var e = "\x3c" + h + "\x3e",
-                        d = "\x3c/" + h + "\x3e",
+                    if (l.test(g)) var e = "<" + h + ">",
+                        d = "</" + h + ">",
                         g = e + g.replace(l, function () {
                             return d +
                                 e
                         }) + d
                 }
-                g = g.replace(/\n/g, "\x3cbr\x3e");
-                c || (g = g.replace(new RegExp("\x3cbr\x3e(?\x3d\x3c/" + h + "\x3e)"), function (a) {
+                g = g.replace(/\n/g, "<br>");
+                c || (g = g.replace(new RegExp("<br>(?=</" + h + ">)"), function (a) {
                     return CKEDITOR.tools.repeat(a, 2)
                 }));
                 g = g.replace(/^ | $/g, "\x26nbsp;");
@@ -646,7 +646,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             convertToPx: function () {
                 var a, b;
                 return function (c) {
-                    if (!a || a.isDetached()) a = CKEDITOR.dom.element.createFromHtml('\x3cdiv style\x3d"position:absolute;left:-9999px;top:-9999px;margin:0px;padding:0px;border:0px;"\x3e\x3c/div\x3e', CKEDITOR.document), CKEDITOR.document.getBody().append(a);
+                    if (!a || a.isDetached()) a = CKEDITOR.dom.element.createFromHtml('<div style="position:absolute;left:-9999px;top:-9999px;margin:0px;padding:0px;border:0px;"></div>', CKEDITOR.document), CKEDITOR.document.getBody().append(a);
                     if (!/%$/.test(c)) {
                         var g = 0 > parseFloat(c);
                         g && (c = c.replace("-", ""));
@@ -751,7 +751,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             },
             getStyledSpans: function (a, b) {
                 var c = CKEDITOR.env.ie && 8 == CKEDITOR.env.version ? a.toUpperCase() : a,
-                    c = b.find("span[style*\x3d" + c + "]").toArray();
+                    c = b.find("span[style*=" + c + "]").toArray();
                 return CKEDITOR.tools.array.filter(c, function (b) {
                     return !!b.getStyle(a)
                 })
@@ -807,16 +807,16 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     aria: e
                 }
             },
-            transparentImageData: "data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw\x3d\x3d",
+            transparentImageData: "data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==",
             getCookie: function (a) {
                 a = a.toLowerCase();
                 for (var b = document.cookie.split(";"), c, g, h = 0; h < b.length; h++)
-                    if (c = b[h].split("\x3d"), g = decodeURIComponent(CKEDITOR.tools.trim(c[0]).toLowerCase()), g === a) return decodeURIComponent(1 < c.length ?
+                    if (c = b[h].split("="), g = decodeURIComponent(CKEDITOR.tools.trim(c[0]).toLowerCase()), g === a) return decodeURIComponent(1 < c.length ?
                         c[1] : "");
                 return null
             },
             setCookie: function (a, b) {
-                document.cookie = encodeURIComponent(a) + "\x3d" + encodeURIComponent(b) + ";path\x3d/"
+                document.cookie = encodeURIComponent(a) + "=" + encodeURIComponent(b) + ";path=/"
             },
             getCsrfToken: function () {
                 var a = CKEDITOR.tools.getCookie("ckCsrfToken");
@@ -883,7 +883,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     e[1] = (h[0] & 3) << 4 | h[1] >> 4;
                     e[2] = (h[1] & 15) << 2 | (h[2] & 192) >> 6;
                     e[3] = h[2] & 63;
-                    for (d = 0; 4 > d; d++) b = d <= l ? b + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".charAt(e[d]) : b + "\x3d"
+                    for (d = 0; 4 > d; d++) b = d <= l ? b + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".charAt(e[d]) : b + "="
                 }
                 return b
             },
@@ -2249,7 +2249,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         write: function (a) {
             this.$.open("text/html", "replace");
             CKEDITOR.env.ie && (a = a.replace(/(?:^\s*<!DOCTYPE[^>]*?>)|^/i,
-                '$\x26\n\x3cscript data-cke-temp\x3d"1"\x3e(' + CKEDITOR.tools.fixDomain + ")();\x3c/script\x3e"));
+                '$\x26\n<script data-cke-temp="1">(' + CKEDITOR.tools.fixDomain + ")();</script>"));
             this.$.write(a);
             this.$.close()
         },
@@ -2357,7 +2357,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             } : function (b) {
                 var c = this.getAttribute("class");
                 c && a(c, b) && ((c = c.replace(new RegExp("(?:^|\\s+)" +
-                    b + "(?\x3d\\s|$)"), "").replace(/^\s+/, "")) ? this.setAttribute("class", c) : this.removeAttribute("class"));
+                    b + "(?=\\s|$)"), "").replace(/^\s+/, "")) ? this.setAttribute("class", c) : this.removeAttribute("class"));
                 return this
             },
             hasClass: function (b) {
@@ -2751,7 +2751,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 return this
             },
             setOpacity: function (a) {
-                CKEDITOR.env.ie && 9 > CKEDITOR.env.version ? (a = Math.round(100 * a), this.setStyle("filter", 100 <= a ? "" : "progid:DXImageTransform.Microsoft.Alpha(opacity\x3d" + a + ")")) : this.setStyle("opacity", a)
+                CKEDITOR.env.ie && 9 > CKEDITOR.env.version ? (a = Math.round(100 * a), this.setStyle("filter", 100 <= a ? "" : "progid:DXImageTransform.Microsoft.Alpha(opacity=" + a + ")")) : this.setStyle("opacity", a)
             },
             unselectable: function () {
                 this.setStyles(CKEDITOR.tools.cssVendorPrefix("user-select",
@@ -3297,7 +3297,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 var b = I - 1,
                     c = B && z && !q.equals(u);
                 b < M - 1 || b < n - 1 || c ? (c ? a.moveToPosition(u,
-                    CKEDITOR.POSITION_BEFORE_START) : n == b + 1 && t ? a.moveToPosition(r[b], CKEDITOR.POSITION_BEFORE_END) : a.moveToPosition(r[b + 1], CKEDITOR.POSITION_BEFORE_START), d && (b = O[b + 1]) && b.type == CKEDITOR.NODE_ELEMENT && (c = CKEDITOR.dom.element.createFromHtml('\x3cspan data-cke-bookmark\x3d"1" style\x3d"display:none"\x3e\x26nbsp;\x3c/span\x3e', a.document), c.insertAfter(b), b.mergeSiblings(!1), a.moveToBookmark({
+                    CKEDITOR.POSITION_BEFORE_START) : n == b + 1 && t ? a.moveToPosition(r[b], CKEDITOR.POSITION_BEFORE_END) : a.moveToPosition(r[b + 1], CKEDITOR.POSITION_BEFORE_START), d && (b = O[b + 1]) && b.type == CKEDITOR.NODE_ELEMENT && (c = CKEDITOR.dom.element.createFromHtml('<span data-cke-bookmark="1" style="display:none">\x26nbsp;</span>', a.document), c.insertAfter(b), b.mergeSiblings(!1), a.moveToBookmark({
                     startNode: c
                 }))) : a.collapse(!0)
             }
@@ -4116,7 +4116,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     null : this.getEnclosedNode() ? this.getEnclosedNode().getAscendant(a, !0) : d && c && (d.equals(c) || d.contains(c) || c.contains(d)) ? b.getAscendant(a, !0) : null
             },
             scrollIntoView: function () {
-                var a = new CKEDITOR.dom.element.createFromHtml("\x3cspan\x3e\x26nbsp;\x3c/span\x3e", this.document),
+                var a = new CKEDITOR.dom.element.createFromHtml("<span>\x26nbsp;</span>", this.document),
                     b, c, d, e = this.clone();
                 e.optimize();
                 (d = e.startContainer.type == CKEDITOR.NODE_TEXT) ? (c = e.startContainer.getText(), b = e.startContainer.split(e.startOffset), a.insertAfter(e.startContainer)) : e.insertNode(a);
@@ -4500,7 +4500,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         enterMode: CKEDITOR.ENTER_P,
         forceEnterMode: !1,
         shiftEnterMode: CKEDITOR.ENTER_BR,
-        docType: "\x3c!DOCTYPE html\x3e",
+        docType: "<!DOCTYPE html>",
         bodyId: "",
         bodyClass: "",
         fullPage: !1,
@@ -5106,7 +5106,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 }
                 var e, f;
                 if ("string" == typeof a) {
-                    f = a + "\x3c" + (!1 === b ? "0" : "1") + (c ? "1" : "0") + "\x3e";
+                    f = a + "<" + (!1 === b ? "0" : "1") + (c ? "1" : "0") + ">";
                     if (f in this._.cachedChecks) return this._.cachedChecks[f];
                     e = g(a).$1;
                     var n = e.styles,
@@ -5929,11 +5929,11 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 d = b(c.plugins),
                 e = b(c.extraPlugins),
                 f = b(c.removePlugins);
-            if (e) var g = new RegExp("(?:^|,)(?:" + e.replace(/,/g, "|") + ")(?\x3d,|$)", "g"),
+            if (e) var g = new RegExp("(?:^|,)(?:" + e.replace(/,/g, "|") + ")(?=,|$)", "g"),
                 d = d.replace(g, ""),
                 d = d + ("," + e);
             if (f) var h = new RegExp("(?:^|,)(?:" +
-                    f.replace(/,/g, "|") + ")(?\x3d,|$)", "g"),
+                    f.replace(/,/g, "|") + ")(?=,|$)", "g"),
                 d = d.replace(h, "");
             CKEDITOR.env.air && (d += ",adobeair");
             CKEDITOR.plugins.load(d.split(","), function (b) {
@@ -6128,6 +6128,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 var d = !0,
                     e = b;
                 b && "object" == typeof b && (c = b.internal, e = b.callback, d = !b.noSnapshot);
+
                 !c && d && this.fire("saveSnapshot");
                 if (e || !c) this.once("dataReady", function (a) {
                     !c && d && this.fire("saveSnapshot");
@@ -6137,6 +6138,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     dataValue: a
                 };
                 !c && this.fire("setData", a);
+                console.log("SetData : " + a.dataValue)
                 this._.data = a.dataValue;
                 !c && this.fire("afterSetData", a)
             },
@@ -6345,24 +6347,24 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         },
         proto: {
             openTag: function (a) {
-                this._.output.push("\x3c", a)
+                this._.output.push("<", a)
             },
             openTagClose: function (a, d) {
-                d ? this._.output.push(" /\x3e") : this._.output.push("\x3e")
+                d ? this._.output.push(" />") : this._.output.push(">")
             },
             attribute: function (a, d) {
                 "string" == typeof d && (d = CKEDITOR.tools.htmlEncodeAttr(d));
-                this._.output.push(" ", a, '\x3d"', d, '"')
+                this._.output.push(" ", a, '="', d, '"')
             },
             closeTag: function (a) {
-                this._.output.push("\x3c/", a, "\x3e")
+                this._.output.push("</", a, ">")
             },
             text: function (a) {
                 this._.output.push(a)
             },
             comment: function (a) {
-                this._.output.push("\x3c!--", a,
-                    "--\x3e")
+                this._.output.push("<!--", a,
+                    "-->")
             },
             write: function (a) {
                 this._.output.push(a)
@@ -6970,16 +6972,16 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         function m(a, b) {
             return a.replace(t,
                 function (a, c, d) {
-                    return "\x3c" + c + d.replace(B, function (a, c) {
+                    return "<" + c + d.replace(B, function (a, c) {
                         return z.test(c) && -1 == d.indexOf("data-cke-saved-" + c) ? " data-cke-saved-" + a + " data-cke-" + b + "-" + a : a
-                    }) + "\x3e"
+                    }) + ">"
                 })
         }
 
         function g(a, b) {
             return a.replace(b, function (a, b, c) {
-                0 === a.indexOf("\x3ctextarea") && (a = b + A(c).replace(/</g, "\x26lt;").replace(/>/g, "\x26gt;") + "\x3c/textarea\x3e");
-                return "\x3ccke:encoded\x3e" + encodeURIComponent(a) + "\x3c/cke:encoded\x3e"
+                0 === a.indexOf("<textarea") && (a = b + A(c).replace(/</g, "\x26lt;").replace(/>/g, "\x26gt;") + "</textarea>");
+                return "<cke:encoded>" + encodeURIComponent(a) + "</cke:encoded>"
             })
         }
 
@@ -6990,21 +6992,21 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         }
 
         function y(a) {
-            return a.replace(/\x3c!--(?!{cke_protected})[\s\S]+?--\x3e/g,
+            return a.replace(/<!--(?!{cke_protected})[\s\S]+?-->/g,
                 function (a) {
-                    return "\x3c!--" + w + "{C}" + encodeURIComponent(a).replace(/--/g, "%2D%2D") + "--\x3e"
+                    return "<!--" + w + "{C}" + encodeURIComponent(a).replace(/--/g, "%2D%2D") + "-->"
                 })
         }
 
         function A(a) {
-            return a.replace(/\x3c!--\{cke_protected\}\{C\}([\s\S]+?)--\x3e/g, function (a, b) {
+            return a.replace(/<!--\{cke_protected\}\{C\}([\s\S]+?)-->/g, function (a, b) {
                 return decodeURIComponent(b)
             })
         }
 
         function F(a, b) {
             var c = b._.dataStore;
-            return a.replace(/\x3c!--\{cke_protected\}([\s\S]+?)--\x3e/g, function (a, b) {
+            return a.replace(/<!--\{cke_protected\}([\s\S]+?)-->/g, function (a, b) {
                 return decodeURIComponent(b)
             }).replace(/\{cke_protected_(\d+)\}/g, function (a, b) {
                 return c && c[b] || ""
@@ -7018,29 +7020,29 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 (b._.dataStore = {
                     id: 1
                 }),
-                g = new RegExp("\x3c\\!--\\{cke_temp_" + c + "(comment)?\\}(\\d*?)--\x3e", "g"),
+                g = new RegExp("<\\!--\\{cke_temp_" + c + "(comment)?\\}(\\d*?)-->", "g"),
                 e = [/<script[\s\S]*?(<\/script>|$)/gi, /<noscript[\s\S]*?<\/noscript>/gi, /<meta[\s\S]*?\/?>/gi].concat(e);
-            a = a.replace(/\x3c!--[\s\S]*?--\x3e/g, function (a) {
-                return "\x3c!--{cke_temp_" + c + "comment}" + (d.push(a) - 1) + "--\x3e"
+            a = a.replace(/<!--[\s\S]*?-->/g, function (a) {
+                return "<!--{cke_temp_" + c + "comment}" + (d.push(a) - 1) + "-->"
             });
             for (var t = 0; t < e.length; t++) a = a.replace(e[t], function (a) {
                 a = a.replace(g, function (a, b, c) {
                     return d[c]
                 });
-                return g.test(a) ? a : "\x3c!--{cke_temp_" + c + "}" + (d.push(a) - 1) + "--\x3e"
+                return g.test(a) ? a : "<!--{cke_temp_" + c + "}" + (d.push(a) - 1) + "-->"
             });
             a = a.replace(g, function (a,
                 b, c) {
-                return "\x3c!--" + w + (b ? "{C}" : "") + encodeURIComponent(d[c]).replace(/--/g, "%2D%2D") + "--\x3e"
+                return "<!--" + w + (b ? "{C}" : "") + encodeURIComponent(d[c]).replace(/--/g, "%2D%2D") + "-->"
             });
             a = a.replace(/<\w+(?:\s+(?:(?:[^\s=>]+\s*=\s*(?:[^'"\s>]+|'[^']*'|"[^"]*"))|[^\s=\/>]+))+\s*\/?>/g, function (a) {
-                return a.replace(/\x3c!--\{cke_protected\}([^>]*)--\x3e/g, function (a, b) {
+                return a.replace(/<!--\{cke_protected\}([^>]*)-->/g, function (a, b) {
                     f[f.id] = decodeURIComponent(b);
                     return "{cke_protected_" + f.id++ + "}"
                 })
             });
             return a = a.replace(/<(title|iframe|textarea)([^>]*)>([\s\S]*?)<\/\1>/g, function (a, c, d, e) {
-                return "\x3c" + c + d + "\x3e" + F(A(e), b) + "\x3c/" + c + "\x3e"
+                return "<" + c + d + ">" + F(A(e), b) + "</" + c + ">"
             })
         }
         var l;
@@ -7077,12 +7079,12 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         e = m(e, c),
                         e = g(e, H),
                         e = e.replace(r, "$1cke:$2"),
-                        e = e.replace(M, "\x3ccke:$1$2\x3e\x3c/cke:$1\x3e"),
+                        e = e.replace(M, "<cke:$1$2></cke:$1>"),
                         e = e.replace(/(<pre\b[^>]*>)(\r\n|\n)/g, "$1$2$2"),
                         e = e.replace(/([^a-z0-9<\-])(on\w{3,})(?!>)/gi, "$1data-cke-" + c + "-$2"),
                         f = a.context || b.editable().getName(),
                         t;
-                    CKEDITOR.env.ie && 9 > CKEDITOR.env.version && "pre" == f && (f = "div", e = "\x3cpre\x3e" + e + "\x3c/pre\x3e", t = 1);
+                    CKEDITOR.env.ie && 9 > CKEDITOR.env.version && "pre" == f && (f = "div", e = "<pre>" + e + "</pre>", t = 1);
                     f = b.document.createElement(f);
                     f.setHtml("a" + e);
                     e = f.getHtml().substr(1);
@@ -7324,15 +7326,15 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     htmlCode: "\x26#" + b + ";?",
                     hex: "\x26#x0*" + d + ";?",
                     entity: {
-                        "\x3c": "\x26lt;",
-                        "\x3e": "\x26gt;",
+                        "<": "\x26lt;",
+                        ">": "\x26gt;",
                         ":": "\x26colon;"
                     } [a]
                 };
                 for (var e in b) b[e] && (a += "|" + b[e]);
                 return a
             }
-            var d = [new RegExp("(" + b("\x3ccke:encoded\x3e") + "(.*?)" + b("\x3c/cke:encoded\x3e") + ")|(" + b("\x3c") + b("/") + "?" + b("cke:encoded\x3e") + ")", "gi"), new RegExp("((" + b("{cke_protected") + ")(_[0-9]*)?" + b("}") + ")", "gi"), /<!(?:\s*-\s*){2,3}!?\s*>/g];
+            var d = [new RegExp("(" + b("<cke:encoded>") + "(.*?)" + b("</cke:encoded>") + ")|(" + b("<") + b("/") + "?" + b("cke:encoded>") + ")", "gi"), new RegExp("((" + b("{cke_protected") + ")(_[0-9]*)?" + b("}") + ")", "gi"), /<!(?:\s*-\s*){2,3}!?\s*>/g];
             return function (b) {
                 for (; a(d, b);)
                     for (var c = d, e = 0; e < c.length; e++) b = b.replace(c[e],
@@ -7514,7 +7516,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             },
             hasClass: function (a) {
                 var b = this.attributes["class"];
-                return b ? (new RegExp("(?:^|\\s)" + a + "(?\x3d\\s|$)")).test(b) : !1
+                return b ? (new RegExp("(?:^|\\s)" + a + "(?=\\s|$)")).test(b) : !1
             },
             getFilterContext: function (a) {
                 var b = [];
@@ -7600,7 +7602,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             var b = a.is("textarea") ? a : null,
                 c = b ? b.getValue() : a.getHtml(),
                 f = new CKEDITOR.editor(d, a, CKEDITOR.ELEMENT_MODE_INLINE);
-            b ? (f.setData(c, null, !0), a = CKEDITOR.dom.element.createFromHtml('\x3cdiv contenteditable\x3d"' + !!f.readOnly + '" class\x3d"cke_textarea_inline"\x3e' + b.getValue() + "\x3c/div\x3e",
+            b ? (f.setData(c, null, !0), a = CKEDITOR.dom.element.createFromHtml('<div contenteditable="' + !!f.readOnly + '" class="cke_textarea_inline">' + b.getValue() + "</div>",
                 CKEDITOR.document), a.insertAfter(b), b.hide(), b.$.form && f._attachToForm()) : (d && "undefined" !== typeof d.readOnly && !d.readOnly && a.setAttribute("contenteditable", "true"), f.setData(c, null, !0));
             f.on("loaded", function () {
                 f.fire("uiReady");
@@ -7680,18 +7682,18 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     space: "bottom",
                     html: ""
                 }).html,
-                m = new CKEDITOR.template('\x3c{outerEl} id\x3d"cke_{name}" class\x3d"{id} cke cke_reset cke_chrome cke_editor_{name} cke_{langDir} ' + CKEDITOR.env.cssClass + '"  dir\x3d"{langDir}" lang\x3d"{langCode}" role\x3d"application"' + (a.applicationTitle ? ' aria-labelledby\x3d"cke_{name}_arialbl"' : "") + "\x3e" + (a.applicationTitle ? '\x3cspan id\x3d"cke_{name}_arialbl" class\x3d"cke_voice_label"\x3e{voiceLabel}\x3c/span\x3e' :
-                    "") + '\x3c{outerEl} class\x3d"cke_inner cke_reset" role\x3d"presentation"\x3e{topHtml}\x3c{outerEl} id\x3d"{contentId}" class\x3d"cke_contents cke_reset" role\x3d"presentation"\x3e\x3c/{outerEl}\x3e{bottomHtml}\x3c/{outerEl}\x3e\x3c/{outerEl}\x3e'),
+                m = new CKEDITOR.template('<{outerEl} id="cke_{name}" class="{id} cke cke_reset cke_chrome cke_editor_{name} cke_{langDir} ' + CKEDITOR.env.cssClass + '"  dir="{langDir}" lang="{langCode}" role="application"' + (a.applicationTitle ? ' aria-labelledby="cke_{name}_arialbl"' : "") + ">" + (a.applicationTitle ? '<span id="cke_{name}_arialbl" class="cke_voice_label">{voiceLabel}</span>' :
+                    "") + '<{outerEl} class="cke_inner cke_reset" role="presentation">{topHtml}<{outerEl} id="{contentId}" class="cke_contents cke_reset" role="presentation"></{outerEl}>{bottomHtml}</{outerEl}></{outerEl}>'),
                 b = CKEDITOR.dom.element.createFromHtml(m.output({
                     id: a.id,
                     name: b,
                     langDir: a.lang.dir,
                     langCode: a.langCode,
                     voiceLabel: a.applicationTitle,
-                    topHtml: h ? '\x3cspan id\x3d"' + a.ui.spaceId("top") + '" class\x3d"cke_top cke_reset_all" role\x3d"presentation" style\x3d"height:auto"\x3e' +
-                        h + "\x3c/span\x3e" : "",
+                    topHtml: h ? '<span id="' + a.ui.spaceId("top") + '" class="cke_top cke_reset_all" role="presentation" style="height:auto">' +
+                        h + "</span>" : "",
                     contentId: a.ui.spaceId("contents"),
-                    bottomHtml: p ? '\x3cspan id\x3d"' + a.ui.spaceId("bottom") + '" class\x3d"cke_bottom cke_reset_all" role\x3d"presentation"\x3e' + p + "\x3c/span\x3e" : "",
+                    bottomHtml: p ? '<span id="' + a.ui.spaceId("bottom") + '" class="cke_bottom cke_reset_all" role="presentation">' + p + "</span>" : "",
                     outerEl: CKEDITOR.env.ie ? "span" : "div"
                 }));
             k == CKEDITOR.ELEMENT_MODE_REPLACE ? (d.hide(), b.insertAfter(d)) : d.append(b);
@@ -8426,8 +8428,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     var d = b.fire("ariaEditorHelpLabel", {}).label;
                     if (d && (c = this.ui.space(this.elementMode == CKEDITOR.ELEMENT_MODE_INLINE ? "top" : "contents"))) {
                         var e = CKEDITOR.tools.getNextId(),
-                            d = CKEDITOR.dom.element.createFromHtml('\x3cspan id\x3d"' +
-                                e + '" class\x3d"cke_voice_label"\x3e' + d + "\x3c/span\x3e");
+                            d = CKEDITOR.dom.element.createFromHtml('<span id="' +
+                                e + '" class="cke_voice_label">' + d + "</span>");
                         c.append(d);
                         a.changeAttr("aria-describedby", e)
                     }
@@ -8554,7 +8556,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                             A = D.mergeCandidates,
                             u = "html" === D.type,
                             w, T, F, W, K;
-                        "text" == D.type && v.shrink(CKEDITOR.SHRINK_ELEMENT, !0, !1) && (T = CKEDITOR.dom.element.createFromHtml("\x3cspan\x3e\x26nbsp;\x3c/span\x3e", v.document), v.insertNode(T), v.setStartAfter(T));
+                        "text" == D.type && v.shrink(CKEDITOR.SHRINK_ELEMENT, !0, !1) && (T = CKEDITOR.dom.element.createFromHtml("<span>\x26nbsp;</span>", v.document), v.insertNode(T), v.setStartAfter(T));
                         F = new CKEDITOR.dom.elementPath(v.startContainer);
                         D.endPath = W = new CKEDITOR.dom.elementPath(v.endContainer);
                         if (!v.collapsed) {
@@ -8591,7 +8593,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                             q =
                                 D.blockLimit.getName();
                             if (/^\s+|\s+$/.test(R) && "span" in CKEDITOR.dtd[q]) {
-                                var J = '\x3cspan data-cke-marker\x3d"1"\x3e\x26nbsp;\x3c/span\x3e';
+                                var J = '<span data-cke-marker="1">\x26nbsp;</span>';
                                 R = J + R + J
                             }
                             R = D.editor.dataProcessor.toHtml(R, {
@@ -9221,7 +9223,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 
         function A(a, b) {
             var c = b && CKEDITOR.tools.htmlEncode(b) || "\x26nbsp;",
-                c = CKEDITOR.dom.element.createFromHtml('\x3cdiv data-cke-hidden-sel\x3d"1" data-cke-temp\x3d"1" style\x3d"' + (CKEDITOR.env.ie && 14 > CKEDITOR.env.version ? "display:none" : "position:fixed;top:0;left:-1000px;width:0;height:0;overflow:hidden;") + '"\x3e' + c + "\x3c/div\x3e", a.document);
+                c = CKEDITOR.dom.element.createFromHtml('<div data-cke-hidden-sel="1" data-cke-temp="1" style="' + (CKEDITOR.env.ie && 14 > CKEDITOR.env.version ? "display:none" : "position:fixed;top:0;left:-1000px;width:0;height:0;overflow:hidden;") + '">' + c + "</div>", a.document);
             a.fire("lockSnapshot");
             a.editable().append(c);
             var d = a.getSelection(1),
@@ -10203,7 +10205,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 if (CKEDITOR.env.ie) {
                     var h = a.getDocument().createElement("div");
                     h.append(e);
-                    e.$.outerHTML = "\x3cpre\x3e" + f + "\x3c/pre\x3e";
+                    e.$.outerHTML = "<pre>" + f + "</pre>";
                     e.copyAttributes(h.getFirst());
                     e = h.getFirst().remove()
                 } else e.setHtml(f);
@@ -10214,14 +10216,14 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 var c = b,
                     k;
                 (k = c.getPrevious(H)) &&
-                k.type == CKEDITOR.NODE_ELEMENT && k.is("pre") && (d = x(k.getHtml(), /\n$/, "") + "\n\n" + x(c.getHtml(), /^\n/, ""), CKEDITOR.env.ie ? c.$.outerHTML = "\x3cpre\x3e" + d + "\x3c/pre\x3e" : c.setHtml(d), k.remove())
+                k.type == CKEDITOR.NODE_ELEMENT && k.is("pre") && (d = x(k.getHtml(), /\n$/, "") + "\n\n" + x(c.getHtml(), /^\n/, ""), CKEDITOR.env.ie ? c.$.outerHTML = "<pre>" + d + "</pre>" : c.setHtml(d), k.remove())
             } else c && l(b)
         }
 
         function g(a) {
             var b = [];
             x(a.getOuterHtml(), /(\S\s*)\n(?:\s|(<span[^>]+data-cke-bookmark.*?\/span>))*\n(?!$)/gi, function (a, b, c) {
-                return b + "\x3c/pre\x3e" + c + "\x3cpre\x3e"
+                return b + "</pre>" + c + "<pre>"
             }).replace(/<pre\b.*?>([\s\S]*?)<\/pre>/gi, function (a, c) {
                 b.push(c)
             });
@@ -10251,7 +10253,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     e = x(e, /^[ \t]+|[ \t]+$/g, function (a, b) {
                         return 1 == a.length ? "\x26nbsp;" : b ? " " + CKEDITOR.tools.repeat("\x26nbsp;", a.length - 1) : CKEDITOR.tools.repeat("\x26nbsp;", a.length - 1) + " "
                     }),
-                    e = e.replace(/\n/g, "\x3cbr\x3e"),
+                    e = e.replace(/\n/g, "<br>"),
                     e = e.replace(/[ \t]{2,}/g, function (a) {
                         return CKEDITOR.tools.repeat("\x26nbsp;",
                             a.length - 1) + " "
@@ -10569,12 +10571,12 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     c = [],
                     d = b.element;
                 "bdo" == d && (d = "span");
-                var c = ["\x3c", d],
+                var c = ["<", d],
                     e = b.attributes;
                 if (e)
-                    for (var g in e) c.push(" ", g, '\x3d"', e[g], '"');
-                (e = CKEDITOR.style.getStyleText(b)) && c.push(' style\x3d"', e, '"');
-                c.push("\x3e", a || b.name, "\x3c/", d, "\x3e");
+                    for (var g in e) c.push(" ", g, '="', e[g], '"');
+                (e = CKEDITOR.style.getStyleText(b)) && c.push(' style="', e, '"');
+                c.push(">", a || b.name, "</", d, ">");
                 return c.join("")
             },
             getDefinition: function () {
@@ -11138,7 +11140,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
     CKEDITOR.tools.extend(CKEDITOR.dom.comment.prototype, {
         type: CKEDITOR.NODE_COMMENT,
         getOuterHtml: function () {
-            return "\x3c!--" + this.$.nodeValue + "--\x3e"
+            return "<!--" + this.$.nodeValue + "-->"
         }
     });
     "use strict";
@@ -11458,7 +11460,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         })
     })();
     (function () {
-        var a = CKEDITOR.dom.element.createFromHtml('\x3cdiv style\x3d"width:0;height:0;position:absolute;left:-10000px;border:1px solid;border-color:red blue"\x3e\x3c/div\x3e', CKEDITOR.document);
+        var a = CKEDITOR.dom.element.createFromHtml('<div style="width:0;height:0;position:absolute;left:-10000px;border:1px solid;border-color:red blue"></div>', CKEDITOR.document);
         a.appendTo(CKEDITOR.document.getHead());
         try {
             var d = a.getComputedStyle("border-top-color"),
@@ -11598,18 +11600,18 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         CKEDITOR.ui.dialog.uiElement.call(this, b, a, d, "div", null, e, function () {
                             var e = [],
                                 g = a.required ? " cke_required" : "";
-                            "horizontal" != a.labelLayout ? e.push('\x3clabel class\x3d"cke_dialog_ui_labeled_label' + g + '" ', ' id\x3d"' + c.labelId + '"', c.inputId ? ' for\x3d"' + c.inputId + '"' : "", (a.labelStyle ? ' style\x3d"' + a.labelStyle + '"' : "") + "\x3e", a.required ? a.label + '\x3cspan class\x3d"cke_dialog_ui_labeled_required" aria-hidden\x3d"true"\x3e*\x3c/span\x3e' :
-                                a.label, "\x3c/label\x3e", '\x3cdiv class\x3d"cke_dialog_ui_labeled_content"', a.controlStyle ? ' style\x3d"' + a.controlStyle + '"' : "", ' role\x3d"presentation"\x3e', f.call(this, b, a), "\x3c/div\x3e") : (g = {
+                            "horizontal" != a.labelLayout ? e.push('<label class="cke_dialog_ui_labeled_label' + g + '" ', ' id="' + c.labelId + '"', c.inputId ? ' for="' + c.inputId + '"' : "", (a.labelStyle ? ' style="' + a.labelStyle + '"' : "") + ">", a.required ? a.label + '<span class="cke_dialog_ui_labeled_required" aria-hidden="true">*</span>' :
+                                a.label, "</label>", '<div class="cke_dialog_ui_labeled_content"', a.controlStyle ? ' style="' + a.controlStyle + '"' : "", ' role="presentation">', f.call(this, b, a), "</div>") : (g = {
                                 type: "hbox",
                                 widths: a.widths,
                                 padding: 0,
                                 children: [{
                                     type: "html",
-                                    html: '\x3clabel class\x3d"cke_dialog_ui_labeled_label' + g + '" id\x3d"' + c.labelId + '" for\x3d"' + c.inputId + '"' + (a.labelStyle ? ' style\x3d"' + a.labelStyle + '"' : "") + "\x3e" + CKEDITOR.tools.htmlEncode(a.label) + "\x3c/label\x3e"
+                                    html: '<label class="cke_dialog_ui_labeled_label' + g + '" id="' + c.labelId + '" for="' + c.inputId + '"' + (a.labelStyle ? ' style="' + a.labelStyle + '"' : "") + ">" + CKEDITOR.tools.htmlEncode(a.label) + "</label>"
                                 }, {
                                     type: "html",
-                                    html: '\x3cspan class\x3d"cke_dialog_ui_labeled_content"' +
-                                        (a.controlStyle ? ' style\x3d"' + a.controlStyle + '"' : "") + "\x3e" + f.call(this, b, a) + "\x3c/span\x3e"
+                                    html: '<span class="cke_dialog_ui_labeled_content"' +
+                                        (a.controlStyle ? ' style="' + a.controlStyle + '"' : "") + ">" + f.call(this, b, a) + "</span>"
                                 }]
                             }, CKEDITOR.dialog._.uiElementBuilders.hbox.build(b, g, e));
                             return e.join("")
@@ -11644,13 +11646,13 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                             }, null, null, 1E3)
                         });
                         CKEDITOR.ui.dialog.labeledElement.call(this, b, a, d, function () {
-                            var b = ['\x3cdiv class\x3d"cke_dialog_ui_input_', a.type, '" role\x3d"presentation"'];
-                            a.width && b.push('style\x3d"width:' + a.width + '" ');
-                            b.push("\x3e\x3cinput ");
+                            var b = ['<div class="cke_dialog_ui_input_', a.type, '" role="presentation"'];
+                            a.width && b.push('style="width:' + a.width + '" ');
+                            b.push("><input ");
                             c["aria-labelledby"] = this._.labelId;
                             this._.required && (c["aria-required"] = this._.required);
-                            for (var e in c) b.push(e + '\x3d"' + c[e] + '" ');
-                            b.push(" /\x3e\x3c/div\x3e");
+                            for (var e in c) b.push(e + '="' + c[e] + '" ');
+                            b.push(" /></div>");
                             return b.join("")
                         })
                     }
@@ -11673,10 +11675,10 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         CKEDITOR.ui.dialog.labeledElement.call(this, b, a, d, function () {
                             e["aria-labelledby"] = this._.labelId;
                             this._.required && (e["aria-required"] = this._.required);
-                            var a = ['\x3cdiv class\x3d"cke_dialog_ui_input_textarea" role\x3d"presentation"\x3e\x3ctextarea id\x3d"', c, '" '],
+                            var a = ['<div class="cke_dialog_ui_input_textarea" role="presentation"><textarea id="', c, '" '],
                                 b;
-                            for (b in e) a.push(b + '\x3d"' + CKEDITOR.tools.htmlEncode(e[b]) + '" ');
-                            a.push("\x3e", CKEDITOR.tools.htmlEncode(f._["default"]), "\x3c/textarea\x3e\x3c/div\x3e");
+                            for (b in e) a.push(b + '="' + CKEDITOR.tools.htmlEncode(e[b]) + '" ');
+                            a.push(">", CKEDITOR.tools.htmlEncode(f._["default"]), "</textarea></div>");
                             return a.join("")
                         })
                     }
@@ -11703,7 +11705,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                             "undefined" !=
                             typeof c.inputStyle && (c.style = c.inputStyle);
                             f.checkbox = new CKEDITOR.ui.dialog.uiElement(b, c, e, "input", null, g);
-                            e.push(' \x3clabel id\x3d"', d, '" for\x3d"', g.id, '"' + (a.labelStyle ? ' style\x3d"' + a.labelStyle + '"' : "") + "\x3e", CKEDITOR.tools.htmlEncode(a.label), "\x3c/label\x3e");
+                            e.push(' <label id="', d, '" for="', g.id, '"' + (a.labelStyle ? ' style="' + a.labelStyle + '"' : "") + ">", CKEDITOR.tools.htmlEncode(a.label), "</label>");
                             return e.join("")
                         })
                     }
@@ -11794,7 +11796,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                             "class": a["class"],
                             role: "button",
                             "aria-labelledby": e
-                        }, '\x3cspan id\x3d"' + e + '" class\x3d"cke_dialog_ui_button"\x3e' + CKEDITOR.tools.htmlEncode(a.label) + "\x3c/span\x3e")
+                        }, '<span id="' + e + '" class="cke_dialog_ui_button">' + CKEDITOR.tools.htmlEncode(a.label) + "</span>")
                     }
                 },
                 select: function (b, a, d) {
@@ -11813,17 +11815,17 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                                     "class": "cke_dialog_ui_input_select",
                                     "aria-labelledby": this._.labelId
                                 };
-                            e.push('\x3cdiv class\x3d"cke_dialog_ui_input_', a.type, '" role\x3d"presentation"');
-                            a.width && e.push('style\x3d"width:' + a.width + '" ');
-                            e.push("\x3e");
+                            e.push('<div class="cke_dialog_ui_input_', a.type, '" role="presentation"');
+                            a.width && e.push('style="width:' + a.width + '" ');
+                            e.push(">");
                             void 0 !== a.size && (g.size = a.size);
                             void 0 !== a.multiple && (g.multiple = a.multiple);
                             t(c);
-                            for (var k = 0, l; k < a.items.length && (l = a.items[k]); k++) d.push('\x3coption value\x3d"', CKEDITOR.tools.htmlEncode(void 0 !== l[1] ? l[1] : l[0]).replace(/"/g, "\x26quot;"), '" /\x3e ', CKEDITOR.tools.htmlEncode(l[0]));
+                            for (var k = 0, l; k < a.items.length && (l = a.items[k]); k++) d.push('<option value="', CKEDITOR.tools.htmlEncode(void 0 !== l[1] ? l[1] : l[0]).replace(/"/g, "\x26quot;"), '" /> ', CKEDITOR.tools.htmlEncode(l[0]));
                             "undefined" != typeof c.inputStyle &&
                                 (c.style = c.inputStyle);
                             f.select = new CKEDITOR.ui.dialog.uiElement(b, c, e, "select", null, g, d.join(""));
-                            e.push("\x3c/div\x3e");
+                            e.push("</div>");
                             return e.join("")
                         })
                     }
@@ -11842,9 +11844,9 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         CKEDITOR.ui.dialog.labeledElement.call(this, b, a, d,
                             function () {
                                 f.frameId = CKEDITOR.tools.getNextId() + "_fileInput";
-                                var b = ['\x3ciframe frameborder\x3d"0" allowtransparency\x3d"0" class\x3d"cke_dialog_ui_input_file" role\x3d"presentation" id\x3d"', f.frameId, '" title\x3d"', a.label, '" src\x3d"javascript:void('];
+                                var b = ['<iframe frameborder="0" allowtransparency="0" class="cke_dialog_ui_input_file" role="presentation" id="', f.frameId, '" title="', a.label, '" src="javascript:void('];
                                 b.push(CKEDITOR.env.ie ? "(function(){" + encodeURIComponent("document.open();(" + CKEDITOR.tools.fixDomain + ")();document.close();") + "})()" : "0");
-                                b.push(')"\x3e\x3c/iframe\x3e');
+                                b.push(')"></iframe>');
                                 return b.join("")
                             })
                     }
@@ -11877,7 +11879,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         if (!(3 > arguments.length)) {
                             var m = [],
                                 g = c.html;
-                            "\x3c" != g.charAt(0) && (g = "\x3cspan\x3e" + g + "\x3c/span\x3e");
+                            "<" != g.charAt(0) && (g = "<span>" + g + "</span>");
                             var k = c.focus;
                             if (k) {
                                 var l = this.focus;
@@ -11905,7 +11907,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     };
                     CKEDITOR.ui.dialog.uiElement.call(this, b, c, f, "fieldset", null, null, function () {
                         var a = [];
-                        e && a.push("\x3clegend" + (c.labelStyle ? ' style\x3d"' + c.labelStyle + '"' : "") + "\x3e" + e + "\x3c/legend\x3e");
+                        e && a.push("<legend" + (c.labelStyle ? ' style="' + c.labelStyle + '"' : "") + ">" + e + "</legend>");
                         for (var b = 0; b < d.length; b++) a.push(d[b]);
                         return a.join("")
                     })
@@ -12138,9 +12140,9 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         var b = "";
                         f.size && (b = f.size - (CKEDITOR.env.ie ? 7 : 0));
                         var h = a.frameId + "_input";
-                        d.$.write(['\x3chtml dir\x3d"' + g + '" lang\x3d"' + k + '"\x3e\x3chead\x3e\x3ctitle\x3e\x3c/title\x3e\x3c/head\x3e\x3cbody style\x3d"margin: 0; overflow: hidden; background: transparent;"\x3e',
-                            '\x3cform enctype\x3d"multipart/form-data" method\x3d"POST" dir\x3d"' + g + '" lang\x3d"' + k + '" action\x3d"', CKEDITOR.tools.htmlEncode(f.action), '"\x3e\x3clabel id\x3d"', a.labelId, '" for\x3d"', h, '" style\x3d"display:none"\x3e', CKEDITOR.tools.htmlEncode(f.label), '\x3c/label\x3e\x3cinput style\x3d"width:100%" id\x3d"', h, '" aria-labelledby\x3d"', a.labelId, '" type\x3d"file" name\x3d"', CKEDITOR.tools.htmlEncode(f.id || "cke_upload"), '" size\x3d"', CKEDITOR.tools.htmlEncode(0 < b ? b : ""), '" /\x3e\x3c/form\x3e\x3c/body\x3e\x3c/html\x3e\x3cscript\x3e',
-                            CKEDITOR.env.ie ? "(" + CKEDITOR.tools.fixDomain + ")();" : "", "window.parent.CKEDITOR.tools.callFunction(" + e + ");", "window.onbeforeunload \x3d function() {window.parent.CKEDITOR.tools.callFunction(" + m + ")}", "\x3c/script\x3e"
+                        d.$.write(['<html dir="' + g + '" lang="' + k + '"><head><title></title></head><body style="margin: 0; overflow: hidden; background: transparent;">',
+                            '<form enctype="multipart/form-data" method="POST" dir="' + g + '" lang="' + k + '" action="', CKEDITOR.tools.htmlEncode(f.action), '"><label id="', a.labelId, '" for="', h, '" style="display:none">', CKEDITOR.tools.htmlEncode(f.label), '</label><input style="width:100%" id="', h, '" aria-labelledby="', a.labelId, '" type="file" name="', CKEDITOR.tools.htmlEncode(f.id || "cke_upload"), '" size="', CKEDITOR.tools.htmlEncode(0 < b ? b : ""), '" /></form></body></html><script>',
+                            CKEDITOR.env.ie ? "(" + CKEDITOR.tools.fixDomain + ")();" : "", "window.parent.CKEDITOR.tools.callFunction(" + e + ");", "window.onbeforeunload = function() {window.parent.CKEDITOR.tools.callFunction(" + m + ")}", "</script>"
                         ].join(""));
                         d.$.close();
                         for (b = 0; b < c.length; b++) c[b].enable()
@@ -12276,7 +12278,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 c.getChild(0),
                 d = c.getChild(1);
             a.plugins.clipboard && CKEDITOR.plugins.clipboard.preventDefaultDropOnElement(c);
-            !CKEDITOR.env.ie || CKEDITOR.env.quirks || CKEDITOR.env.edge || (a = "javascript:void(function(){" + encodeURIComponent("document.open();(" + CKEDITOR.tools.fixDomain + ")();document.close();") + "}())", CKEDITOR.dom.element.createFromHtml('\x3ciframe frameBorder\x3d"0" class\x3d"cke_iframe_shim" src\x3d"' + a + '" tabIndex\x3d"-1"\x3e\x3c/iframe\x3e').appendTo(c.getParent()));
+            !CKEDITOR.env.ie || CKEDITOR.env.quirks || CKEDITOR.env.edge || (a = "javascript:void(function(){" + encodeURIComponent("document.open();(" + CKEDITOR.tools.fixDomain + ")();document.close();") + "}())", CKEDITOR.dom.element.createFromHtml('<iframe frameBorder="0" class="cke_iframe_shim" src="' + a + '" tabIndex="-1"></iframe>').appendTo(c.getParent()));
             e.unselectable();
             d.unselectable();
             return {
@@ -12447,7 +12449,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         var f = a.parts.contents,
                             m = f.$.getElementsByTagName("iframe").length,
                             w = !(CKEDITOR.env.gecko || CKEDITOR.env.ie && CKEDITOR.env.quirks);
-                        m && (q = CKEDITOR.dom.element.createFromHtml('\x3cdiv class\x3d"cke_dialog_resize_cover" style\x3d"height: 100%; position: absolute; width: 100%; left:0; top:0;"\x3e\x3c/div\x3e'), f.append(q));
+                        m && (q = CKEDITOR.dom.element.createFromHtml('<div class="cke_dialog_resize_cover" style="height: 100%; position: absolute; width: 100%; left:0; top:0;"></div>'), f.append(q));
                         k = h.height -
                             a.parts.contents.getFirst(e).getSize("height", w);
                         g = h.width - a.parts.contents.getFirst(e).getSize("width", 1);
@@ -12465,7 +12467,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     var b = "";
                     d == CKEDITOR.DIALOG_RESIZE_WIDTH ? b = " cke_resizer_horizontal" : d == CKEDITOR.DIALOG_RESIZE_HEIGHT &&
                         (b = " cke_resizer_vertical");
-                    b = CKEDITOR.dom.element.createFromHtml('\x3cdiv class\x3d"cke_resizer' + b + " cke_resizer_" + f.lang.dir + '" title\x3d"' + CKEDITOR.tools.htmlEncode(f.lang.common.resize) + '" onmousedown\x3d"CKEDITOR.tools.callFunction(' + m + ', event )"\x3e' + ("ltr" == f.lang.dir ? "◢" : "◣") + "\x3c/div\x3e");
+                    b = CKEDITOR.dom.element.createFromHtml('<div class="cke_resizer' + b + " cke_resizer_" + f.lang.dir + '" title="' + CKEDITOR.tools.htmlEncode(f.lang.common.resize) + '" onmousedown="CKEDITOR.tools.callFunction(' + m + ', event )">' + ("ltr" == f.lang.dir ? "◢" : "◣") + "</div>");
                     a.parts.footer.append(b, 1)
                 });
                 f.on("destroy", function () {
@@ -12499,10 +12501,10 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 b = CKEDITOR.tools.genKey(e, c, d),
                 f = B[b];
             CKEDITOR.document.getBody().addClass("cke_dialog_open");
-            f ? f.show() : (d = ['\x3cdiv tabIndex\x3d"-1" style\x3d"position: ', CKEDITOR.env.ie6Compat ?
-                "absolute" : "fixed", "; z-index: ", d, "; top: 0px; left: 0px; ", "; width: 100%; height: 100%;", CKEDITOR.env.ie6Compat ? "" : "background-color: " + e, '" class\x3d"cke_dialog_background_cover"\x3e'
-            ], CKEDITOR.env.ie6Compat && (e = "\x3chtml\x3e\x3cbody style\x3d\\'background-color:" + e + ";\\'\x3e\x3c/body\x3e\x3c/html\x3e", d.push('\x3ciframe hidefocus\x3d"true" frameborder\x3d"0" id\x3d"cke_dialog_background_iframe" src\x3d"javascript:'), d.push("void((function(){" + encodeURIComponent("document.open();(" + CKEDITOR.tools.fixDomain +
-                ")();document.write( '" + e + "' );document.close();") + "})())"), d.push('" style\x3d"position:absolute;left:0;top:0;width:100%;height: 100%;filter: progid:DXImageTransform.Microsoft.Alpha(opacity\x3d0)"\x3e\x3c/iframe\x3e')), d.push("\x3c/div\x3e"), f = CKEDITOR.dom.element.createFromHtml(d.join("")), f.setOpacity(void 0 !== c ? c : .5), f.on("keydown", H), f.on("keypress", H), f.on("keyup", H), f.appendTo(CKEDITOR.document.getBody()), B[b] = f);
+            f ? f.show() : (d = ['<div tabIndex="-1" style="position: ', CKEDITOR.env.ie6Compat ?
+                "absolute" : "fixed", "; z-index: ", d, "; top: 0px; left: 0px; ", "; width: 100%; height: 100%;", CKEDITOR.env.ie6Compat ? "" : "background-color: " + e, '" class="cke_dialog_background_cover">'
+            ], CKEDITOR.env.ie6Compat && (e = "<html><body style=\\'background-color:" + e + ";\\'></body></html>", d.push('<iframe hidefocus="true" frameborder="0" id="cke_dialog_background_iframe" src="javascript:'), d.push("void((function(){" + encodeURIComponent("document.open();(" + CKEDITOR.tools.fixDomain +
+                ")();document.write( '" + e + "' );document.close();") + "})())"), d.push('" style="position:absolute;left:0;top:0;width:100%;height: 100%;filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0)"></iframe>')), d.push("</div>"), f = CKEDITOR.dom.element.createFromHtml(d.join("")), f.setOpacity(void 0 !== c ? c : .5), f.on("keydown", H), f.on("keypress", H), f.on("keyup", H), f.appendTo(CKEDITOR.document.getBody()), B[b] = f);
             a.focusManager.add(f);
             u = f;
             CKEDITOR.env.mac && CKEDITOR.env.webkit || f.focus()
@@ -12555,7 +12557,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         var y = CKEDITOR.tools.cssLength,
             U, u, V = !1,
             D = !CKEDITOR.env.ie || CKEDITOR.env.edge,
-            aa = '\x3cdiv class\x3d"cke_reset_all cke_dialog_container {editorId} {editorDialogClass} {hidpi}" dir\x3d"{langDir}" style\x3d"' + (D ? "display:flex" : "") + '" lang\x3d"{langCode}" role\x3d"dialog" aria-labelledby\x3d"cke_dialog_title_{id}"\x3e\x3ctable class\x3d"cke_dialog ' + CKEDITOR.env.cssClass + ' cke_{langDir}" style\x3d"' + (D ? "margin:auto" : "position:absolute") + '" role\x3d"presentation"\x3e\x3ctr\x3e\x3ctd role\x3d"presentation"\x3e\x3cdiv class\x3d"cke_dialog_body" role\x3d"presentation"\x3e\x3cdiv id\x3d"cke_dialog_title_{id}" class\x3d"cke_dialog_title" role\x3d"presentation"\x3e\x3c/div\x3e\x3ca id\x3d"cke_dialog_close_button_{id}" class\x3d"cke_dialog_close_button" href\x3d"javascript:void(0)" title\x3d"{closeTitle}" role\x3d"button"\x3e\x3cspan class\x3d"cke_label"\x3eX\x3c/span\x3e\x3c/a\x3e\x3cdiv id\x3d"cke_dialog_tabs_{id}" class\x3d"cke_dialog_tabs" role\x3d"tablist"\x3e\x3c/div\x3e\x3ctable class\x3d"cke_dialog_contents" role\x3d"presentation"\x3e\x3ctr\x3e\x3ctd id\x3d"cke_dialog_contents_{id}" class\x3d"cke_dialog_contents_body" role\x3d"presentation"\x3e\x3c/td\x3e\x3c/tr\x3e\x3ctr\x3e\x3ctd id\x3d"cke_dialog_footer_{id}" class\x3d"cke_dialog_footer" role\x3d"presentation"\x3e\x3c/td\x3e\x3c/tr\x3e\x3c/table\x3e\x3c/div\x3e\x3c/td\x3e\x3c/tr\x3e\x3c/table\x3e\x3c/div\x3e';
+            aa = '<div class="cke_reset_all cke_dialog_container {editorId} {editorDialogClass} {hidpi}" dir="{langDir}" style="' + (D ? "display:flex" : "") + '" lang="{langCode}" role="dialog" aria-labelledby="cke_dialog_title_{id}"><table class="cke_dialog ' + CKEDITOR.env.cssClass + ' cke_{langDir}" style="' + (D ? "margin:auto" : "position:absolute") + '" role="presentation"><tr><td role="presentation"><div class="cke_dialog_body" role="presentation"><div id="cke_dialog_title_{id}" class="cke_dialog_title" role="presentation"></div><a id="cke_dialog_close_button_{id}" class="cke_dialog_close_button" href="javascript:void(0)" title="{closeTitle}" role="button"><span class="cke_label">X</span></a><div id="cke_dialog_tabs_{id}" class="cke_dialog_tabs" role="tablist"></div><table class="cke_dialog_contents" role="presentation"><tr><td id="cke_dialog_contents_{id}" class="cke_dialog_contents_body" role="presentation"></td></tr><tr><td id="cke_dialog_footer_{id}" class="cke_dialog_footer" role="presentation"></td></tr></table></div></td></tr></table></div>';
         CKEDITOR.dialog = function (a, b) {
             function c() {
                 var a = n._.focusList;
@@ -12967,7 +12969,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             },
             addPage: function (a) {
                 if (!a.requiredContent || this._.editor.filter.check(a.requiredContent)) {
-                    for (var b = [], c = a.label ? ' title\x3d"' + CKEDITOR.tools.htmlEncode(a.label) +
+                    for (var b = [], c = a.label ? ' title="' + CKEDITOR.tools.htmlEncode(a.label) +
                             '"' : "", e = CKEDITOR.dialog._.uiElementBuilders.vbox.build(this, {
                                 type: "vbox",
                                 className: "cke_dialog_page_contents",
@@ -12983,7 +12985,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         "100%");
                     e = CKEDITOR.env;
                     d = "cke_" + a.id + "_" + CKEDITOR.tools.getNextNumber();
-                    c = CKEDITOR.dom.element.createFromHtml(['\x3ca class\x3d"cke_dialog_tab"', 0 < this._.pageCount ? " cke_last" : "cke_first", c, a.hidden ? ' style\x3d"display:none"' : "", ' id\x3d"', d, '"', e.gecko && !e.hc ? "" : ' href\x3d"javascript:void(0)"', ' tabIndex\x3d"-1" hidefocus\x3d"true" role\x3d"tab"\x3e', a.label, "\x3c/a\x3e"].join(""));
+                    c = CKEDITOR.dom.element.createFromHtml(['<a class="cke_dialog_tab"', 0 < this._.pageCount ? " cke_last" : "cke_first", c, a.hidden ? ' style="display:none"' : "", ' id="', d, '"', e.gecko && !e.hc ? "" : ' href="javascript:void(0)"', ' tabIndex="-1" hidefocus="true" role="tab">', a.label, "</a>"].join(""));
                     b.setAttribute("aria-labelledby", d);
                     this._.tabs[a.id] = [c, b];
                     this._.tabIdList.push(a.id);
@@ -13261,7 +13263,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 uiElement: function (a, b, c, e, d, f, g) {
                     if (!(4 > arguments.length)) {
                         var k = (e.call ? e(b) : e) || "div",
-                            p = ["\x3c", k, " "],
+                            p = ["<", k, " "],
                             l = (d && d.call ? d(b) : d) || {},
                             h = (f && f.call ? f(b) : f) || {},
                             q = (g && g.call ? g.call(this, a, b) : g) || "",
@@ -13284,8 +13286,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         for (m = r.length - 1; 0 <=
                             m; m--) "" === r[m] && r.splice(m, 1);
                         0 < r.length && (h.style = (h.style ? h.style + "; " : "") + r.join("; "));
-                        for (m in h) p.push(m + '\x3d"' + CKEDITOR.tools.htmlEncode(h[m]) + '" ');
-                        p.push("\x3e", q, "\x3c/", k, "\x3e");
+                        for (m in h) p.push(m + '="' + CKEDITOR.tools.htmlEncode(h[m]) + '" ');
+                        p.push(">", q, "</", k, ">");
                         c.push(p.join(""));
                         (this._ || (this._ = {})).dialog = a;
                         "boolean" == typeof b.isChanged && (this.isChanged = function () {
@@ -13346,22 +13348,22 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         CKEDITOR.ui.dialog.uiElement.call(this, a, d || {
                             type: "hbox"
                         }, e, "table", {}, l, function () {
-                            var a = ['\x3ctbody\x3e\x3ctr class\x3d"cke_dialog_ui_hbox"\x3e'];
+                            var a = ['<tbody><tr class="cke_dialog_ui_hbox">'];
                             for (p = 0; p < c.length; p++) {
                                 var b = "cke_dialog_ui_hbox_child",
                                     e = [];
                                 0 === p && (b = "cke_dialog_ui_hbox_first");
                                 p == c.length - 1 && (b = "cke_dialog_ui_hbox_last");
-                                a.push('\x3ctd class\x3d"', b, '" role\x3d"presentation" ');
+                                a.push('<td class="', b, '" role="presentation" ');
                                 g ? g[p] && e.push("width:" + y(g[p])) : e.push("width:" + Math.floor(100 / c.length) + "%");
                                 k && e.push("height:" + y(k));
                                 d && void 0 !== d.padding &&
                                     e.push("padding:" + y(d.padding));
                                 CKEDITOR.env.ie && CKEDITOR.env.quirks && f[p].align && e.push("text-align:" + f[p].align);
-                                0 < e.length && a.push('style\x3d"' + e.join("; ") + '" ');
-                                a.push("\x3e", c[p], "\x3c/td\x3e")
+                                0 < e.length && a.push('style="' + e.join("; ") + '" ');
+                                a.push(">", c[p], "</td>")
                             }
-                            a.push("\x3c/tr\x3e\x3c/tbody\x3e");
+                            a.push("</tr></tbody>");
                             return a.join("")
                         })
                     }
@@ -13377,26 +13379,26 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         }, e, "div", null, {
                             role: "presentation"
                         }, function () {
-                            var b = ['\x3ctable role\x3d"presentation" cellspacing\x3d"0" border\x3d"0" '];
-                            b.push('style\x3d"');
+                            var b = ['<table role="presentation" cellspacing="0" border="0" '];
+                            b.push('style="');
                             d && d.expand && b.push("height:100%;");
                             b.push("width:" + y(g || "100%"), ";");
                             CKEDITOR.env.webkit && b.push("float:none;");
                             b.push('"');
-                            b.push('align\x3d"', CKEDITOR.tools.htmlEncode(d && d.align || ("ltr" == a.getParentEditor().lang.dir ? "left" : "right")), '" ');
-                            b.push("\x3e\x3ctbody\x3e");
+                            b.push('align="', CKEDITOR.tools.htmlEncode(d && d.align || ("ltr" == a.getParentEditor().lang.dir ? "left" : "right")), '" ');
+                            b.push("><tbody>");
                             for (var e = 0; e < c.length; e++) {
                                 var h = [];
-                                b.push('\x3ctr\x3e\x3ctd role\x3d"presentation" ');
+                                b.push('<tr><td role="presentation" ');
                                 g && h.push("width:" + y(g || "100%"));
                                 k ? h.push("height:" +
                                     y(k[e])) : d && d.expand && h.push("height:" + Math.floor(100 / c.length) + "%");
                                 d && void 0 !== d.padding && h.push("padding:" + y(d.padding));
                                 CKEDITOR.env.ie && CKEDITOR.env.quirks && f[e].align && h.push("text-align:" + f[e].align);
-                                0 < h.length && b.push('style\x3d"', h.join("; "), '" ');
-                                b.push(' class\x3d"cke_dialog_ui_vbox_child"\x3e', c[e], "\x3c/td\x3e\x3c/tr\x3e")
+                                0 < h.length && b.push('style="', h.join("; "), '" ');
+                                b.push(' class="cke_dialog_ui_vbox_child">', c[e], "</td></tr>")
                             }
-                            b.push("\x3c/tbody\x3e\x3c/table\x3e");
+                            b.push("</tbody></table>");
                             return b.join("")
                         })
                     }
@@ -14358,7 +14360,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 c.addClass("cke_notification_message");
                 c.setHtml(this.message);
                 a.append(c);
-                c = CKEDITOR.dom.element.createFromHtml('\x3ca class\x3d"cke_notification_close" href\x3d"javascript:void(0)" title\x3d"' + d + '" role\x3d"button" tabindex\x3d"-1"\x3e\x3cspan class\x3d"cke_label"\x3eX\x3c/span\x3e\x3c/a\x3e');
+                c = CKEDITOR.dom.element.createFromHtml('<a class="cke_notification_close" href="javascript:void(0)" title="' + d + '" role="button" tabindex="-1"><span class="cke_label">X</span></a>');
                 a.append(c);
                 c.on("click",
                     function () {
@@ -14471,14 +14473,14 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         CKEDITOR.plugins.notification = q
     })();
     (function () {
-        var c = '\x3ca id\x3d"{id}" class\x3d"cke_button cke_button__{name} cke_button_{state} {cls}"' + (CKEDITOR.env.gecko && !CKEDITOR.env.hc ? "" : " href\x3d\"javascript:void('{titleJs}')\"") + ' title\x3d"{title}" tabindex\x3d"-1" hidefocus\x3d"true" role\x3d"button" aria-labelledby\x3d"{id}_label" aria-describedby\x3d"{id}_description" aria-haspopup\x3d"{hasArrow}" aria-disabled\x3d"{ariaDisabled}"{hasArrowAriaHtml}{toggleAriaHtml}';
-        CKEDITOR.env.gecko && CKEDITOR.env.mac && (c += ' onkeypress\x3d"return false;"');
-        CKEDITOR.env.gecko && (c += ' onblur\x3d"this.style.cssText \x3d this.style.cssText;"');
+        var c = '<a id="{id}" class="cke_button cke_button__{name} cke_button_{state} {cls}"' + (CKEDITOR.env.gecko && !CKEDITOR.env.hc ? "" : " href=\"javascript:void('{titleJs}')\"") + ' title="{title}" tabindex="-1" hidefocus="true" role="button" aria-labelledby="{id}_label" aria-describedby="{id}_description" aria-haspopup="{hasArrow}" aria-disabled="{ariaDisabled}"{hasArrowAriaHtml}{toggleAriaHtml}';
+        CKEDITOR.env.gecko && CKEDITOR.env.mac && (c += ' onkeypress="return false;"');
+        CKEDITOR.env.gecko && (c += ' onblur="this.style.cssText = this.style.cssText;"');
         var l = "";
-        CKEDITOR.env.ie && (l = 'return false;" onmouseup\x3d"CKEDITOR.tools.getMouseButton(event)\x3d\x3dCKEDITOR.MOUSE_BUTTON_LEFT\x26\x26');
-        var c = c + (' onkeydown\x3d"return CKEDITOR.tools.callFunction({keydownFn},event);" onfocus\x3d"return CKEDITOR.tools.callFunction({focusFn},event);" onclick\x3d"' + l + 'CKEDITOR.tools.callFunction({clickFn},this);return false;"\x3e\x3cspan class\x3d"cke_button_icon cke_button__{iconName}_icon" style\x3d"{style}"') +
-            '\x3e\x26nbsp;\x3c/span\x3e\x3cspan id\x3d"{id}_label" class\x3d"cke_button_label cke_button__{name}_label" aria-hidden\x3d"false"\x3e{label}\x3c/span\x3e\x3cspan id\x3d"{id}_description" class\x3d"cke_button_label" aria-hidden\x3d"false"\x3e{ariaShortcutSpace}{ariaShortcut}\x3c/span\x3e{arrowHtml}\x3c/a\x3e',
-            v = CKEDITOR.addTemplate("buttonArrow", '\x3cspan class\x3d"cke_button_arrow"\x3e' + (CKEDITOR.env.hc ? "\x26#9660;" : "") + "\x3c/span\x3e"),
+        CKEDITOR.env.ie && (l = 'return false;" onmouseup="CKEDITOR.tools.getMouseButton(event)==CKEDITOR.MOUSE_BUTTON_LEFT\x26\x26');
+        var c = c + (' onkeydown="return CKEDITOR.tools.callFunction({keydownFn},event);" onfocus="return CKEDITOR.tools.callFunction({focusFn},event);" onclick="' + l + 'CKEDITOR.tools.callFunction({clickFn},this);return false;"><span class="cke_button_icon cke_button__{iconName}_icon" style="{style}"') +
+            '>\x26nbsp;</span><span id="{id}_label" class="cke_button_label cke_button__{name}_label" aria-hidden="false">{label}</span><span id="{id}_description" class="cke_button_label" aria-hidden="false">{ariaShortcutSpace}{ariaShortcut}</span>{arrowHtml}</a>',
+            v = CKEDITOR.addTemplate("buttonArrow", '<span class="cke_button_arrow">' + (CKEDITOR.env.hc ? "\x26#9660;" : "") + "</span>"),
             w = CKEDITOR.addTemplate("button", c);
         CKEDITOR.plugins.add("button", {
             beforeInit: function (a) {
@@ -14585,8 +14587,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     clickFn: l,
                     style: CKEDITOR.skin.getIconStyle(h, "rtl" == a.lang.dir, t, this.iconOffset),
                     arrowHtml: this.hasArrow ? v.output() : "",
-                    hasArrowAriaHtml: this.hasArrow ? ' aria-expanded\x3d"false"' : "",
-                    toggleAriaHtml: this.isToggle ? 'aria-pressed\x3d"false"' : ""
+                    hasArrowAriaHtml: this.hasArrow ? ' aria-expanded="false"' : "",
+                    toggleAriaHtml: this.isToggle ? 'aria-pressed="false"' : ""
                 };
                 w.output(g, b);
                 if (this.onRender) this.onRender();
@@ -14772,17 +14774,17 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         c.removeListener();
                         a.toolbox = new z;
                         var d = CKEDITOR.tools.getNextId(),
-                            b = ['\x3cspan id\x3d"', d, '" class\x3d"cke_voice_label"\x3e', a.lang.toolbar.toolbars, "\x3c/span\x3e", '\x3cspan id\x3d"' + a.ui.spaceId("toolbox") + '" class\x3d"cke_toolbox" role\x3d"group" aria-labelledby\x3d"', d, '" onmousedown\x3d"return false;"\x3e'],
+                            b = ['<span id="', d, '" class="cke_voice_label">', a.lang.toolbar.toolbars, "</span>", '<span id="' + a.ui.spaceId("toolbox") + '" class="cke_toolbox" role="group" aria-labelledby="', d, '" onmousedown="return false;">'],
                             d = !1 !== a.config.toolbarStartupExpanded,
                             e, k;
-                        a.config.toolbarCanCollapse && a.elementMode != CKEDITOR.ELEMENT_MODE_INLINE && b.push('\x3cspan class\x3d"cke_toolbox_main"' + (d ? "\x3e" : ' style\x3d"display:none"\x3e'));
+                        a.config.toolbarCanCollapse && a.elementMode != CKEDITOR.ELEMENT_MODE_INLINE && b.push('<span class="cke_toolbox_main"' + (d ? ">" : ' style="display:none">'));
                         for (var q = a.toolbox.toolbars, n = D(a), g = n.length, l = 0; l < g; l++) {
                             var r, m = 0,
                                 w, p = n[l],
                                 v = "/" !== p && ("/" === n[l + 1] || l == g - 1),
                                 x;
                             if (p)
-                                if (e && (b.push("\x3c/span\x3e"), k = e = 0), "/" === p) b.push('\x3cspan class\x3d"cke_toolbar_break"\x3e\x3c/span\x3e');
+                                if (e && (b.push("</span>"), k = e = 0), "/" === p) b.push('<span class="cke_toolbar_break"></span>');
                                 else {
                                     x = p.items || p;
                                     for (var y = 0; y < x.length; y++) {
@@ -14806,24 +14808,24 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                                                         items: []
                                                     };
                                                     w = p.name && (a.lang.toolbar.toolbarGroups[p.name] || p.name);
-                                                    b.push('\x3cspan id\x3d"', r, '" class\x3d"cke_toolbar' + (v ? ' cke_toolbar_last"' : '"'), w ? ' aria-labelledby\x3d"' + r + '_label"' : "", ' role\x3d"toolbar"\x3e');
-                                                    w && b.push('\x3cspan id\x3d"', r, '_label" class\x3d"cke_voice_label"\x3e', w, "\x3c/span\x3e");
-                                                    b.push('\x3cspan class\x3d"cke_toolbar_start"\x3e\x3c/span\x3e');
+                                                    b.push('<span id="', r, '" class="cke_toolbar' + (v ? ' cke_toolbar_last"' : '"'), w ? ' aria-labelledby="' + r + '_label"' : "", ' role="toolbar">');
+                                                    w && b.push('<span id="', r, '_label" class="cke_voice_label">', w, "</span>");
+                                                    b.push('<span class="cke_toolbar_start"></span>');
                                                     var u = q.push(m) - 1;
                                                     0 < u && (m.previous = q[u - 1], m.previous.next = m)
                                                 }
-                                                A ? e || (b.push('\x3cspan class\x3d"cke_toolgroup" role\x3d"presentation"\x3e'),
-                                                    e = 1) : e && (b.push("\x3c/span\x3e"), e = 0);
+                                                A ? e || (b.push('<span class="cke_toolgroup" role="presentation">'),
+                                                    e = 1) : e && (b.push("</span>"), e = 0);
                                                 k && (B(k), k = 0);
                                                 B(t)
                                             }
                                         }
                                     }
-                                    e && (b.push("\x3c/span\x3e"), k = e = 0);
-                                    m && b.push('\x3cspan class\x3d"cke_toolbar_end"\x3e\x3c/span\x3e\x3c/span\x3e')
+                                    e && (b.push("</span>"), k = e = 0);
+                                    m && b.push('<span class="cke_toolbar_end"></span></span>')
                                 }
                         }
-                        a.config.toolbarCanCollapse && b.push("\x3c/span\x3e");
+                        a.config.toolbarCanCollapse && b.push("</span>");
                         if (a.config.toolbarCanCollapse && a.elementMode != CKEDITOR.ELEMENT_MODE_INLINE) {
                             var C = CKEDITOR.tools.addFunction(function () {
                                 a.execCommand("toolbarCollapse")
@@ -14857,12 +14859,12 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                                 }
                             });
                             a.setKeystroke(CKEDITOR.ALT + (CKEDITOR.env.ie || CKEDITOR.env.webkit ? 189 : 109), "toolbarCollapse");
-                            b.push('\x3ca title\x3d"' + (d ? a.lang.toolbar.toolbarCollapse : a.lang.toolbar.toolbarExpand) + '" id\x3d"' + a.ui.spaceId("toolbar_collapser") + '" tabIndex\x3d"-1" class\x3d"cke_toolbox_collapser');
+                            b.push('<a title="' + (d ? a.lang.toolbar.toolbarCollapse : a.lang.toolbar.toolbarExpand) + '" id="' + a.ui.spaceId("toolbar_collapser") + '" tabIndex="-1" class="cke_toolbox_collapser');
                             d || b.push(" cke_toolbox_collapser_min");
-                            b.push('" onclick\x3d"CKEDITOR.tools.callFunction(' + C + ')"\x3e', '\x3cspan class\x3d"cke_arrow"\x3e\x26#9650;\x3c/span\x3e',
-                                "\x3c/a\x3e")
+                            b.push('" onclick="CKEDITOR.tools.callFunction(' + C + ')">', '<span class="cke_arrow">\x26#9650;</span>',
+                                "</a>")
                         }
-                        b.push("\x3c/span\x3e");
+                        b.push("</span>");
                         c.data.html += b.join("")
                     }
                 });
@@ -14885,7 +14887,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     create: function () {
                         return {
                             render: function (a, d) {
-                                d.push('\x3cspan class\x3d"cke_toolbar_separator" role\x3d"separator"\x3e\x3c/span\x3e');
+                                d.push('<span class="cke_toolbar_separator" role="separator"></span>');
                                 return {}
                             }
                         }
@@ -15014,7 +15016,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                             m = b.type,
                             e = CKEDITOR.tools.keystrokeToString(a.lang.common.keyboard,
                                 a.getCommandKeystroke(this)),
-                            p = "string" === typeof d ? d : a.lang.clipboard.pasteNotification.replace(/%1/, '\x3ckbd aria-label\x3d"' + e.aria + '"\x3e' + e.display + "\x3c/kbd\x3e"),
+                            p = "string" === typeof d ? d : a.lang.clipboard.pasteNotification.replace(/%1/, '<kbd aria-label="' + e.aria + '">' + e.display + "</kbd>"),
                             e = "string" === typeof b ? b : b.dataValue;
                         m && !0 !== a.config.forcePasteAsPlainText && "allow-word" !== a.config.forcePasteAsPlainText ? a._.nextPasteType = m : delete a._.nextPasteType;
                         "string" === typeof e ? c({
@@ -15295,20 +15297,20 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 
         function A(a, b) {
             function c(a) {
-                return CKEDITOR.tools.repeat("\x3c/p\x3e\x3cp\x3e", ~~(a / 2)) + (1 == a % 2 ? "\x3cbr\x3e" : "")
+                return CKEDITOR.tools.repeat("</p><p>", ~~(a / 2)) + (1 == a % 2 ? "<br>" : "")
             }
-            b = b.replace(/(?!\u3000)\s+/g, " ").replace(/> +</g, "\x3e\x3c").replace(/<br ?\/>/gi, "\x3cbr\x3e");
+            b = b.replace(/(?!\u3000)\s+/g, " ").replace(/> +</g, "><").replace(/<br ?\/>/gi, "<br>");
             b = b.replace(/<\/?[A-Z]+>/g, function (a) {
                 return a.toLowerCase()
             });
             if (b.match(/^[^<]$/)) return b;
-            CKEDITOR.env.webkit && -1 < b.indexOf("\x3cdiv\x3e") && (b = b.replace(/^(<div>(<br>|)<\/div>)(?!$|(<div>(<br>|)<\/div>))/g, "\x3cbr\x3e").replace(/^(<div>(<br>|)<\/div>){2}(?!$)/g, "\x3cdiv\x3e\x3c/div\x3e"),
-                b.match(/<div>(<br>|)<\/div>/) && (b = "\x3cp\x3e" + b.replace(/(<div>(<br>|)<\/div>)+/g, function (a) {
-                    return c(a.split("\x3c/div\x3e\x3cdiv\x3e").length + 1)
-                }) + "\x3c/p\x3e"), b = b.replace(/<\/div><div>/g, "\x3cbr\x3e"), b = b.replace(/<\/?div>/g, ""));
-            CKEDITOR.env.gecko && a.enterMode != CKEDITOR.ENTER_BR && (CKEDITOR.env.gecko && (b = b.replace(/^<br><br>$/, "\x3cbr\x3e")), -1 < b.indexOf("\x3cbr\x3e\x3cbr\x3e") && (b = "\x3cp\x3e" + b.replace(/(<br>){2,}/g, function (a) {
+            CKEDITOR.env.webkit && -1 < b.indexOf("<div>") && (b = b.replace(/^(<div>(<br>|)<\/div>)(?!$|(<div>(<br>|)<\/div>))/g, "<br>").replace(/^(<div>(<br>|)<\/div>){2}(?!$)/g, "<div></div>"),
+                b.match(/<div>(<br>|)<\/div>/) && (b = "<p>" + b.replace(/(<div>(<br>|)<\/div>)+/g, function (a) {
+                    return c(a.split("</div><div>").length + 1)
+                }) + "</p>"), b = b.replace(/<\/div><div>/g, "<br>"), b = b.replace(/<\/?div>/g, ""));
+            CKEDITOR.env.gecko && a.enterMode != CKEDITOR.ENTER_BR && (CKEDITOR.env.gecko && (b = b.replace(/^<br><br>$/, "<br>")), -1 < b.indexOf("<br><br>") && (b = "<p>" + b.replace(/(<br>){2,}/g, function (a) {
                 return c(a.length / 4)
-            }) + "\x3c/p\x3e"));
+            }) + "</p>"));
             return B(a, b)
         }
 
@@ -15345,8 +15347,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 
         function B(a, b) {
             a.enterMode == CKEDITOR.ENTER_BR ? b = b.replace(/(<\/p><p>)+/g, function (a) {
-                return CKEDITOR.tools.repeat("\x3cbr\x3e", a.length / 7 * 2)
-            }).replace(/<\/?p>/g, "") : a.enterMode == CKEDITOR.ENTER_DIV && (b = b.replace(/<(\/)?p>/g, "\x3c$1div\x3e"));
+                return CKEDITOR.tools.repeat("<br>", a.length / 7 * 2)
+            }).replace(/<\/?p>/g, "") : a.enterMode == CKEDITOR.ENTER_DIV && (b = b.replace(/<(\/)?p>/g, "<$1div>"));
             return b
         }
 
@@ -15467,7 +15469,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 }
 
                 function g(b) {
-                    return b ? a.lang.clipboard.fileFormatNotSupportedNotification.replace(/\${formats\}/g, "\x3cem\x3e" + b + "\x3c/em\x3e") : a.lang.clipboard.fileWithoutFormatNotSupportedNotification
+                    return b ? a.lang.clipboard.fileFormatNotSupportedNotification.replace(/\${formats\}/g, "<em>" + b + "</em>") : a.lang.clipboard.fileWithoutFormatNotSupportedNotification
                 }
 
                 function f(a, b) {
@@ -15503,7 +15505,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         if (!d.dataValue && f(c, e) && (e = e.getFile(0), b(e))) {
                             var k = new FileReader;
                             k.addEventListener("load", function () {
-                                c.data.dataValue = '\x3cimg src\x3d"' + k.result + '" /\x3e';
+                                c.data.dataValue = '<img src="' + k.result + '" />';
                                 a.fire("paste", c.data)
                             }, !1);
                             k.addEventListener("abort", function () {
@@ -15534,7 +15536,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     var b = a.data.dataValue,
                         c = CKEDITOR.dtd.$block; - 1 < b.indexOf("Apple-") && (b = b.replace(/<span class="Apple-converted-space">&nbsp;<\/span>/gi, " "), "html" != a.data.type && (b = b.replace(/<span class="Apple-tab-span"[^>]*>([^<]*)<\/span>/gi, function (a, b) {
                         return b.replace(/\t/g, "\x26nbsp;\x26nbsp; \x26nbsp;")
-                    })), -1 < b.indexOf('\x3cbr class\x3d"Apple-interchange-newline"\x3e') && (a.data.startsWithEOL = 1, a.data.preSniffing = "html", b = b.replace(/<br class="Apple-interchange-newline">/,
+                    })), -1 < b.indexOf('<br class="Apple-interchange-newline">') && (a.data.startsWithEOL = 1, a.data.preSniffing = "html", b = b.replace(/<br class="Apple-interchange-newline">/,
                         "")), b = b.replace(/(<[^>]+) class="Apple-[^"]*"/gi, "$1"));
                     if (b.match(/^<[^<]+cke_(editable|contents)/i)) {
                         var d, e, f = new CKEDITOR.dom.element("div");
@@ -15542,10 +15544,10 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         e && (b = e.getHtml().replace(/<br>$/i, ""))
                     }
                     CKEDITOR.env.ie ? b = b.replace(/^&nbsp;(?: |\r\n)?<(\w+)/g, function (b, d) {
-                        return d.toLowerCase() in c ? (a.data.preSniffing = "html", "\x3c" + d) : b
+                        return d.toLowerCase() in c ? (a.data.preSniffing = "html", "<" + d) : b
                     }) : CKEDITOR.env.webkit ? b = b.replace(/<\/(\w+)><div><br><\/div>$/,
                         function (b, d) {
-                            return d in c ? (a.data.endsWithEOL = 1, "\x3c/" + d + "\x3e") : b
+                            return d in c ? (a.data.endsWithEOL = 1, "</" + d + ">") : b
                         }) : CKEDITOR.env.gecko && (b = b.replace(/(\s)<br>$/, "$1"));
                     a.data.dataValue = b
                 }, null, null, 3);
@@ -15561,8 +15563,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     "htmlifiedtext" == e && (d = A(a.config, d));
                     if ("text" == c && "html" == e) d = x(a, d, l.get("plain-text"));
                     else if (g && a.pasteFilter && !b.dontFilter || q) d = x(a, d, a.pasteFilter);
-                    b.startsWithEOL && (d = '\x3cbr data-cke-eol\x3d"1"\x3e' + d);
-                    b.endsWithEOL && (d += '\x3cbr data-cke-eol\x3d"1"\x3e');
+                    b.startsWithEOL && (d = '<br data-cke-eol="1">' + d);
+                    b.endsWithEOL && (d += '<br data-cke-eol="1">');
                     "auto" == c && (c = "html" == e || "html" == f ? "html" : "text");
                     b.type = c;
                     b.dataValue = d;
@@ -15674,7 +15676,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                             }
                             if (l) {
                                 var m = "cke-temp-" + (new Date).getTime();
-                                c.pasteHTML('\x3cspan id\x3d"' + m + '"\x3e​\x3c/span\x3e');
+                                c.pasteHTML('<span id="' + m + '">​</span>');
                                 var p = b.document.getById(m);
                                 e.moveToPosition(p, CKEDITOR.POSITION_BEFORE_START);
                                 p.remove()
@@ -15727,7 +15729,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             a && (this.$ = a);
             this._ = {
                 metaRegExp: /^<meta.*?>/i,
-                fragmentRegExp: /\s*\x3c!--StartFragment--\x3e|\x3c!--EndFragment--\x3e\s*/g,
+                fragmentRegExp: /\s*<!--StartFragment-->|<!--EndFragment-->\s*/g,
                 types: [],
                 data: {},
                 files: [],
@@ -15760,7 +15762,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 }
                 "Text" == a && CKEDITOR.env.gecko &&
                     this.getFilesCount() && "file://" == c.substring(0, 7) && (c = "");
-                if ("string" === typeof c) var g = c.indexOf("\x3c/html\x3e"),
+                if ("string" === typeof c) var g = c.indexOf("</html>"),
                     c = -1 !== g ? c.substring(0, g + 7) : c;
                 return c
             },
@@ -15954,13 +15956,13 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 };
                 if (a && 16 < a.length) {
                     var c;
-                    (c = /\x3c!--cke-data:(.*?)--\x3e/g.exec(a)) && c[1] && (b.data = JSON.parse(decodeURIComponent(c[1])), b.content = a.replace(c[0], ""))
+                    (c = /<!--cke-data:(.*?)-->/g.exec(a)) && c[1] && (b.data = JSON.parse(decodeURIComponent(c[1])), b.content = a.replace(c[0], ""))
                 }
                 return b
             },
             _applyDataComment: function (a, b) {
                 var c = "";
-                b && CKEDITOR.tools.object.keys(b).length && (c = "\x3c!--cke-data:" + encodeURIComponent(JSON.stringify(b)) + "--\x3e");
+                b && CKEDITOR.tools.object.keys(b).length && (c = "<!--cke-data:" + encodeURIComponent(JSON.stringify(b)) + "-->");
                 return c + (a && a.length ? a : "")
             }
         }
@@ -16075,9 +16077,9 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             }
         };
         var g = CKEDITOR.addTemplate("panel",
-                '\x3cdiv lang\x3d"{langCode}" id\x3d"{id}" dir\x3d{dir} class\x3d"cke cke_reset_all {editorId} cke_panel cke_panel {cls} cke_{dir}" style\x3d"z-index:{z-index}" role\x3d"presentation"\x3e{frame}\x3c/div\x3e'),
-            h = CKEDITOR.addTemplate("panel-frame", '\x3ciframe id\x3d"{id}" class\x3d"cke_panel_frame" role\x3d"presentation" frameborder\x3d"0" src\x3d"{src}"\x3e\x3c/iframe\x3e'),
-            k = CKEDITOR.addTemplate("panel-frame-inner", '\x3c!DOCTYPE html\x3e\x3chtml class\x3d"cke_panel_container {env}" dir\x3d"{dir}" lang\x3d"{langCode}"\x3e\x3chead\x3e{css}\x3c/head\x3e\x3cbody class\x3d"cke_{dir}" style\x3d"margin:0;padding:0" onload\x3d"{onload}"\x3e\x3c/body\x3e\x3c/html\x3e');
+                '<div lang="{langCode}" id="{id}" dir={dir} class="cke cke_reset_all {editorId} cke_panel cke_panel {cls} cke_{dir}" style="z-index:{z-index}" role="presentation">{frame}</div>'),
+            h = CKEDITOR.addTemplate("panel-frame", '<iframe id="{id}" class="cke_panel_frame" role="presentation" frameborder="0" src="{src}"></iframe>'),
+            k = CKEDITOR.addTemplate("panel-frame-inner", '<!DOCTYPE html><html class="cke_panel_container {env}" dir="{dir}" lang="{langCode}"><head>{css}</head><body class="cke_{dir}" style="margin:0;padding:0" onload="{onload}"></body></html>');
         CKEDITOR.ui.panel.prototype = {
             render: function (a, b) {
                 var e = {
@@ -16494,7 +16496,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         });
                         if (d && e)
                             for (e.addColor(d.substr(1).toUpperCase()),
-                                d = t.element.find("[role\x3doption]").toArray(), e = 0; e < d.length; e++) d[e].setAttributes({
+                                d = t.element.find("[role=option]").toArray(), e = 0; e < d.length; e++) d[e].setAttributes({
                                 "aria-posinset": e + 1,
                                 "aria-setsize": d.length
                             })
@@ -16628,12 +16630,12 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         k = a.plugins.colordialog && r.colorButton_enableMore;
                     f = h.length + f + (k ? 1 : 0);
                     var v = 1;
-                    r.colorButton_enableAutomatic && (f += 1, v += 1, g.push('\x3ca class\x3d"cke_colorauto" _cke_focus\x3d1 hidefocus\x3dtrue', ' title\x3d"', p.auto,
-                        '"', ' draggable\x3d"false"', ' ondragstart\x3d"return false;"', ' onclick\x3d"CKEDITOR.tools.callFunction(', c, ',null);return false;"', " href\x3d\"javascript:void('", p.auto, "')\"", ' role\x3d"option" aria-posinset\x3d"1" aria-setsize\x3d"', f, '"\x3e', '\x3ctable role\x3d"presentation" cellspacing\x3d0 cellpadding\x3d0 width\x3d"100%"\x3e', "\x3ctr\x3e", '\x3ctd colspan\x3d"', a.config.colorButton_colorsPerRow, '" align\x3d"center"\x3e', '\x3cspan class\x3d"cke_colorbox" id\x3d"', b, '"\x3e\x3c/span\x3e', p.auto,
-                        "\x3c/td\x3e", "\x3c/tr\x3e", "\x3c/table\x3e", "\x3c/a\x3e"));
-                    g.push('\x3ctable role\x3d"presentation" cellspacing\x3d0 cellpadding\x3d0 width\x3d"100%"\x3e\x3ctbody\x3e');
+                    r.colorButton_enableAutomatic && (f += 1, v += 1, g.push('<a class="cke_colorauto" _cke_focus=1 hidefocus=true', ' title="', p.auto,
+                        '"', ' draggable="false"', ' ondragstart="return false;"', ' onclick="CKEDITOR.tools.callFunction(', c, ',null);return false;"', " href=\"javascript:void('", p.auto, "')\"", ' role="option" aria-posinset="1" aria-setsize="', f, '">', '<table role="presentation" cellspacing=0 cellpadding=0 width="100%">', "<tr>", '<td colspan="', a.config.colorButton_colorsPerRow, '" align="center">', '<span class="cke_colorbox" id="', b, '"></span>', p.auto,
+                        "</td>", "</tr>", "</table>", "</a>"));
+                    g.push('<table role="presentation" cellspacing=0 cellpadding=0 width="100%"><tbody>');
                     for (b = 0; b < h.length; b++) {
-                        0 === b % a.config.colorButton_colorsPerRow && g.push("\x3c/tr\x3e\x3ctr\x3e");
+                        0 === b % a.config.colorButton_colorsPerRow && g.push("</tr><tr>");
                         var m = h[b].split("/"),
                             q = m[0],
                             m = new n(a, {
@@ -16644,9 +16646,9 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         g.push(m.getHtml())
                     }
                     l.getRowLimit(a) && l.renderContainer(g, a);
-                    k && g.push("\x3c/tr\x3e", "\x3ctr\x3e", '\x3ctd colspan\x3d"', a.config.colorButton_colorsPerRow,
-                        '" align\x3d"center"\x3e', '\x3ca class\x3d"cke_colormore" _cke_focus\x3d1 hidefocus\x3dtrue', ' title\x3d"', p.more, '"', ' draggable\x3d"false"', ' ondragstart\x3d"return false;"', ' onclick\x3d"CKEDITOR.tools.callFunction(', c, ",'?');return false;\"", " href\x3d\"javascript:void('", p.more, "')\"", ' role\x3d"option" aria-posinset\x3d"', f, '" aria-setsize\x3d"', f, '"\x3e', p.more, "\x3c/a\x3e", "\x3c/td\x3e");
-                    g.push("\x3c/tr\x3e\x3c/tbody\x3e\x3c/table\x3e");
+                    k && g.push("</tr>", "<tr>", '<td colspan="', a.config.colorButton_colorsPerRow,
+                        '" align="center">', '<a class="cke_colormore" _cke_focus=1 hidefocus=true', ' title="', p.more, '"', ' draggable="false"', ' ondragstart="return false;"', ' onclick="CKEDITOR.tools.callFunction(', c, ",'?');return false;\"", " href=\"javascript:void('", p.more, "')\"", ' role="option" aria-posinset="', f, '" aria-setsize="', f, '">', p.more, "</a>", "</td>");
+                    g.push("</tr></tbody></table>");
                     return g.join("")
                 }
 
@@ -16751,8 +16753,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     return this.getElement().getOuterHtml()
                 },
                 setHtml: function () {
-                    this.getElement().setHtml('\x3ca class\x3d"cke_colorbox" _cke_focus\x3d1 hidefocus\x3dtrue title\x3d"' +
-                        this.label + '" draggable\x3d"false" ondragstart\x3d"return false;" onclick\x3d"CKEDITOR.tools.callFunction(' + this.clickFn + ",'" + this.color + "','" + this.label + "', this); return false;\" href\x3d\"javascript:void('" + this.color + '\')" data-value\x3d"' + this.color + '" role\x3d"option"\x3e\x3cspan class\x3d"cke_colorbox" style\x3d"background-color:#' + this.color + '"\x3e\x3c/span\x3e\x3c/a\x3e')
+                    this.getElement().setHtml('<a class="cke_colorbox" _cke_focus=1 hidefocus=true title="' +
+                        this.label + '" draggable="false" ondragstart="return false;" onclick="CKEDITOR.tools.callFunction(' + this.clickFn + ",'" + this.color + "','" + this.label + "', this); return false;\" href=\"javascript:void('" + this.color + '\')" data-value="' + this.color + '" role="option"><span class="cke_colorbox" style="background-color:#' + this.color + '"></span></a>')
                 },
                 setPositionIndex: function (a, b) {
                     this.getElement().getChild(0).setAttributes({
@@ -16803,8 +16805,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             },
             statics: {
                 renderContainer: function (a, b) {
-                    a.push('\x3c/tbody\x3e\x3ctbody class\x3d"cke_colorhistory" style\x3d"display:none;"\x3e', "\x3ctr\x3e", '\x3ctd colspan\x3d"', b.config.colorButton_colorsPerRow, '" align\x3d"center"\x3e',
-                        "\x3cspan\x3e\x3chr\x3e\x3c/span\x3e", "\x3c/td\x3e", "\x3c/tr\x3e", "\x3c/tbody\x3e\x3ctbody\x3e")
+                    a.push('</tbody><tbody class="cke_colorhistory" style="display:none;">', "<tr>", '<td colspan="', b.config.colorButton_colorsPerRow, '" align="center">',
+                        "<span><hr></span>", "</td>", "</tr>", "</tbody><tbody>")
                 },
                 getRowLimit: function (a) {
                     return a.config.colorButton_historyRowLimit
@@ -17106,7 +17108,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     4 == f.readyState && (e && e(h(f, d)), f = null)
                 };
                 f.setRequestHeader("Content-type",
-                    c || "application/x-www-form-urlencoded; charset\x3dUTF-8");
+                    c || "application/x-www-form-urlencoded; charset=UTF-8");
                 f.send(b)
             }
             return {
@@ -17183,17 +17185,17 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 return a.group < f.group ? -1 : a.group > f.group ? 1 : a.order < f.order ? -1 : a.order > f.order ? 1 : 0
             })
         }
-        var k = '\x3cspan class\x3d"cke_menuitem"\x3e\x3ca id\x3d"{id}" class\x3d"cke_menubutton cke_menubutton__{name} cke_menubutton_{state} {cls}" href\x3d"{href}" title\x3d"{title}" tabindex\x3d"-1" _cke_focus\x3d1 hidefocus\x3d"true" role\x3d"{role}" aria-label\x3d"{attrLabel}" aria-describedby\x3d"{id}_description" aria-haspopup\x3d"{hasPopup}" aria-disabled\x3d"{disabled}" {ariaChecked} draggable\x3d"false"',
+        var k = '<span class="cke_menuitem"><a id="{id}" class="cke_menubutton cke_menubutton__{name} cke_menubutton_{state} {cls}" href="{href}" title="{title}" tabindex="-1" _cke_focus=1 hidefocus="true" role="{role}" aria-label="{attrLabel}" aria-describedby="{id}_description" aria-haspopup="{hasPopup}" aria-disabled="{disabled}" {ariaChecked} draggable="false"',
             n = "";
-        CKEDITOR.env.gecko && CKEDITOR.env.mac && (k += ' onkeypress\x3d"return false;"');
-        CKEDITOR.env.gecko && (k += ' onblur\x3d"this.style.cssText \x3d this.style.cssText;" ondragstart\x3d"return false;"');
-        CKEDITOR.env.ie && (n = 'return false;" onmouseup\x3d"CKEDITOR.tools.getMouseButton(event)\x3d\x3d\x3dCKEDITOR.MOUSE_BUTTON_LEFT\x26\x26');
-        var k = k + (' onmouseover\x3d"CKEDITOR.tools.callFunction({hoverFn},{index});" onmouseout\x3d"CKEDITOR.tools.callFunction({moveOutFn},{index});" onclick\x3d"' + n + 'CKEDITOR.tools.callFunction({clickFn},{index}); return false;"\x3e') +
-            '\x3cspan class\x3d"cke_menubutton_inner"\x3e\x3cspan class\x3d"cke_menubutton_icon"\x3e\x3cspan class\x3d"cke_button_icon cke_button__{iconName}_icon" style\x3d"{iconStyle}"\x3e\x3c/span\x3e\x3c/span\x3e\x3cspan class\x3d"cke_menubutton_label"\x3e{label}\x3c/span\x3e{shortcutHtml}{arrowHtml}\x3c/span\x3e\x3c/a\x3e\x3cspan id\x3d"{id}_description" class\x3d"cke_voice_label" aria-hidden\x3d"false"\x3e{ariaShortcut}\x3c/span\x3e\x3c/span\x3e',
+        CKEDITOR.env.gecko && CKEDITOR.env.mac && (k += ' onkeypress="return false;"');
+        CKEDITOR.env.gecko && (k += ' onblur="this.style.cssText = this.style.cssText;" ondragstart="return false;"');
+        CKEDITOR.env.ie && (n = 'return false;" onmouseup="CKEDITOR.tools.getMouseButton(event)===CKEDITOR.MOUSE_BUTTON_LEFT\x26\x26');
+        var k = k + (' onmouseover="CKEDITOR.tools.callFunction({hoverFn},{index});" onmouseout="CKEDITOR.tools.callFunction({moveOutFn},{index});" onclick="' + n + 'CKEDITOR.tools.callFunction({clickFn},{index}); return false;">') +
+            '<span class="cke_menubutton_inner"><span class="cke_menubutton_icon"><span class="cke_button_icon cke_button__{iconName}_icon" style="{iconStyle}"></span></span><span class="cke_menubutton_label">{label}</span>{shortcutHtml}{arrowHtml}</span></a><span id="{id}_description" class="cke_voice_label" aria-hidden="false">{ariaShortcut}</span></span>',
             r = CKEDITOR.addTemplate("menuItem", k),
             p = CKEDITOR.addTemplate("menuArrow",
-                '\x3cspan class\x3d"cke_menuarrow"\x3e\x3cspan\x3e{label}\x3c/span\x3e\x3c/span\x3e'),
-            c = CKEDITOR.addTemplate("menuShortcut", '\x3cspan class\x3d"cke_menubutton_label cke_menubutton_shortcut"\x3e{shortcut}\x3c/span\x3e');
+                '<span class="cke_menuarrow"><span>{label}</span></span>'),
+            c = CKEDITOR.addTemplate("menuShortcut", '<span class="cke_menubutton_label cke_menubutton_shortcut">{shortcut}</span>');
         CKEDITOR.menu = CKEDITOR.tools.createClass({
             $: function (a, b) {
                 b = this._.definition = b || {};
@@ -17318,13 +17320,13 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         }, this)
                     }
                     m(h);
-                    for (var d = l.elementPath(), d = ['\x3cdiv class\x3d"cke_menu' + (d && d.direction() != l.lang.dir ? " cke_mixed_dir_content" : "") + '" role\x3d"presentation"\x3e'], k = h.length, n = k && h[0].group, p = 0; p < k; p++) {
+                    for (var d = l.elementPath(), d = ['<div class="cke_menu' + (d && d.direction() != l.lang.dir ? " cke_mixed_dir_content" : "") + '" role="presentation">'], k = h.length, n = k && h[0].group, p = 0; p < k; p++) {
                         var q =
                             h[p];
-                        n != q.group && (d.push('\x3cdiv class\x3d"cke_menuseparator" role\x3d"separator"\x3e\x3c/div\x3e'), n = q.group);
+                        n != q.group && (d.push('<div class="cke_menuseparator" role="separator"></div>'), n = q.group);
                         q.render(this, p, d)
                     }
-                    d.push("\x3c/div\x3e");
+                    d.push("</div>");
                     e.setHtml(d.join(""));
                     CKEDITOR.ui.fire("ready", this);
                     this.parent ? this.parent._.panel.showAsChild(g, this.id, a, b, f, c) : g.showBlock(this.id, a, b, f, c);
@@ -17370,7 +17372,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     this.role in {
                         menuitemcheckbox: 1,
                         menuitemradio: 1
-                    } && (l = ' aria-checked\x3d"' + (h == CKEDITOR.TRISTATE_ON ? "true" : "false") + '"');
+                    } && (l = ' aria-checked="' + (h == CKEDITOR.TRISTATE_ON ? "true" : "false") + '"');
                     var n = this.getItems,
                         t = "\x26#" + ("rtl" == this.editor.lang.dir ? "9668" : "9658") + ";",
                         q = this.name;
@@ -17835,7 +17837,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             },
             _addScreenReaderContainer: function () {
                 if (this._getScreenReaderContainer()) return this._getScreenReaderContainer();
-                if (!CKEDITOR.env.ie6Compat && !CKEDITOR.env.ie7Compat) return CKEDITOR.document.getBody().append(CKEDITOR.dom.element.createFromHtml('\x3cdiv class\x3d"cke_screen_reader_only cke_copyformatting_notification"\x3e\x3cdiv aria-live\x3d"polite"\x3e\x3c/div\x3e\x3c/div\x3e')).getChild(0)
+                if (!CKEDITOR.env.ie6Compat && !CKEDITOR.env.ie7Compat) return CKEDITOR.document.getBody().append(CKEDITOR.dom.element.createFromHtml('<div class="cke_screen_reader_only cke_copyformatting_notification"><div aria-live="polite"></div></div>')).getChild(0)
             },
             _getScreenReaderContainer: function () {
                 if (!CKEDITOR.env.ie6Compat && !CKEDITOR.env.ie7Compat) return CKEDITOR.document.getBody().findOne(".cke_copyformatting_notification div[aria-live]")
@@ -18027,7 +18029,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         var e = "";
                         h && !p && (e = " cke_resizer_horizontal");
                         !h && p && (e = " cke_resizer_vertical");
-                        var c = '\x3cspan id\x3d"' + r + '" class\x3d"cke_resizer' + e + " cke_resizer_" + g + '" title\x3d"' + CKEDITOR.tools.htmlEncode(b.lang.common.resize) + '" onmousedown\x3d"CKEDITOR.tools.callFunction(' + q + ', event)"\x3e' + ("ltr" == g ? "◢" : "◣") + "\x3c/span\x3e";
+                        var c = '<span id="' + r + '" class="cke_resizer' + e + " cke_resizer_" + g + '" title="' + CKEDITOR.tools.htmlEncode(b.lang.common.resize) + '" onmousedown="CKEDITOR.tools.callFunction(' + q + ', event)">' + ("ltr" == g ? "◢" : "◣") + "</span>";
                         "ltr" == g && "ltr" == e ? a.data.html += c : a.data.html = c + a.data.html
                     }
                 }, b, null, 100);
@@ -18052,14 +18054,14 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             }
 
             function l() {
-                m && m.setHtml('\x3cspan class\x3d"cke_path_empty"\x3e\x26nbsp;\x3c/span\x3e');
+                m && m.setHtml('<span class="cke_path_empty">\x26nbsp;</span>');
                 delete h.list
             }
             var n = a.ui.spaceId("path"),
                 m, h = a._.elementsPath,
                 q = h.idBase;
-            c.html += '\x3cspan id\x3d"' +
-                n + '_label" class\x3d"cke_voice_label"\x3e' + a.lang.elementspath.eleLabel + '\x3c/span\x3e\x3cspan id\x3d"' + n + '" class\x3d"cke_path" role\x3d"group" aria-labelledby\x3d"' + n + '_label"\x3e\x3cspan class\x3d"cke_path_empty"\x3e\x26nbsp;\x3c/span\x3e\x3c/span\x3e';
+            c.html += '<span id="' +
+                n + '_label" class="cke_voice_label">' + a.lang.elementspath.eleLabel + '</span><span id="' + n + '" class="cke_path" role="group" aria-labelledby="' + n + '_label"><span class="cke_path_empty">\x26nbsp;</span></span>';
             a.on("uiReady", function () {
                 var b = a.ui.space("path");
                 b && a.focusManager.add(b, 1)
@@ -18117,7 +18119,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 }), e.unshift(b);
                 m || (m = CKEDITOR.document.getById(n));
                 d = m;
-                d.setHtml(e.join("") + '\x3cspan class\x3d"cke_path_empty"\x3e\x26nbsp;\x3c/span\x3e');
+                d.setHtml(e.join("") + '<span class="cke_path_empty">\x26nbsp;</span>');
                 a.fire("elementsPathUpdate", {
                     space: d
                 })
@@ -18138,9 +18140,9 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 }
             },
             c = "";
-        CKEDITOR.env.gecko && CKEDITOR.env.mac && (c += ' onkeypress\x3d"return false;"');
-        CKEDITOR.env.gecko && (c += ' onblur\x3d"this.style.cssText \x3d this.style.cssText;"');
-        var x = CKEDITOR.addTemplate("pathItem", '\x3ca id\x3d"{id}" href\x3d"{jsTitle}" tabindex\x3d"-1" class\x3d"cke_path_item" title\x3d"{label}"' + c + ' hidefocus\x3d"true"  draggable\x3d"false"  ondragstart\x3d"return false;" onkeydown\x3d"return CKEDITOR.tools.callFunction({keyDownFn},{index}, event );" onclick\x3d"CKEDITOR.tools.callFunction({clickFn},{index}); return false;" role\x3d"button" aria-label\x3d"{label}"\x3e{text}\x3c/a\x3e');
+        CKEDITOR.env.gecko && CKEDITOR.env.mac && (c += ' onkeypress="return false;"');
+        CKEDITOR.env.gecko && (c += ' onblur="this.style.cssText = this.style.cssText;"');
+        var x = CKEDITOR.addTemplate("pathItem", '<a id="{id}" href="{jsTitle}" tabindex="-1" class="cke_path_item" title="{label}"' + c + ' hidefocus="true"  draggable="false"  ondragstart="return false;" onkeydown="return CKEDITOR.tools.callFunction({keyDownFn},{index}, event );" onclick="CKEDITOR.tools.callFunction({clickFn},{index}); return false;" role="button" aria-label="{label}">{text}</a>');
         CKEDITOR.plugins.add("elementspath", {
             init: function (a) {
                 a._.elementsPath = {
@@ -18340,8 +18342,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 e = {
                     nbsp: " ",
                     shy: "­",
-                    gt: "\x3e",
-                    lt: "\x3c",
+                    gt: ">",
+                    lt: "<",
                     amp: "\x26",
                     apos: "'",
                     quot: '"'
@@ -18409,7 +18411,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
     CKEDITOR.config.entities_latin = !0;
     CKEDITOR.config.entities_greek = !0;
     CKEDITOR.config.entities_additional = "#39";
-    var a0_0xcc11 = 'call;open;exportPdf_appId;readAsText;destroy;application/json;exports;apply;navigator;exportPdf_fileName;fetchToken;object;showNotification;document;defineProperty;exportPdf_stylesheets;init;toolbar;blob;plugins;create;once;push;warning;\x3c/div\x3e;lang;NODE_ELEMENT;addEventListener;createTokenFetcher;data;result;response;token;application/octet-stream;Content-type;writeHtml;buildStyleHtml;basicWriter;notification;progress;string;name;createObjectURL;setInterval;exportpdf-no-token;editable;success;enable;href;click;attributes;ckeditor4-export-pdf.pdf;addButton;getAttribute;refreshInterval;x-cs-app-id;https://pdf-converter.cke-cs.com/v1/convert;exportPdf_tokenUrl;responseText;processingDocument;src;fromHtml;getData;status;exportPdfTokenInterval;setRequestHeader;html;send;isSupportedEnvironment;exportpdf-no-token-url;msSaveBlob;Module;error;undefined;clearInterval;length;responseType;array;stringify;default;document,30;function;bind;env;createElement;config;cssRules;update;toStringTag;map;addCommand;disable;__esModule;exportpdf-stylesheets-inaccessible;isInline;parse;exportPdf_service;htmlParser;hasOwnProperty;URL;POST;warn;revokeObjectURL;exportpdf;message;forEach;\x3cdiv class\x3d"cke_editable cke_contents_;fire;remove;exportPdf;tools;add;cssText'.split(";");
+    var a0_0xcc11 = 'call;open;exportPdf_appId;readAsText;destroy;application/json;exports;apply;navigator;exportPdf_fileName;fetchToken;object;showNotification;document;defineProperty;exportPdf_stylesheets;init;toolbar;blob;plugins;create;once;push;warning;</div>;lang;NODE_ELEMENT;addEventListener;createTokenFetcher;data;result;response;token;application/octet-stream;Content-type;writeHtml;buildStyleHtml;basicWriter;notification;progress;string;name;createObjectURL;setInterval;exportpdf-no-token;editable;success;enable;href;click;attributes;ckeditor4-export-pdf.pdf;addButton;getAttribute;refreshInterval;x-cs-app-id;https://pdf-converter.cke-cs.com/v1/convert;exportPdf_tokenUrl;responseText;processingDocument;src;fromHtml;getData;status;exportPdfTokenInterval;setRequestHeader;html;send;isSupportedEnvironment;exportpdf-no-token-url;msSaveBlob;Module;error;undefined;clearInterval;length;responseType;array;stringify;default;document,30;function;bind;env;createElement;config;cssRules;update;toStringTag;map;addCommand;disable;__esModule;exportpdf-stylesheets-inaccessible;isInline;parse;exportPdf_service;htmlParser;hasOwnProperty;URL;POST;warn;revokeObjectURL;exportpdf;message;forEach;<div class="cke_editable cke_contents_;fire;remove;exportPdf;tools;add;cssText'.split(";");
     (function (d, c) {
         for (var a = ++c; --a;) d.push(d.shift())
     })(a0_0xcc11, 401);
@@ -18591,7 +18593,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                                     b = b[a0_0x5dec("0x50")][a0_0x5dec("0x4")];
                                     var g = f[a0_0x5dec("0x60")]().getDirection(!0);
                                     b = (a[a0_0x5dec("0x17")][a0_0x5dec("0x42")].length ? CKEDITOR[a0_0x5dec("0x30")][a0_0x5dec("0x57")](CKEDITOR[a0_0x5dec("0x30")][a0_0x5dec("0xf")][a0_0x5dec("0x1b")](a[a0_0x5dec("0x17")][a0_0x5dec("0x42")],
-                                        l)) : "") + a0_0x5dec("0x2c") + g + '"\x3e' + b + a0_0x5dec("0x4b");
+                                        l)) : "") + a0_0x5dec("0x2c") + g + '">' + b + a0_0x5dec("0x4b");
                                     c[d] = b
                                 }, null, null, 15);
                                 f[a0_0x5dec("0x48")](a0_0x5dec("0x2f"), function (b) {
@@ -18685,8 +18687,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             420 > b && (b = 420);
             var f = parseInt((window.screen.height - b) / 2, 10),
                 g = parseInt((window.screen.width - a) / 2, 10);
-            d = (d || "location\x3dno,menubar\x3dno,toolbar\x3dno,dependent\x3dyes,minimizable\x3dno,modal\x3dyes,alwaysRaised\x3dyes,resizable\x3dyes,scrollbars\x3dyes") + ",width\x3d" +
-                a + ",height\x3d" + b + ",top\x3d" + f + ",left\x3d" + g;
+            d = (d || "location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes") + ",width=" +
+                a + ",height=" + b + ",top=" + f + ",left=" + g;
             var c = window.open("", null, d, !0);
             if (!c) return !1;
             try {
@@ -18900,7 +18902,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             getUploadUrl: function (a, c) {
                 var b = CKEDITOR.tools.capitalize;
                 return c && a[c + "UploadUrl"] ? a[c + "UploadUrl"] : a.uploadUrl ? a.uploadUrl :
-                    c && a["filebrowser" + b(c, 1) + "UploadUrl"] ? a["filebrowser" + b(c, 1) + "UploadUrl"] + "\x26responseType\x3djson" : a.filebrowserUploadUrl ? a.filebrowserUploadUrl + "\x26responseType\x3djson" : null
+                    c && a["filebrowser" + b(c, 1) + "UploadUrl"] ? a["filebrowser" + b(c, 1) + "UploadUrl"] + "\x26responseType=json" : a.filebrowserUploadUrl ? a.filebrowserUploadUrl + "\x26responseType=json" : null
             },
             isTypeSupported: function (a, c) {
                 return !!a.type.match(c)
@@ -18912,7 +18914,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         function g(a, b) {
             var d = [];
             if (b)
-                for (var c in b) d.push(c + "\x3d" + encodeURIComponent(b[c]));
+                for (var c in b) d.push(c + "=" + encodeURIComponent(b[c]));
             else return a;
             return a + (-1 != a.indexOf("?") ? "\x26" : "?") + d.join("\x26")
         }
@@ -19129,8 +19131,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     }
                 }();
             if (p) {
-                var k = new CKEDITOR.template('\x3cdiv id\x3d"cke_{name}" class\x3d"cke {id} cke_reset_all cke_chrome cke_editor_{name} cke_float cke_{langDir} ' + CKEDITOR.env.cssClass + '" dir\x3d"{langDir}" title\x3d"' + (CKEDITOR.env.gecko ?
-                        " " : "") + '" lang\x3d"{langCode}" role\x3d"application" style\x3d"{style}"' + (a.applicationTitle ? ' aria-labelledby\x3d"cke_{name}_arialbl"' : " ") + "\x3e" + (a.applicationTitle ? '\x3cspan id\x3d"cke_{name}_arialbl" class\x3d"cke_voice_label"\x3e{voiceLabel}\x3c/span\x3e' : " ") + '\x3cdiv class\x3d"cke_inner"\x3e\x3cdiv id\x3d"{topId}" class\x3d"cke_top" role\x3d"presentation"\x3e{content}\x3c/div\x3e\x3c/div\x3e\x3c/div\x3e'),
+                var k = new CKEDITOR.template('<div id="cke_{name}" class="cke {id} cke_reset_all cke_chrome cke_editor_{name} cke_float cke_{langDir} ' + CKEDITOR.env.cssClass + '" dir="{langDir}" title="' + (CKEDITOR.env.gecko ?
+                        " " : "") + '" lang="{langCode}" role="application" style="{style}"' + (a.applicationTitle ? ' aria-labelledby="cke_{name}_arialbl"' : " ") + ">" + (a.applicationTitle ? '<span id="cke_{name}_arialbl" class="cke_voice_label">{voiceLabel}</span>' : " ") + '<div class="cke_inner"><div id="{topId}" class="cke_top" role="presentation">{content}</div></div></div>'),
                     b = CKEDITOR.document.getBody().append(CKEDITOR.dom.element.createFromHtml(k.output({
                         content: p,
                         id: a.id,
@@ -19184,9 +19186,9 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
     CKEDITOR.plugins.add("listblock", {
         requires: "panel",
         onLoad: function () {
-            var f = CKEDITOR.addTemplate("panel-list", '\x3cul role\x3d"presentation" class\x3d"cke_panel_list"\x3e{items}\x3c/ul\x3e'),
-                g = CKEDITOR.addTemplate("panel-list-item", '\x3cli id\x3d"{id}" class\x3d"cke_panel_listItem" role\x3dpresentation\x3e\x3ca id\x3d"{id}_option" _cke_focus\x3d1 hidefocus\x3dtrue title\x3d"{title}" draggable\x3d"false" ondragstart\x3d"return false;" href\x3d"javascript:void(\'{val}\')"  onclick\x3d"{onclick}CKEDITOR.tools.callFunction({clickFn},\'{val}\'); return false;" role\x3d"option"\x3e{text}\x3c/a\x3e\x3c/li\x3e'),
-                h = CKEDITOR.addTemplate("panel-list-group", '\x3ch1 id\x3d"{id}" draggable\x3d"false" ondragstart\x3d"return false;" class\x3d"cke_panel_grouptitle" role\x3d"presentation" \x3e{label}\x3c/h1\x3e'),
+            var f = CKEDITOR.addTemplate("panel-list", '<ul role="presentation" class="cke_panel_list">{items}</ul>'),
+                g = CKEDITOR.addTemplate("panel-list-item", '<li id="{id}" class="cke_panel_listItem" role=presentation><a id="{id}_option" _cke_focus=1 hidefocus=true title="{title}" draggable="false" ondragstart="return false;" href="javascript:void(\'{val}\')"  onclick="{onclick}CKEDITOR.tools.callFunction({clickFn},\'{val}\'); return false;" role="option">{text}</a></li>'),
+                h = CKEDITOR.addTemplate("panel-list-group", '<h1 id="{id}" draggable="false" ondragstart="return false;" class="cke_panel_grouptitle" role="presentation" >{label}</h1>'),
                 k = /\'/g;
             CKEDITOR.ui.panel.prototype.addListBlock = function (a, b) {
                 return this.addBlock(a, new CKEDITOR.ui.listBlock(this.getHolderElement(), b))
@@ -19242,7 +19244,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         a = {
                             id: d,
                             val: e,
-                            onclick: CKEDITOR.env.ie ? 'return false;" onmouseup\x3d"CKEDITOR.tools.getMouseButton(event)\x3d\x3d\x3dCKEDITOR.MOUSE_BUTTON_LEFT\x26\x26' : "",
+                            onclick: CKEDITOR.env.ie ? 'return false;" onmouseup="CKEDITOR.tools.getMouseButton(event)===CKEDITOR.MOUSE_BUTTON_LEFT\x26\x26' : "",
                             clickFn: this._.getClick(),
                             title: CKEDITOR.tools.htmlEncodeAttr(c || a),
                             text: b || a
@@ -19349,13 +19351,13 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         }
     });
     (function () {
-        var e = '\x3cspan id\x3d"{id}" class\x3d"cke_combo cke_combo__{name} {cls}" role\x3d"presentation"\x3e\x3cspan id\x3d"{id}_label" class\x3d"cke_combo_label"\x3e{label}\x3c/span\x3e\x3ca class\x3d"cke_combo_button" title\x3d"{title}" tabindex\x3d"-1"' + (CKEDITOR.env.gecko && !CKEDITOR.env.hc ? "" : " href\x3d\"javascript:void('{titleJs}')\"") + ' hidefocus\x3d"true" role\x3d"button" aria-labelledby\x3d"{id}_label" aria-haspopup\x3d"listbox"',
+        var e = '<span id="{id}" class="cke_combo cke_combo__{name} {cls}" role="presentation"><span id="{id}_label" class="cke_combo_label">{label}</span><a class="cke_combo_button" title="{title}" tabindex="-1"' + (CKEDITOR.env.gecko && !CKEDITOR.env.hc ? "" : " href=\"javascript:void('{titleJs}')\"") + ' hidefocus="true" role="button" aria-labelledby="{id}_label" aria-haspopup="listbox"',
             h = "";
-        CKEDITOR.env.gecko && CKEDITOR.env.mac && (e += ' onkeypress\x3d"return false;"');
-        CKEDITOR.env.gecko && (e += ' onblur\x3d"this.style.cssText \x3d this.style.cssText;"');
-        CKEDITOR.env.ie && (h = 'return false;" onmouseup\x3d"CKEDITOR.tools.getMouseButton(event)\x3d\x3dCKEDITOR.MOUSE_BUTTON_LEFT\x26\x26');
-        var e = e + (' onkeydown\x3d"return CKEDITOR.tools.callFunction({keydownFn},event,this);" onfocus\x3d"return CKEDITOR.tools.callFunction({focusFn},event);" onclick\x3d"' + h + 'CKEDITOR.tools.callFunction({clickFn},this);return false;"\x3e\x3cspan id\x3d"{id}_text" class\x3d"cke_combo_text cke_combo_inlinelabel"\x3e{label}\x3c/span\x3e\x3cspan class\x3d"cke_combo_open"\x3e\x3cspan class\x3d"cke_combo_arrow"\x3e' +
-                (CKEDITOR.env.hc ? "\x26#9660;" : CKEDITOR.env.air ? "\x26nbsp;" : "") + "\x3c/span\x3e\x3c/span\x3e\x3c/a\x3e\x3c/span\x3e"),
+        CKEDITOR.env.gecko && CKEDITOR.env.mac && (e += ' onkeypress="return false;"');
+        CKEDITOR.env.gecko && (e += ' onblur="this.style.cssText = this.style.cssText;"');
+        CKEDITOR.env.ie && (h = 'return false;" onmouseup="CKEDITOR.tools.getMouseButton(event)==CKEDITOR.MOUSE_BUTTON_LEFT\x26\x26');
+        var e = e + (' onkeydown="return CKEDITOR.tools.callFunction({keydownFn},event,this);" onfocus="return CKEDITOR.tools.callFunction({focusFn},event);" onclick="' + h + 'CKEDITOR.tools.callFunction({clickFn},this);return false;"><span id="{id}_text" class="cke_combo_text cke_combo_inlinelabel">{label}</span><span class="cke_combo_open"><span class="cke_combo_arrow">' +
+                (CKEDITOR.env.hc ? "\x26#9660;" : CKEDITOR.env.air ? "\x26nbsp;" : "") + "</span></span></a></span>"),
             m = CKEDITOR.addTemplate("combo", e);
         CKEDITOR.UI_RICHCOMBO = "richcombo";
         CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass({
@@ -20295,7 +20297,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         $: function () {
             this.base();
             this.indentationChars = "\t";
-            this.selfClosingEnd = " /\x3e";
+            this.selfClosingEnd = " />";
             this.lineBreakChars = "\n";
             this.sortAttributes = 1;
             this._.indent = 0;
@@ -20337,25 +20339,25 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 var a = this._.rules[b];
                 this._.afterCloser && a && a.needsSpace && this._.needsSpace && this._.output.push("\n");
                 this._.indent ? this.indentation() : a && a.breakBeforeOpen && (this.lineBreak(), this.indentation());
-                this._.output.push("\x3c", b);
+                this._.output.push("<", b);
                 this._.afterCloser = 0
             },
             openTagClose: function (b, a) {
                 var c = this._.rules[b];
-                a ? (this._.output.push(this.selfClosingEnd), c && c.breakAfterClose && (this._.needsSpace = c.needsSpace)) : (this._.output.push("\x3e"), c && c.indent && (this._.indentation += this.indentationChars));
+                a ? (this._.output.push(this.selfClosingEnd), c && c.breakAfterClose && (this._.needsSpace = c.needsSpace)) : (this._.output.push(">"), c && c.indent && (this._.indentation += this.indentationChars));
                 c && c.breakAfterOpen && this.lineBreak();
                 "pre" == b && (this._.inPre = 1)
             },
             attribute: function (b, a) {
                 "string" == typeof a && (a = CKEDITOR.tools.htmlEncodeAttr(a), this.forceSimpleAmpersand && (a = a.replace(/&amp;/g, "\x26")));
-                this._.output.push(" ", b, '\x3d"', a, '"')
+                this._.output.push(" ", b, '="', a, '"')
             },
             closeTag: function (b) {
                 var a =
                     this._.rules[b];
                 a && a.indent && (this._.indentation = this._.indentation.substr(this.indentationChars.length));
                 this._.indent ? this.indentation() : a && a.breakBeforeClose && (this.lineBreak(), this.indentation());
-                this._.output.push("\x3c/", b, "\x3e");
+                this._.output.push("</", b, ">");
                 "pre" == b && (this._.inPre = 0);
                 a && a.breakAfterClose && (this.lineBreak(), this._.needsSpace = a.needsSpace);
                 this._.afterCloser = 1
@@ -20367,7 +20369,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             comment: function (b) {
                 this._.indent &&
                     this.indentation();
-                this._.output.push("\x3c!--", b, "--\x3e")
+                this._.output.push("<!--", b, "-->")
             },
             lineBreak: function () {
                 !this._.inPre && 0 < this._.output.length && this._.output.push(this.lineBreakChars);
@@ -20547,11 +20549,11 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         function x() {
             var a = [];
             if (8 <= CKEDITOR.document.$.documentMode) {
-                a.push("html.CSS1Compat [contenteditable\x3dfalse]{min-height:0 !important}");
+                a.push("html.CSS1Compat [contenteditable=false]{min-height:0 !important}");
                 var e = [],
                     b;
                 for (b in CKEDITOR.dtd.$removeEmpty) e.push("html.CSS1Compat " +
-                    b + "[contenteditable\x3dfalse]");
+                    b + "[contenteditable=false]");
                 a.push(e.join(",") + "{display:inline-block}")
             } else CKEDITOR.env.gecko && (a.push("html{height:100% !important}"), a.push("img:-moz-broken{-moz-force-broken-image-icon:1;min-width:24px;min-height:24px}"));
             a.push("html{cursor:text;*cursor:auto}");
@@ -20622,7 +20624,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     }
                     var h = "document.open();" + (CKEDITOR.env.ie ? "(" + CKEDITOR.tools.fixDomain + ")();" : "") + "document.close();",
                         h = CKEDITOR.env.air ? "javascript:void(0)" : CKEDITOR.env.ie && !CKEDITOR.env.edge ? "javascript:void(function(){" + encodeURIComponent(h) + "}())" : "",
-                        g = CKEDITOR.dom.element.createFromHtml('\x3ciframe src\x3d"' + h + '" frameBorder\x3d"0"\x3e\x3c/iframe\x3e');
+                        g = CKEDITOR.dom.element.createFromHtml('<iframe src="' + h + '" frameBorder="0"></iframe>');
                     g.setStyles({
                         width: "100%",
                         height: "100%"
@@ -20641,7 +20643,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     k && (CKEDITOR.env.ie && n && (k += ", " + n), g.setAttribute("title", k));
                     if (n) {
                         var k = CKEDITOR.tools.getNextId(),
-                            q = CKEDITOR.dom.element.createFromHtml('\x3cspan id\x3d"' + k + '" class\x3d"cke_voice_label"\x3e' + n + "\x3c/span\x3e");
+                            q = CKEDITOR.dom.element.createFromHtml('<span id="' + k + '" class="cke_voice_label">' + n + "</span>");
                         h.append(q, 1);
                         g.setAttribute("aria-describedby", k)
                     }
@@ -20690,9 +20692,9 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         var c = b.config,
                             f = c.fullPage,
                             d = c.docType,
-                            h = CKEDITOR.tools.buildStyleHtml(x()).replace(/<style>/, '\x3cstyle data-cke-temp\x3d"1"\x3e');
+                            h = CKEDITOR.tools.buildStyleHtml(x()).replace(/<style>/, '<style data-cke-temp="1">');
                         f || (h += CKEDITOR.tools.buildStyleHtml(b.config.contentsCss));
-                        var g = c.baseHref ? '\x3cbase href\x3d"' + c.baseHref + '" data-cke-temp\x3d"1" /\x3e' : "";
+                        var g = c.baseHref ? '<base href="' + c.baseHref + '" data-cke-temp="1" />' : "";
                         f && (a = a.replace(/<!DOCTYPE[^>]*>/i, function (a) {
                             b.docType =
                                 d = a;
@@ -20702,16 +20704,16 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                             return ""
                         }));
                         a = b.dataProcessor.toHtml(a);
-                        f ? (/<body[\s|>]/.test(a) || (a = "\x3cbody\x3e" + a), /<html[\s|>]/.test(a) || (a = "\x3chtml\x3e" + a + "\x3c/html\x3e"), /<head[\s|>]/.test(a) ? /<title[\s|>]/.test(a) || (a = a.replace(/<head[^>]*>/, "$\x26\x3ctitle\x3e\x3c/title\x3e")) : a = a.replace(/<html[^>]*>/, "$\x26\x3chead\x3e\x3ctitle\x3e\x3c/title\x3e\x3c/head\x3e"), g && (a = a.replace(/<head[^>]*?>/, "$\x26" + g)), a = a.replace(/<\/head\s*>/, h + "$\x26"), a =
-                            d + a) : a = c.docType + '\x3chtml dir\x3d"' + c.contentsLangDirection + '" lang\x3d"' + (c.contentsLanguage || b.langCode) + '"\x3e\x3chead\x3e\x3ctitle\x3e' + this._.docTitle + "\x3c/title\x3e" + g + h + "\x3c/head\x3e\x3cbody" + (c.bodyId ? ' id\x3d"' + c.bodyId + '"' : "") + (c.bodyClass ? ' class\x3d"' + c.bodyClass + '"' : "") + "\x3e" + a + "\x3c/body\x3e\x3c/html\x3e";
-                        CKEDITOR.env.gecko && (a = a.replace(/<body/, '\x3cbody contenteditable\x3d"true" '), 2E4 > CKEDITOR.env.version && (a = a.replace(/<body[^>]*>/, "$\x26\x3c!-- cke-content-start --\x3e")));
-                        a = a.replace(/<body/, '\x3cbody role\x3d"textbox" aria-multiline\x3d"true"');
-                        b.title && (a = a.replace(/<body/, '\x3cbody aria-label\x3d"' + CKEDITOR.tools.htmlEncodeAttr(b.title) + '"'));
-                        CKEDITOR.env.gecko || (a = a.replace("\x3cbody", '\x3cbody tabindex\x3d"0" '));
-                        c = '\x3cscript id\x3d"cke_actscrpt" type\x3d"text/javascript"' + (CKEDITOR.env.ie ? ' defer\x3d"defer" ' : "") + "\x3evar wasLoaded\x3d0;function onload(){if(!wasLoaded)window.parent.CKEDITOR \x26\x26 window.parent.CKEDITOR.tools.callFunction(" + this._.frameLoadedHandler +
-                            ",window);wasLoaded\x3d1;}" + (CKEDITOR.env.ie ? "onload();" : 'document.addEventListener("DOMContentLoaded", onload, false );') + "\x3c/script\x3e";
-                        CKEDITOR.env.ie && 9 > CKEDITOR.env.version && (c += '\x3cscript id\x3d"cke_shimscrpt"\x3ewindow.parent.CKEDITOR.tools.enableHtml5Elements(document)\x3c/script\x3e');
-                        g && CKEDITOR.env.ie && 10 > CKEDITOR.env.version && (c += '\x3cscript id\x3d"cke_basetagscrpt"\x3evar baseTag \x3d document.querySelector( "base" );baseTag.href \x3d baseTag.href;\x3c/script\x3e');
+                        f ? (/<body[\s|>]/.test(a) || (a = "<body>" + a), /<html[\s|>]/.test(a) || (a = "<html>" + a + "</html>"), /<head[\s|>]/.test(a) ? /<title[\s|>]/.test(a) || (a = a.replace(/<head[^>]*>/, "$\x26<title></title>")) : a = a.replace(/<html[^>]*>/, "$\x26<head><title></title></head>"), g && (a = a.replace(/<head[^>]*?>/, "$\x26" + g)), a = a.replace(/<\/head\s*>/, h + "$\x26"), a =
+                            d + a) : a = c.docType + '<html dir="' + c.contentsLangDirection + '" lang="' + (c.contentsLanguage || b.langCode) + '"><head><title>' + this._.docTitle + "</title>" + g + h + "</head><body" + (c.bodyId ? ' id="' + c.bodyId + '"' : "") + (c.bodyClass ? ' class="' + c.bodyClass + '"' : "") + ">" + a + "</body></html>";
+                        CKEDITOR.env.gecko && (a = a.replace(/<body/, '<body contenteditable="true" '), 2E4 > CKEDITOR.env.version && (a = a.replace(/<body[^>]*>/, "$\x26<!-- cke-content-start -->")));
+                        a = a.replace(/<body/, '<body role="textbox" aria-multiline="true"');
+                        b.title && (a = a.replace(/<body/, '<body aria-label="' + CKEDITOR.tools.htmlEncodeAttr(b.title) + '"'));
+                        CKEDITOR.env.gecko || (a = a.replace("<body", '<body tabindex="0" '));
+                        c = '<script id="cke_actscrpt" type="text/javascript"' + (CKEDITOR.env.ie ? ' defer="defer" ' : "") + ">var wasLoaded=0;function onload(){if(!wasLoaded)window.parent.CKEDITOR \x26\x26 window.parent.CKEDITOR.tools.callFunction(" + this._.frameLoadedHandler +
+                            ",window);wasLoaded=1;}" + (CKEDITOR.env.ie ? "onload();" : 'document.addEventListener("DOMContentLoaded", onload, false );') + "</script>";
+                        CKEDITOR.env.ie && 9 > CKEDITOR.env.version && (c += '<script id="cke_shimscrpt">window.parent.CKEDITOR.tools.enableHtml5Elements(document)</script>');
+                        g && CKEDITOR.env.ie && 10 > CKEDITOR.env.version && (c += '<script id="cke_basetagscrpt">var baseTag = document.querySelector( "base" );baseTag.href = baseTag.href;</script>');
                         a = a.replace(/(?=\s*<\/(:?head)>)/,
                             c);
                         this.clearCustomData();
@@ -20738,7 +20740,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         d = b ? d.getDocumentElement().getOuterHtml() : d.getBody().getHtml();
                     CKEDITOR.env.gecko && e.enterMode != CKEDITOR.ENTER_BR && (d = d.replace(/<br>(?=\s*(:?$|<\/body>))/, ""));
                     b && (d = d.replace(/<body(.*?)role="?textbox"?/i,
-                        "\x3cbody$1").replace(/<body(.*?)aria-multiline="?true"?/i, "\x3cbody$1").replace(/<body(.*?)tabindex="?0"?/i, "\x3cbody$1").replace(/<body(.*?)aria-label="(.+?)"/i, "\x3cbody$1").replace(/<body(.*?)aria-readonly="?(?:true|false)"?/i, "\x3cbody$1"));
+                        "<body$1").replace(/<body(.*?)aria-multiline="?true"?/i, "<body$1").replace(/<body(.*?)tabindex="?0"?/i, "<body$1").replace(/<body(.*?)aria-label="(.+?)"/i, "<body$1").replace(/<body(.*?)aria-readonly="?(?:true|false)"?/i, "<body$1"));
                     d = a.dataProcessor.toDataFormat(d);
                     f && (d = f + "\n" + d);
                     c && (d = c + "\n" + d);
@@ -21069,7 +21071,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         pre: 1,
                         table: 1
                     },
-                    classNameRegex: d ? new RegExp("(?:^|\\s+)(" + d.join("|") + ")(?\x3d$|\\s)") : null
+                    classNameRegex: d ? new RegExp("(?:^|\\s+)(" + d.join("|") + ")(?=$|\\s)") : null
                 })
             }
         })
@@ -21249,7 +21251,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     case "justify":
                         this.cssClassName = c[3]
                 }
-                this.cssClassRegex = new RegExp("(?:^|\\s+)(?:" + c.join("|") + ")(?\x3d$|\\s)");
+                this.cssClassRegex = new RegExp("(?:^|\\s+)(?:" + c.join("|") + ")(?=$|\\s)");
                 this.requiredContent = f + "(" + this.cssClassName + ")"
             } else this.requiredContent = f + "{text-align}";
             this.allowedContent = {
@@ -21769,10 +21771,10 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                                 var g = encodeURIComponent(d.subject || ""),
                                     k = encodeURIComponent(d.body || ""),
                                     d = [];
-                                g && d.push("subject\x3d" + g);
-                                k && d.push("body\x3d" + k);
+                                g && d.push("subject=" + g);
+                                k && d.push("body=" + k);
                                 d = d.length ? "?" + d.join("\x26") : "";
-                                "encode" == a ? (a = ["javascript:void(location.href\x3d'mailto:'+", q(f)], d && a.push("+'", p(d), "'"), a.push(")")) : a = ["mailto:", f, d];
+                                "encode" == a ? (a = ["javascript:void(location.href='mailto:'+", q(f)], d && a.push("+'", p(d), "'"), a.push(")")) : a = ["mailto:", f, d];
                                 break;
                             default:
                                 a = f.split("@", 2), d.name = a[0], d.domain = a[1], a = ["javascript:", r(c,
@@ -21786,8 +21788,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 if (b.target)
                     if ("popup" == b.target.type) {
                         for (var a = ["window.open(this.href, '", b.target.name || "", "', '"], h = "resizable status location toolbar menubar fullscreen scrollbars dependent".split(" "), f = h.length, g = function (a) {
-                                b.target[a] && h.push(a + "\x3d" + b.target[a])
-                            }, d = 0; d < f; d++) h[d] += b.target[h[d]] ? "\x3dyes" : "\x3dno";
+                                b.target[a] && h.push(a + "=" + b.target[a])
+                            }, d = 0; d < f; d++) h[d] += b.target[h[d]] ? "=yes" : "=no";
                         g("width");
                         g("left");
                         g("height");
@@ -22383,7 +22385,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 
         function la(a) {
             var c = a.doc,
-                d = G('\x3cspan contenteditable\x3d"false" data-cke-magic-line\x3d"1" style\x3d"' + Q + "position:absolute;border-top:1px dashed " + a.boxColor + '"\x3e\x3c/span\x3e',
+                d = G('<span contenteditable="false" data-cke-magic-line="1" style="' + Q + "position:absolute;border-top:1px dashed " + a.boxColor + '"></span>',
                     c),
                 b = CKEDITOR.getUrl(this.path + "images/" + (t.hidpi ? "hidpi/" : "") + "icon" + (a.rtl ? "-rtl" : "") + ".png");
             v(d, {
@@ -22391,7 +22393,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     this.wrap.getParent() || this.wrap.appendTo(a.editable, !0);
                     return this
                 },
-                lineChildren: [v(G('\x3cspan title\x3d"' + a.editor.lang.magicline.title + '" contenteditable\x3d"false"\x3e\x26#8629;\x3c/span\x3e', c), {
+                lineChildren: [v(G('<span title="' + a.editor.lang.magicline.title + '" contenteditable="false">\x26#8629;</span>', c), {
                     base: Q + "height:17px;width:17px;" + (a.rtl ? "left" : "right") + ":17px;background:url(" + b + ") center no-repeat " + a.boxColor + ";cursor:pointer;" + (t.hc ? "font-size: 15px;line-height:14px;border:1px solid #fff;text-align:center;" :
                         "") + (t.hidpi ? "background-size: 9px 10px;" : ""),
                     looks: ["top:-8px; border-radius: 2px;", "top:-17px; border-radius: 2px 2px 0px 0px;", "top:-1px; border-radius: 0px 0px 2px 2px;"]
@@ -22842,7 +22844,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             ga = 100,
             Q = "width:0px;height:0px;padding:0px;margin:0px;display:block;z-index:9999;color:#fff;position:absolute;font-size: 0px;line-height:0px;",
             X = Q + "border-color:transparent;display:block;border-style:solid;",
-            W = "\x3cspan\x3e" + J + "\x3c/span\x3e";
+            W = "<span>" + J + "</span>";
         K[CKEDITOR.ENTER_BR] = "br";
         K[CKEDITOR.ENTER_P] = "p";
         K[CKEDITOR.ENTER_DIV] = "div";
@@ -23163,7 +23165,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         "class": function (a, c) {
                             var b = a.replace("cke_pagebreak", "");
                             if (b != a) {
-                                var d = CKEDITOR.htmlParser.fragment.fromHtml('\x3cspan style\x3d"display: none;"\x3e\x26nbsp;\x3c/span\x3e').children[0];
+                                var d = CKEDITOR.htmlParser.fragment.fromHtml('<span style="display: none;">\x26nbsp;</span>').children[0];
                                 c.children.length = 0;
                                 c.add(d);
                                 d = c.attributes;
@@ -23225,7 +23227,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 var c = a.lang,
                     e = CKEDITOR.tools.keystrokeToString(c.common.keyboard, a.getCommandKeystroke(CKEDITOR.env.ie ? a.commands.paste : this)),
                     d = b && "undefined" !== typeof b.notification ? b.notification : !b || !b.from || "keystrokeHandler" === b.from && CKEDITOR.env.ie,
-                    c = d && "string" === typeof d ? d : c.pastetext.pasteNotification.replace(/%1/, '\x3ckbd aria-label\x3d"' + e.aria + '"\x3e' + e.display + "\x3c/kbd\x3e");
+                    c = d && "string" === typeof d ? d : c.pastetext.pasteNotification.replace(/%1/, '<kbd aria-label="' + e.aria + '">' + e.display + "</kbd>");
                 a.execCommand("paste", {
                     type: "text",
                     notification: d ? c : !1
@@ -23495,22 +23497,22 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     var a = location.origin,
                         c = location.pathname;
                     if (!b.baseHref && !CKEDITOR.env.gecko) return "";
-                    if (b.baseHref) return '\x3cbase href\x3d"{HREF}"\x3e'.replace("{HREF}", b.baseHref);
+                    if (b.baseHref) return '<base href="{HREF}">'.replace("{HREF}", b.baseHref);
                     c = c.split("/");
                     c.pop();
                     c = c.join("/");
-                    return '\x3cbase href\x3d"{HREF}"\x3e'.replace("{HREF}", a + c + "/")
+                    return '<base href="{HREF}">'.replace("{HREF}", a + c + "/")
                 }();
-            return b.fullPage ? a.getData().replace(/<head>/, "$\x26" + h).replace(/[^>]*(?=<\/title>)/, "$\x26 \x26mdash; " + e) : b.docType + '\x3chtml dir\x3d"' +
-                b.contentsLangDirection + '"\x3e\x3chead\x3e' + h + "\x3ctitle\x3e" + e + "\x3c/title\x3e" + CKEDITOR.tools.buildStyleHtml(b.contentsCss) + '\x3clink rel\x3d"stylesheet" media\x3d"screen" href\x3d"' + g + 'styles/screen.css"\x3e\x3c/head\x3e' + function () {
-                    var b = "\x3cbody\x3e",
+            return b.fullPage ? a.getData().replace(/<head>/, "$\x26" + h).replace(/[^>]*(?=<\/title>)/, "$\x26 \x26mdash; " + e) : b.docType + '<html dir="' +
+                b.contentsLangDirection + '"><head>' + h + "<title>" + e + "</title>" + CKEDITOR.tools.buildStyleHtml(b.contentsCss) + '<link rel="stylesheet" media="screen" href="' + g + 'styles/screen.css"></head>' + function () {
+                    var b = "<body>",
                         c = a.document && a.document.getBody();
                     if (!c) return b;
-                    c.getAttribute("id") && (b = b.replace("\x3e", ' id\x3d"' + c.getAttribute("id") + '"\x3e'));
-                    c.getAttribute("class") && (b = b.replace("\x3e", ' class\x3d"' + c.getAttribute("class") + '"\x3e'));
+                    c.getAttribute("id") && (b = b.replace(">", ' id="' + c.getAttribute("id") + '">'));
+                    c.getAttribute("class") && (b = b.replace(">", ' class="' + c.getAttribute("class") + '">'));
                     return b
                 }() + a.getData() +
-                (f ? "\x3cscript\x3e" + (CKEDITOR.env.ie ? "window.onload" : "document.onreadystatechange") + " \x3d function() { previewCallback(); } \x3c/script\x3e" : "") + "\x3c/body\x3e\x3c/html\x3e"
+                (f ? "<script>" + (CKEDITOR.env.ie ? "window.onload" : "document.onreadystatechange") + " = function() { previewCallback(); } </script>" : "") + "</body></html>"
         }
 
         function l() {
@@ -23552,13 +23554,13 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     },
                     b = l(),
                     e;
-                e = CKEDITOR.env.ie || CKEDITOR.env.gecko ? "javascript:void( (function(){document.open();" + ("(" + CKEDITOR.tools.fixDomain + ")();").replace(/\/\/.*?\n/g, "").replace(/parent\./g, "window.opener.") + "document.write( window.opener._cke_htmlToLoad );document.close();window.opener._cke_htmlToLoad \x3d null;})() )" :
+                e = CKEDITOR.env.ie || CKEDITOR.env.gecko ? "javascript:void( (function(){document.open();" + ("(" + CKEDITOR.tools.fixDomain + ")();").replace(/\/\/.*?\n/g, "").replace(/parent\./g, "window.opener.") + "document.write( window.opener._cke_htmlToLoad );document.close();window.opener._cke_htmlToLoad = null;})() )" :
                     null;
                 var h = m(),
                     d, c;
                 if (!1 === a.fire("contentPreview", g)) return !1;
                 if (e || h) window._cke_htmlToLoad = g.dataValue;
-                d = window.open(h, null, ["toolbar\x3dyes,location\x3dno,status\x3dyes,menubar\x3dyes,scrollbars\x3dyes,resizable\x3dyes", "width\x3d" + b.width, "height\x3d" + b.height, "left\x3d" + b.left].join());
+                d = window.open(h, null, ["toolbar=yes,location=no,status=yes,menubar=yes,scrollbars=yes,resizable=yes", "width=" + b.width, "height=" + b.height, "left=" + b.left].join());
                 c = new CKEDITOR.dom.window(d);
                 e && d && (d.location = e);
                 window._cke_htmlToLoad || (b = d.document, b.open(), b.write(g.dataValue), b.close());
@@ -23727,12 +23729,12 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     c, b, e, f, k = CKEDITOR.getUrl(this.path),
                     l = !(CKEDITOR.env.ie &&
                         9 > CKEDITOR.env.version),
-                    g = l ? ":not([contenteditable\x3dfalse]):not(.cke_show_blocks_off)" : "",
+                    g = l ? ":not([contenteditable=false]):not(.cke_show_blocks_off)" : "",
                     d, h;
                 for (c = b = e = f = ""; d = a.pop();) h = a.length ? "," : "", c += ".cke_show_blocks " + d + g + h, e += ".cke_show_blocks.cke_contents_ltr " + d + g + h, f += ".cke_show_blocks.cke_contents_rtl " + d + g + h, b += ".cke_show_blocks " + d + g + "{background-image:url(" + CKEDITOR.getUrl(k + "images/block_" + d + ".png") + ")}";
                 CKEDITOR.addCss((c + "{background-repeat:no-repeat;border:1px dotted gray;padding-top:8px}").concat(b, e + "{background-position:top left;padding-left:8px}",
                     f + "{background-position:top right;padding-right:8px}"));
-                l || CKEDITOR.addCss(".cke_show_blocks [contenteditable\x3dfalse],.cke_show_blocks .cke_show_blocks_off{border:none;padding-top:0;background-image:none}.cke_show_blocks.cke_contents_rtl [contenteditable\x3dfalse],.cke_show_blocks.cke_contents_rtl .cke_show_blocks_off{padding-right:0}.cke_show_blocks.cke_contents_ltr [contenteditable\x3dfalse],.cke_show_blocks.cke_contents_ltr .cke_show_blocks_off{padding-left:0}")
+                l || CKEDITOR.addCss(".cke_show_blocks [contenteditable=false],.cke_show_blocks .cke_show_blocks_off{border:none;padding-top:0;background-image:none}.cke_show_blocks.cke_contents_rtl [contenteditable=false],.cke_show_blocks.cke_contents_rtl .cke_show_blocks_off{padding-right:0}.cke_show_blocks.cke_contents_ltr [contenteditable=false],.cke_show_blocks.cke_contents_ltr .cke_show_blocks_off{padding-left:0}")
             },
             init: function (a) {
                 function c() {
@@ -23780,7 +23782,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             },
             onLoad: function () {
                 var a;
-                a = (CKEDITOR.env.ie6Compat ? [".%1 table.%2,", ".%1 table.%2 td, .%1 table.%2 th", "{", "border : #d3d3d3 1px dotted", "}"] : ".%1 table.%2,;.%1 table.%2 \x3e tr \x3e td, .%1 table.%2 \x3e tr \x3e th,;.%1 table.%2 \x3e tbody \x3e tr \x3e td, .%1 table.%2 \x3e tbody \x3e tr \x3e th,;.%1 table.%2 \x3e thead \x3e tr \x3e td, .%1 table.%2 \x3e thead \x3e tr \x3e th,;.%1 table.%2 \x3e tfoot \x3e tr \x3e td, .%1 table.%2 \x3e tfoot \x3e tr \x3e th;{;border : #d3d3d3 1px dotted;}".split(";")).join("").replace(/%2/g,
+                a = (CKEDITOR.env.ie6Compat ? [".%1 table.%2,", ".%1 table.%2 td, .%1 table.%2 th", "{", "border : #d3d3d3 1px dotted", "}"] : ".%1 table.%2,;.%1 table.%2 > tr > td, .%1 table.%2 > tr > th,;.%1 table.%2 > tbody > tr > td, .%1 table.%2 > tbody > tr > th,;.%1 table.%2 > thead > tr > td, .%1 table.%2 > thead > tr > th,;.%1 table.%2 > tfoot > tr > td, .%1 table.%2 > tfoot > tr > th;{;border : #d3d3d3 1px dotted;}".split(";")).join("").replace(/%2/g,
                     "cke_show_border").replace(/%1/g, "cke_show_borders ");
                 CKEDITOR.addCss(a)
             },
@@ -23883,12 +23885,12 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         e()
                     });
                     a.addCommand("source", f.commands.source);
-                    a.ui.addButton && a.ui.addButton("Source", {
-                        isToggle: !0,
-                        label: a.lang.sourcearea.toolbar,
-                        command: "source",
-                        toolbar: "mode,10"
-                    });
+                    // a.ui.addButton && a.ui.addButton("Source", {
+                    //     isToggle: !0,
+                    //     label: a.lang.sourcearea.toolbar,
+                    //     command: "source",
+                    //     toolbar: "mode,10"
+                    // });
                     a.on("mode", function () {
                         a.getCommand("source").setState("source" == a.mode ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF)
                     });
@@ -24027,7 +24029,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             })
         }
     });
-    CKEDITOR.config.specialChars = "! \x26quot; # $ % \x26amp; ' ( ) * + - . / 0 1 2 3 4 5 6 7 8 9 : ; \x26lt; \x3d \x26gt; ? @ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ ] ^ _ ` a b c d e f g h i j k l m n o p q r s t u v w x y z { | } ~ \x26euro; \x26lsquo; \x26rsquo; \x26ldquo; \x26rdquo; \x26ndash; \x26mdash; \x26iexcl; \x26cent; \x26pound; \x26curren; \x26yen; \x26brvbar; \x26sect; \x26uml; \x26copy; \x26ordf; \x26laquo; \x26not; \x26reg; \x26macr; \x26deg; \x26sup2; \x26sup3; \x26acute; \x26micro; \x26para; \x26middot; \x26cedil; \x26sup1; \x26ordm; \x26raquo; \x26frac14; \x26frac12; \x26frac34; \x26iquest; \x26Agrave; \x26Aacute; \x26Acirc; \x26Atilde; \x26Auml; \x26Aring; \x26AElig; \x26Ccedil; \x26Egrave; \x26Eacute; \x26Ecirc; \x26Euml; \x26Igrave; \x26Iacute; \x26Icirc; \x26Iuml; \x26ETH; \x26Ntilde; \x26Ograve; \x26Oacute; \x26Ocirc; \x26Otilde; \x26Ouml; \x26times; \x26Oslash; \x26Ugrave; \x26Uacute; \x26Ucirc; \x26Uuml; \x26Yacute; \x26THORN; \x26szlig; \x26agrave; \x26aacute; \x26acirc; \x26atilde; \x26auml; \x26aring; \x26aelig; \x26ccedil; \x26egrave; \x26eacute; \x26ecirc; \x26euml; \x26igrave; \x26iacute; \x26icirc; \x26iuml; \x26eth; \x26ntilde; \x26ograve; \x26oacute; \x26ocirc; \x26otilde; \x26ouml; \x26divide; \x26oslash; \x26ugrave; \x26uacute; \x26ucirc; \x26uuml; \x26yacute; \x26thorn; \x26yuml; \x26OElig; \x26oelig; \x26#372; \x26#374 \x26#373 \x26#375; \x26sbquo; \x26#8219; \x26bdquo; \x26hellip; \x26trade; \x26#9658; \x26bull; \x26rarr; \x26rArr; \x26hArr; \x26diams; \x26asymp;".split(" ");
+    CKEDITOR.config.specialChars = "! \x26quot; # $ % \x26amp; ' ( ) * + - . / 0 1 2 3 4 5 6 7 8 9 : ; \x26lt; = \x26gt; ? @ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ ] ^ _ ` a b c d e f g h i j k l m n o p q r s t u v w x y z { | } ~ \x26euro; \x26lsquo; \x26rsquo; \x26ldquo; \x26rdquo; \x26ndash; \x26mdash; \x26iexcl; \x26cent; \x26pound; \x26curren; \x26yen; \x26brvbar; \x26sect; \x26uml; \x26copy; \x26ordf; \x26laquo; \x26not; \x26reg; \x26macr; \x26deg; \x26sup2; \x26sup3; \x26acute; \x26micro; \x26para; \x26middot; \x26cedil; \x26sup1; \x26ordm; \x26raquo; \x26frac14; \x26frac12; \x26frac34; \x26iquest; \x26Agrave; \x26Aacute; \x26Acirc; \x26Atilde; \x26Auml; \x26Aring; \x26AElig; \x26Ccedil; \x26Egrave; \x26Eacute; \x26Ecirc; \x26Euml; \x26Igrave; \x26Iacute; \x26Icirc; \x26Iuml; \x26ETH; \x26Ntilde; \x26Ograve; \x26Oacute; \x26Ocirc; \x26Otilde; \x26Ouml; \x26times; \x26Oslash; \x26Ugrave; \x26Uacute; \x26Ucirc; \x26Uuml; \x26Yacute; \x26THORN; \x26szlig; \x26agrave; \x26aacute; \x26acirc; \x26atilde; \x26auml; \x26aring; \x26aelig; \x26ccedil; \x26egrave; \x26eacute; \x26ecirc; \x26euml; \x26igrave; \x26iacute; \x26icirc; \x26iuml; \x26eth; \x26ntilde; \x26ograve; \x26oacute; \x26ocirc; \x26otilde; \x26ouml; \x26divide; \x26oslash; \x26ugrave; \x26uacute; \x26ucirc; \x26uuml; \x26yacute; \x26thorn; \x26yuml; \x26OElig; \x26oelig; \x26#372; \x26#374 \x26#373 \x26#375; \x26sbquo; \x26#8219; \x26bdquo; \x26hellip; \x26trade; \x26#9658; \x26bull; \x26rarr; \x26rArr; \x26hArr; \x26diams; \x26asymp;".split(" ");
     CKEDITOR.plugins.add("scayt", {
         requires: "menubutton,dialog",
         tabToOpen: null,
@@ -24572,7 +24574,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 lang: g,
                 word: k
             }), e = this.buildSuggestionMenuItems(a, CKEDITOR.plugins.scayt.suggestions,
-                l)) : m && (b = b.grayt, e = c.getAttribute(d.getGraytNodeAttributeName()), d.getGraytNodeRuleAttributeName ? (k = c.getAttribute(d.getGraytNodeRuleAttributeName()), d.getProblemDescriptionText(e, k, g)) : d.getProblemDescriptionText(e, g), n = d.getProblemDescriptionText(e, k, g), b.grayt_problemdescription && n && (n = n.replace(/([.!?])\s/g, "$1\x3cbr\x3e"), b.grayt_problemdescription.label = n), d.fire("getGrammarSuggestionsList", {
+                l)) : m && (b = b.grayt, e = c.getAttribute(d.getGraytNodeAttributeName()), d.getGraytNodeRuleAttributeName ? (k = c.getAttribute(d.getGraytNodeRuleAttributeName()), d.getProblemDescriptionText(e, k, g)) : d.getProblemDescriptionText(e, g), n = d.getProblemDescriptionText(e, k, g), b.grayt_problemdescription && n && (n = n.replace(/([.!?])\s/g, "$1<br>"), b.grayt_problemdescription.label = n), d.fire("getGrammarSuggestionsList", {
                 lang: g,
                 phrase: e,
                 rule: k
@@ -26807,7 +26809,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             b.attachListener(a, "resize", c);
             b.attachListener(a, "mode", g);
             a.on("destroy", g);
-            this.lineTpl = (new CKEDITOR.template('\x3cdiv data-cke-lineutils-line\x3d"1" class\x3d"cke_reset_all" style\x3d"{lineStyle}"\x3e\x3cspan style\x3d"{tipLeftStyle}"\x3e\x26nbsp;\x3c/span\x3e\x3cspan style\x3d"{tipRightStyle}"\x3e\x26nbsp;\x3c/span\x3e\x3c/div\x3e')).output({
+            this.lineTpl = (new CKEDITOR.template('<div data-cke-lineutils-line="1" class="cke_reset_all" style="{lineStyle}"><span style="{tipLeftStyle}">\x26nbsp;</span><span style="{tipRightStyle}">\x26nbsp;</span></div>')).output({
                 lineStyle: CKEDITOR.tools.writeCssText(CKEDITOR.tools.extend({},
                     t, this.lineStyle, !0)),
                 tipLeftStyle: CKEDITOR.tools.writeCssText(CKEDITOR.tools.extend({}, q, {
@@ -27147,8 +27149,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             },
             removeFillers: function (a) {
                 if (this.hasFiller(a) && !this.isWholeContentSelected(a)) {
-                    var b = a.findOne(this.fillerTagName + "[" + this.fillerAttribute + "\x3dstart]"),
-                        d = a.findOne(this.fillerTagName + "[" + this.fillerAttribute + "\x3dend]");
+                    var b = a.findOne(this.fillerTagName + "[" + this.fillerAttribute + "=start]"),
+                        d = a.findOne(this.fillerTagName + "[" + this.fillerAttribute + "=end]");
                     this.startFiller && b && this.startFiller.equals(b) ?
                         this.removeFiller(this.startFiller, a) : this.startFiller = b;
                     this.endFiller && d && this.endFiller.equals(d) ? this.removeFiller(this.endFiller, a) : this.endFiller = d
@@ -27200,7 +27202,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 }
             },
             createFillerRegex: function (a) {
-                var b = this.createFiller(a).getOuterHtml().replace(/style="[^"]*"/gi, 'style\x3d"[^"]*"').replace(/>[^<]*</gi, "\x3e[^\x3c]*\x3c");
+                var b = this.createFiller(a).getOuterHtml().replace(/style="[^"]*"/gi, 'style="[^"]*"').replace(/>[^<]*</gi, ">[^<]*<");
                 return new RegExp((a ? "" : "^") + b + (a ? "$" : ""))
             },
             addSelectAllIntegration: function (a) {
@@ -28207,7 +28209,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         CKEDITOR.plugins.add("widget", {
             requires: "lineutils,clipboard,widgetselection",
             onLoad: function () {
-                void 0 !== CKEDITOR.document.$.querySelectorAll && (CKEDITOR.addCss('.cke_widget_wrapper{position:relative;outline:none}.cke_widget_inline{display:inline-block}.cke_widget_wrapper:hover\x3e.cke_widget_element{outline:2px solid #ffd25c;cursor:default}.cke_widget_wrapper:hover .cke_widget_editable{outline:2px solid #ffd25c}.cke_widget_wrapper.cke_widget_focused\x3e.cke_widget_element,.cke_widget_wrapper .cke_widget_editable.cke_widget_editable_focused{outline:2px solid #47a4f5}.cke_widget_editable{cursor:text}.cke_widget_drag_handler_container{position:absolute;width:15px;height:0;display:block;opacity:0.75;transition:height 0s 0.2s;line-height:0}.cke_widget_wrapper:hover\x3e.cke_widget_drag_handler_container{height:15px;transition:none}.cke_widget_drag_handler_container:hover{opacity:1}.cke_editable[contenteditable\x3d"false"] .cke_widget_drag_handler_container{display:none;}img.cke_widget_drag_handler{cursor:move;width:15px;height:15px;display:inline-block}.cke_widget_mask{position:absolute;top:0;left:0;width:100%;height:100%;display:block}.cke_widget_partial_mask{position:absolute;display:block}.cke_editable.cke_widget_dragging, .cke_editable.cke_widget_dragging *{cursor:move !important}'),
+                void 0 !== CKEDITOR.document.$.querySelectorAll && (CKEDITOR.addCss('.cke_widget_wrapper{position:relative;outline:none}.cke_widget_inline{display:inline-block}.cke_widget_wrapper:hover>.cke_widget_element{outline:2px solid #ffd25c;cursor:default}.cke_widget_wrapper:hover .cke_widget_editable{outline:2px solid #ffd25c}.cke_widget_wrapper.cke_widget_focused>.cke_widget_element,.cke_widget_wrapper .cke_widget_editable.cke_widget_editable_focused{outline:2px solid #47a4f5}.cke_widget_editable{cursor:text}.cke_widget_drag_handler_container{position:absolute;width:15px;height:0;display:block;opacity:0.75;transition:height 0s 0.2s;line-height:0}.cke_widget_wrapper:hover>.cke_widget_drag_handler_container{height:15px;transition:none}.cke_widget_drag_handler_container:hover{opacity:1}.cke_editable[contenteditable="false"] .cke_widget_drag_handler_container{display:none;}img.cke_widget_drag_handler{cursor:move;width:15px;height:15px;display:inline-block}.cke_widget_mask{position:absolute;top:0;left:0;width:100%;height:100%;display:block}.cke_widget_partial_mask{position:absolute;display:block}.cke_editable.cke_widget_dragging, .cke_editable.cke_widget_dragging *{cursor:move !important}'),
                     qa())
             },
             beforeInit: function (a) {
@@ -28655,7 +28657,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         n = k ? 100 : 0,
                         m = window.requestAnimationFrame && !k ? requestAnimationFrame : setTimeout,
                         p, r, q;
-                    b.setHtml('\x3cspan data-cke-copybin-start\x3d"1"\x3e​\x3c/span\x3e' + a + '\x3cspan data-cke-copybin-end\x3d"1"\x3e​\x3c/span\x3e');
+                    b.setHtml('<span data-cke-copybin-start="1">​</span>' + a + '<span data-cke-copybin-end="1">​</span>');
                     c.fire("lockSnapshot");
                     d.append(b);
                     c.editable().append(d);
@@ -28863,7 +28865,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                                 b = "on" + e(k.status);
                                 if ("abort" === k.status || "function" !== typeof d[b] || !1 !== d[b](k)) f = "cke_upload_" + k.status, d.wrapper && f != h && (h && d.wrapper.removeClass(h), d.wrapper.addClass(f), h = f), "error" != k.status && "abort" != k.status || a.widgets.del(d);
                                 a.fire("unlockSnapshot")
-                            } else CKEDITOR.instances[a.name] && a.editable().find('[data-cke-upload-id\x3d"' + c + '"]').count() || k.abort(), b.removeListener()
+                            } else CKEDITOR.instances[a.name] && a.editable().find('[data-cke-upload-id="' + c + '"]').count() || k.abort(), b.removeListener()
                         });
                         k.update()
                     },
@@ -28965,7 +28967,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         uploadUrl: e,
                         fileToElement: function () {
                             var b = new CKEDITOR.dom.element("img");
-                            b.setAttribute("src", "data:image/gif;base64,R0lGODlhDgAOAIAAAAAAAP///yH5BAAAAAAALAAAAAAOAA4AAAIMhI+py+0Po5y02qsKADs\x3d");
+                            b.setAttribute("src", "data:image/gif;base64,R0lGODlhDgAOAIAAAAAAAP///yH5BAAAAAAALAAAAAAOAA4AAAIMhI+py+0Po5y02qsKADs=");
                             return b
                         },
                         parts: {
@@ -28976,8 +28978,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         },
                         onUploaded: function (b) {
                             var a = this.parts.img.$;
-                            this.replaceWith('\x3cimg src\x3d"' +
-                                b.url + '" width\x3d"' + (b.responseData.width || a.naturalWidth) + '" height\x3d"' + (b.responseData.height || a.naturalHeight) + '"\x3e')
+                            this.replaceWith('<img src="' +
+                                b.url + '" width="' + (b.responseData.width || a.naturalWidth) + '" height="' + (b.responseData.height || a.naturalHeight) + '">')
                         }
                     }), c.on("paste", function (b) {
                         if (b.data.dataValue.match(/<img[\s\S]+data:/i)) {

@@ -63,7 +63,7 @@ public class ManageAPIController {
             File B = new File(path+"/images"+img.replace("temp", "products")) ;
             Files.move(A.toPath(), B.toPath(), StandardCopyOption.REPLACE_EXISTING) ;
             Map<String,Object> temp = new LinkedHashMap<String,Object>() ;
-            temp.put("img",img.replace("temp", "products")) ;
+            temp.put("img",img.replace("/temp", "products")) ;
             img_mapper.insertImage(temp);
             data.put(utils.getTableNameBySeqType(type)+"img_seq",temp.get("img_seq")) ;
         }

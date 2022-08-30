@@ -8,7 +8,7 @@ public class utils {
         String str = null ;
         if (type.equals("case")) str = "csi_" ;
         else if (type.equals("cpu")) str = "cpi_" ;
-        else if (type.equals("mainboard")) str = "mbi_" ;
+        else if (type.equals("mainboard")) str = "mii_" ;
         else if (type.equals("gpu")) str = "gpi_" ;
         else if (type.equals("cooler")) str = "coi_" ;
         else if (type.equals("power")) str = "poi_" ;
