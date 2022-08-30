@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -103,22 +104,33 @@ public class BoardAPIController {
         AccountInfoVO user = (AccountInfoVO)session.getAttribute("user") ;
         BoardInfoVO bidata = new BoardInfoVO() ;
         bidata.setBdi_imgs("");
-        if (data.getImg_list() != null && data.getImg_list().size() > 0)
+        String A = data.getBdi_comment() ;
+        String[] split = A.split("src=\"");
+        List<String> imglist = new LinkedList<String>() ;
+        for (Integer i = 1 ; i < split.length; i++)
         {
-            List<String> imglist = data.getImg_list() ;
+            System.out.println(split[i].substring(7,33));
+            imglist.add(split[i].substring(7,33)) ;
+            data.setBdi_comment(data.getBdi_comment().replaceFirst(split[i].substring(7,33),"<img_tag_Temp>"));
+            
+        }
+        if (imglist.size() > 0)
+        {
             for (String i : imglist)
             {
                 Map<String,Object> s = new LinkedHashMap<String,Object>() ;
-                s.put("img_src",i.replace("temp", "board"));
+                File from = new File(path+"/images/"+i) ;
+                String After = i.replace("temp", "board") ;
+                s.put("img",After);
                 img_mapper.insertImage(s);
                 bidata.setBdi_imgs(bidata.getBdi_imgs() + (bidata.getBdi_imgs()==""?"":",") + s.get("img_seq").toString());
-
-                File from = new File(path+"/images/temp/"+i) ;
-                File target = new File(path+"/images/board/"+i) ;
+                File target = new File(path+"/images/"+After) ;
+                data.setBdi_comment(data.getBdi_comment().replaceFirst("<img_tag_Temp>",After));
                 Files.move(from.toPath(),target.toPath(),StandardCopyOption.REPLACE_EXISTING) ;
             }
         }
 
+        System.out.println(bidata.getBdi_comment());
         bidata.setBdi_aci_seq(user.getAci_seq());
         bidata.setBdi_title(data.getBdi_title());
         bidata.setBdi_comment(data.getBdi_comment());

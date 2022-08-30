@@ -11,6 +11,8 @@ $("document").ready(function(){
 
     // testdetail(13, page);
 
+
+
     $("#btn_publish").click(function(){
         // if(!(confirm("등록하시겠습니까?"))) return;
 
@@ -18,8 +20,15 @@ $("document").ready(function(){
         //     alert("로그인후 사용가능합니다.")
         //     return;
         // }
-        let edit_txt = CKEDITOR.instances.ckedit.getData().replace("\\n", "")
+        let test = $("#ckedit img").attr("src")
+        console.log(test)
 
+        let edit_txt = CKEDITOR.instances.ckedit.getData().replace("\\n", "")
+    
+        // console.log(edit_txt)
+        // let index = edit_txt.indexOf('src="/image/temp')
+        // edit_txt.
+        // console.log(edit_txt.indexOf('<img alt="" src="/image/temp'))
         if(seq == null || seq == "" || seq == undefined){
             if(!(confirm("등록하시겠습니까?"))) return;
             insertBoardData(edit_txt);
@@ -44,7 +53,7 @@ function editMethod() {
     CKEDITOR.replace(
         'ckedit' ,{
             height:500,
-            filebrowserImageUploadUrl:'/image/upload',
+            filebrowserImageUploadUrl:'/image/upload?temp=true',
             // filebrowserUploadUrl:"/Student/computer"
         }
         );
@@ -90,7 +99,8 @@ function insertBoardData(board_text) {
         bdi_title:$(".board_title input").val(),
         bdi_comment:board_text
     }
-
+    
+    // console.log(sessionStorage.getItem("img_file_G"))
     $.ajax({
         url:"/api/board/post",
         type:"put",

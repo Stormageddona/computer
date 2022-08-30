@@ -13,7 +13,9 @@
 
 </head>
 <body>
-    <h1>견적페이지</h1>
+    <section>
+        <div class="section_wrap">
+    <h3>견적페이지</h3>
     <div class="info_area">
         <table>
             <tbody>
@@ -44,5 +46,7 @@
             <button class="cart_save">견적 정보 저장</button>
             <button class="cart_delete">견적 정보 삭제</button>
     </div>
+</div>
+</section>
 </body>
 </html>

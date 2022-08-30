@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Calendar;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,8 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,13 +36,13 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @Slf4j
 public class CkeditAPIController {
-    @Value("${image.upload.path}")
+    @Value("${spring.servlet.multipart.location}")
     String uploadpath;
 
     @Value("${image.upload.url}")
     String uploadurl;
 
-    @GetMapping("/upload/Student/computer/ckeditImg/{filename}")
+    @GetMapping("/upload/computer/temp/{filename}")
     // ResponseEntity 
     // Resource = import org.springframework.core.io.Resource
     public ResponseEntity<Resource> getImages(@RequestPart MultipartFile upload,@PathVariable String type, @PathVariable String filename, HttpServletRequest request) throws Exception {
@@ -49,7 +52,7 @@ public class CkeditAPIController {
         String destFileName;
 
         destFileName = RandomStringUtils.randomAlphabetic(8).concat(".").concat(sourceExt);
-        Path folderLocaion = Paths.get(uploadpath);
+        Path folderLocaion = Paths.get("/images/s"+uploadpath);
         Path target = folderLocaion.resolve(destFileName);
         Resource r = null;
         try
@@ -82,24 +85,39 @@ public class CkeditAPIController {
 
     @PostMapping("/image/upload")
     @SneakyThrows
-    public String upload(@RequestPart MultipartFile upload, @RequestParam("CKEditorFuncNum") String callback, HttpServletRequest request) {
-        String sourceName = upload.getOriginalFilename();
-        String sourceExt = FilenameUtils.getExtension(sourceName).toLowerCase();
-        
+    public String upload(@RequestPart MultipartFile upload, @RequestParam("CKEditorFuncNum") String callback, HttpServletRequest request,@RequestParam @Nullable Boolean temp ) throws Exception {
+        // String sourceName = upload.getOriginalFilename();
+        // String sourceExt = FilenameUtils.getExtension(sourceName).toLowerCase();
+
+
+
+        // if (!ext.equalsIgnoreCase("jpg") && !ext.equalsIgnoreCase("png")  &&  !ext.equalsIgnoreCase("gif") )
+        // {            
+        //     resultMap.put("status", false) ;
+        //     resultMap.put("message", "이미지 파일 확장자는 jpg, png, gif만 허용합니다.") ;
+        //     return resultMap ;
+        // }
+
         // File destFile;
-        String destFileName;
+        // String destFileName;
         
         // System.out.println(uploadpath);
 
         // do {
-        destFileName = RandomStringUtils.randomAlphabetic(8).concat(".").concat(sourceExt);
-        Path folderLocaion = Paths.get(uploadpath);
-        Path target = folderLocaion.resolve(destFileName);
+        String Location = temp!=null && temp?"/temp":"/board" ;
+        Path forderLocaion = Paths.get(uploadpath+"/images"+Location) ;
+        String fileName = upload.getOriginalFilename() ;
+        String[] fileNameSplit = fileName.split("\\.") ;
+        String ext = fileNameSplit[fileNameSplit.length - 1] ;
+        Calendar c = Calendar.getInstance() ;
+        String saveFileName = StringUtils.cleanPath("img_" + c.getTimeInMillis() + "." +ext) ;
+        Path target =forderLocaion.resolve(saveFileName) ;
+        // destFileName = RandomStringUtils.randomAlphabetic(8).concat(".").concat(sourceExt);
+        // Path folderLocaion = Paths.get(uploadpath);
+        // Path target = folderLocaion.resolve("/images/"+saveFileName);
         // destFile = new File(uploadpath+"/"+destFileName);
         // log.info("{}", uploadpath.concat(uploadpath+"/"+destFileName));
         try {
-            System.out.println(folderLocaion.toString());
-            System.out.println(target.toString());
             Files.copy(upload.getInputStream(),target,StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
             // resultMap.put("status", false) ;
@@ -113,17 +131,18 @@ public class CkeditAPIController {
         // destFile.getParentFile().mkdir();
         // upload.transferTo(destFile);
 
-        String imgUrl = "/upload"+uploadpath+"/"+destFileName;
-        System.out.println(imgUrl);
-        //ckedit upload callback
+        String imgUrl = "/image"+Location+"/"+saveFileName;
+        // System.out.println(imgUrl);
+        // //ckedit upload callback
         StringBuffer sb = new StringBuffer();
         sb.append("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction(");
         sb.append(callback);
         sb.append(", '");
         // sb.append(testUrl);
         sb.append(imgUrl);
+        
         sb.append("', 'image upload success!!')</script>");
-
+        System.out.println(sb.toString());
         // return imgUrl;
         return sb.toString();
     }

@@ -18,7 +18,7 @@ $(function()
             {
                 alert(result.message) ;
                 if (!result.status) return ;
-                location.reload()
+                location.href = '/'
             }
         })
     })

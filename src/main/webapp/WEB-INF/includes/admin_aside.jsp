@@ -1,13 +1,13 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/includes/header.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/admin/aside.css">
 </head>
 <body>
-    <aside>
         <nav id="side_gnb">
             <ul>
                 <li>
@@ -30,10 +30,8 @@
                     <li><a href="/admin/product?type=7">케이스</a></li>
                     <li><a href="/admin/product?type=8">하드디스크</a></li>
                     <li><a href="/admin/product?type=9">SSD</a></li>
-                    
                 </li>
             </ul>
         </nav>
-    </aside>
 </body>
 </html>

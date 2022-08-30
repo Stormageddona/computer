@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/includes/admin_aside.jsp"%>
+<%@include file="/WEB-INF/includes/header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +10,10 @@
 <body>
     
     <main>
+        <section>
+            <div class="section_wrap">
+                <%@include file="/WEB-INF/includes/admin_aside.jsp"%>
+                <div class="section_wrap_content">
         <button class="add_account">사용자추가</button>
         <div class="search_box">
                 <input type="text" class="keyword" placeholder="검색어 입력" value="${keyword}">
@@ -39,6 +43,9 @@
         <div class="page_area">
 
         </div>
+        </div>
+    </div>
+    </section>
     </main>
     <%@include file="/WEB-INF/views/admin/popupbox.jsp"%>
 </body>
