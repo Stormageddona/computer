@@ -52,6 +52,7 @@ $(function()
                 // console.log(result.column_kr)
 
                 getcolumnData(result)
+                console.log(Listcolumn_kr)
                 for (let i=0; i < Listcolumn_kr.length ; i++)
                 {
                     if (Listcolumn_kr[i] == "번호" || Listcolumn_kr[i] == "등록일") continue ;
@@ -67,6 +68,7 @@ $(function()
                         $(".add_box").append(tag)
                         continue ;
                     }
+                    console.log(Listcolumn_kr[i])
                     let tag = '<span>' + Listcolumn_kr[i] + '</span><input type="text" class="'+ Listcolumn[i] +'"><br>'
                     $(".add_box").append(tag)
                 }
@@ -196,7 +198,7 @@ function getcolumnData(result)
 {
     let tempArr_kr = new Array();
     let temp = new Array();
-    
+    console.log(result.column_kr)
     for(let i=0; i<result.column_kr.length; i++) {
         tempArr_kr.push(result.column_kr[i]);
     }
@@ -225,6 +227,8 @@ function getcolumnData(result)
         Listcolumn_kr.push(result.column_kr[temp[i]])
         Listcolumn.push(result.column[temp[i]])
     }
+    console.log(Listcolumn_kr)
+
     let data = new Array()
     data.push(Listcolumn)
     data.push(Listcolumn_kr)
