@@ -116,7 +116,7 @@ public class AccountAPIController {
         }
         
         @PatchMapping("/modify")
-        public Map<String,Object> modAccount(HttpSession session, @RequestBody AccountInfoVO data) throws Exception
+        public Map<String,Object> modAccount(@RequestBody AccountInfoVO data) throws Exception
         {
             Map<String,Object> map =new LinkedHashMap<String,Object>() ;
             try {
@@ -165,8 +165,6 @@ public class AccountAPIController {
                 map.put("status",true) ;
                 map.put("seq",AESAlgorithm.Encrypt(temp)) ; 
             }
-    
-
             return map ;
 
         }
@@ -193,6 +191,12 @@ public class AccountAPIController {
         {
             Map<String,Object> map =new LinkedHashMap<String,Object>() ;
             AccountInfoVO user = (AccountInfoVO)session.getAttribute("user") ;
+            if (session.getAttribute("user") == null)
+            {
+                map.put("status", false) ;
+                map.put("message","유저 정보가 없습니다.") ;
+                return map ;
+            }
             System.out.println(user.getAci_seq());
             List<CartRequest> list = a_mapper.selectCartInfoBySeq(user.getAci_seq()) ;
             List<CartRequest> dataList = new LinkedList<CartRequest>() ;

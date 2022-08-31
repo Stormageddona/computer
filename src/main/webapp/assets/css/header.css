@@ -151,3 +151,7 @@ header .header_bottom nav ol.part_add_nav li {
     display: inline-block !important;
     color: #000;
 }
+
+.user_tab {
+    display: inline-block;
+}

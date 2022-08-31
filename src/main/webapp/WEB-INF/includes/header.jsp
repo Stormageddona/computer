@@ -39,12 +39,10 @@
                 <a href="/"><img src="/assets/images/images.png" alt="로고"></a>
             </h1>
             <div class="user_menu">
-                <a href="/account/login">로그인</a>
-                <a href="/account/join">회원가입</a> 
-                <c:if test="${user != null}">
-
-                    <a href="/account/modify">정보 수정</a>
-                </c:if>
+                <div class="user_tab">
+                    <a href="/account/login">로그인</a>
+                    <a href="/account/join">회원가입</a> 
+                </div>
                 <p>|</p>
                 <div class="search_form">
                     <input type="text">
@@ -69,8 +67,8 @@
                     </li>
                     <li><a href="/estimate">견적페이지</a></li>
                     <li><a href="/board/list">커뮤니티</a></li>
-                    <li><a href="/qna/list">1:1질문</a></li>
-                    <li><a href="/admin/account">관리자 페이지</a></li>
+                    <!-- <li><a href="/qna/list">1:1질문</a></li> -->
+                    <!-- <li><a href="/admin/account">관리자 페이지</a></li> -->
                 </ul>
                 <a href="">
                     <span></span>

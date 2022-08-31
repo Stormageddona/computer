@@ -8,6 +8,7 @@ $("document").ready(function()
             url:"/api/account/cart" , type:"get",
             success:function(result)
             {
+                console.log(result);
                 CartList = result.CartList
                 listreload()
             }

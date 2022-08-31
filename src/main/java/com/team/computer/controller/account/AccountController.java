@@ -1,5 +1,7 @@
 package com.team.computer.controller.account;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +47,13 @@ public class AccountController {
     {
         model.addAttribute("seq", hash) ;
         return "/account/pwdreset" ;
+    }
+
+    // 로그아웃
+    @GetMapping("/logout")
+    public String getAccountLogout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
     }
 
     @GetMapping("/test")
