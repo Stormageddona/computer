@@ -24,7 +24,6 @@ import com.team.computer.data.request.CartRequest;
 import com.team.computer.mapper.AccountMapper;
 import com.team.computer.mapper.ProductMapper;
 import com.team.computer.util.AESAlgorithm;
-import com.team.computer.util.GetIP;
 import com.team.computer.util.utils;
 
 @RestController

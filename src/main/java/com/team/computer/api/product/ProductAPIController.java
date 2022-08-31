@@ -28,11 +28,7 @@ public class ProductAPIController {
     @GetMapping("/test/{type}")
     public Map<String, Object> getProductList(@PathVariable String type ,@RequestParam Integer count) {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
-        List<String> str = prod_mapper.selectProductColumn(type+"_info") ;
-        for (String i : str)
-        {
-            
-        }
+
 
         for (Integer i = 0 ; i < count ; i++)
         {

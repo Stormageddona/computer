@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.team.computer.data.AccountInfoVO;
 import com.team.computer.data.QuestionInfoVO;
 import com.team.computer.mapper.QnaMapper;
 

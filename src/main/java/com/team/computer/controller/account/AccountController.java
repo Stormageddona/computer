@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.team.computer.util.AESAlgorithm;
 
 @Controller
 @RequestMapping("/account")
@@ -56,10 +55,4 @@ public class AccountController {
         return "redirect:/";
     }
 
-    @GetMapping("/test")
-    public String getTest123213() throws Exception {
-        String encSeq = "5W1lkSvmI3LgzGXM+Q3Hdw==";
-        // System.out.println(AESAlgorithm.Decrypt(encSeq));
-        return "asdasd";
-    }
 }
