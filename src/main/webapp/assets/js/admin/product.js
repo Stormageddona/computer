@@ -104,6 +104,7 @@ $(function()
                 for (let i = 0 ; i < Listcolumn.length ; i++)
                 {
                     data[Listcolumn[i]] = $("."+[Listcolumn[i]]).val()
+                    console.log(Listcolumn[i])
                 }
                 $.ajax
                 ({

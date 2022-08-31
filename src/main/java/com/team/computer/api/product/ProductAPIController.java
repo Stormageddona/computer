@@ -52,7 +52,7 @@ public class ProductAPIController {
 
     @GetMapping("/{type}")
     @Transactional
-    public Map<String, Object> getProductCaseList(@RequestParam @Nullable String keyword, @RequestParam @Nullable String page,@RequestParam @Nullable Boolean desc,@PathVariable String type,@RequestParam @Nullable String search,@RequestParam @Nullable String ordertype) {
+    public Map<String, Object> getProductList(@RequestParam @Nullable String keyword, @RequestParam @Nullable String page,@RequestParam @Nullable Boolean desc,@PathVariable String type,@RequestParam @Nullable String search,@RequestParam @Nullable String ordertype) {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
         if(search == null || search.equals("null")) search = "total" ;
         if (ordertype == null || ordertype.equals("null")) ordertype = "release_dt" ;

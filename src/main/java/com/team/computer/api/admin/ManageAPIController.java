@@ -4,12 +4,10 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
+
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,14 +23,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.team.computer.api.FileAPIController;
-import com.team.computer.mapper.AdminMapper;
 import com.team.computer.mapper.ImageMapper;
 import com.team.computer.mapper.ProductMapper;
-import com.team.computer.util.FileUtils;
 import com.team.computer.util.utils;
 
-import ch.qos.logback.core.FileAppender;
 
 @RestController
 @RequestMapping("/api/admin/product")
@@ -41,7 +35,7 @@ public class ManageAPIController {
     @Autowired ImageMapper img_mapper ;
     @Value("${spring.servlet.multipart.location}") String path;
     @DeleteMapping("")
-    public Map<String,Object> getProductList(@RequestParam String type,@RequestParam Integer seq)
+    public Map<String,Object> deleteProduct(@RequestParam String type,@RequestParam Integer seq)
     {
         Map<String,Object> map = new LinkedHashMap<String,Object>();
         // System.out.println(type+"_info" + "  " + utils.getTableNameBySeqType(type)+"seq" + "  " +  seq);
@@ -74,6 +68,7 @@ public class ManageAPIController {
         return map;
     }
     
+
     @GetMapping("/{type}")
     public Map<String,Object> getProduct(@PathVariable String type,@RequestParam Integer seq)
     {

@@ -84,7 +84,7 @@
 
     <update id="updateBoardComment">
         UPDATE board_comment_info
-        SET bcmi_comment=#{bcmi_comment}, bcmi_mod_dt=#{bcmi_mod_dt}
+        SET bcmi_comment=#{bcmi_comment}, bcmi_mod_dt=CURRENT_TIMESTAMP
         WHERE bcmi_seq=#{bcmi_seq};
     </update>
 
