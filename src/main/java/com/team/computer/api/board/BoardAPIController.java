@@ -29,6 +29,8 @@ import com.team.computer.data.BoardInfoVO;
 import com.team.computer.mapper.BoardMapper;
 import com.team.computer.mapper.ImageMapper;
 
+
+
 @RestController
 @RequestMapping("/api/board")
 public class BoardAPIController {
@@ -79,22 +81,7 @@ public class BoardAPIController {
         return m;
     }
 
-    @PutMapping("/comment_add")
-    public Map<String, Object> putBoardComment(@RequestBody BoardCommentInfoVO data) {
-        Map<String, Object> m = new LinkedHashMap<String, Object>();
-        board_mapper.insertBoardDetailComment(data);
-        m.put("status", true);
-        m.put("msg", "등록되었습니다.");
-        return m;
-    }
-    @DeleteMapping("/comment_remove")
-    public Map<String, Object> deleteComment(@RequestParam Integer coment_seq) {
-        Map<String, Object> m = new LinkedHashMap<String, Object>();
-        board_mapper.deleteBoardDetailComment(coment_seq);
-        m.put("status", true);
-        m.put("msg", "삭제되었습니다");
-        return m;
-    }
+
     @Value("${spring.servlet.multipart.location}") String path;
     @PutMapping("/post")
     @Transactional
@@ -102,6 +89,12 @@ public class BoardAPIController {
     {
         Map<String,Object> map = new LinkedHashMap<String,Object>() ;
         AccountInfoVO user = (AccountInfoVO)session.getAttribute("user") ;
+        if (session.getAttribute("user") == null)
+        {
+            map.put("status",false) ;
+            map.put("message","유저 정보가 없습니다.") ;
+            return map ;
+        }
         BoardInfoVO bidata = new BoardInfoVO() ;
         bidata.setBdi_imgs("");
         String A = data.getBdi_comment() ;
@@ -144,7 +137,7 @@ public class BoardAPIController {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
         board_mapper.deleteBoardList(bod_seq);
         m.put("status", true);
-        m.put("msg", "삭제하시겠습니까?");
+        m.put("msg", "삭제되었습니다.");
         return m;
     }
     @PatchMapping("/mod_board") 
@@ -156,7 +149,22 @@ public class BoardAPIController {
         return m;
     }
 
-
+    @PutMapping("/comment_add")
+    public Map<String, Object> putBoardComment(@RequestBody BoardCommentInfoVO data) {
+        Map<String, Object> m = new LinkedHashMap<String, Object>();
+        board_mapper.insertBoardDetailComment(data);
+        m.put("status", true);
+        m.put("msg", "등록되었습니다.");
+        return m;
+    }
+    @DeleteMapping("/comment_remove")
+    public Map<String, Object> deleteComment(@RequestParam Integer coment_seq) {
+        Map<String, Object> m = new LinkedHashMap<String, Object>();
+        board_mapper.deleteBoardDetailComment(coment_seq);
+        m.put("status", true);
+        m.put("msg", "삭제되었습니다");
+        return m;
+    }
     @PatchMapping("/update_comment")
     public Map<String, Object> updateBoardComment(@RequestBody BoardCommentInfoVO data) {
         Map<String, Object> m = new LinkedHashMap<String, Object>();
